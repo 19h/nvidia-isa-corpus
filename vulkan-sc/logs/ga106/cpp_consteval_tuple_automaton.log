@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpsyevz6x8/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cpp_consteval_tuple_automaton.json
+[INFO] Parsing JSON: /tmp/tmpsyevz6x8/cpp_consteval_tuple_automaton.json
+[INFO] Compiling JSON: /tmp/tmpsyevz6x8/cpp_consteval_tuple_automaton.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpsyevz6x8/cpp_consteval_tuple_automaton.spv
+[INFO] Compiled JSON: /tmp/tmpsyevz6x8/cpp_consteval_tuple_automaton.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpsyevz6x8/cache.bin

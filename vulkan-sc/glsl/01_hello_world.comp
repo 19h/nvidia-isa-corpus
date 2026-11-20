@@ -1,0 +1,12 @@
+// Port of programs/01_hello_world.c. The host reads one character per word.
+#version 450
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result {
+    uint words[];
+} result;
+void main() {
+    const uint text[14] = uint[14](72, 101, 108, 108, 111, 44, 32, 87, 111, 114, 108, 100, 33, 10);
+    result.words[0] = 0;
+    for (uint i = 0; i < 14; ++i)
+        result.words[1 + i] = text[i];
+}

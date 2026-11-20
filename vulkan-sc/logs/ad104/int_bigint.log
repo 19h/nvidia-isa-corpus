@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp7apisnvy/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] int_bigint.json
+[INFO] Parsing JSON: /tmp/tmp7apisnvy/int_bigint.json
+[INFO] Compiling JSON: /tmp/tmp7apisnvy/int_bigint.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp7apisnvy/int_bigint.spv
+[INFO] Compiled JSON: /tmp/tmp7apisnvy/int_bigint.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmp7apisnvy/cache.bin

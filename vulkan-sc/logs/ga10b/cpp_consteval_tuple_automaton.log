@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpx_hqmafn/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cpp_consteval_tuple_automaton.json
+[INFO] Parsing JSON: /tmp/tmpx_hqmafn/cpp_consteval_tuple_automaton.json
+[INFO] Compiling JSON: /tmp/tmpx_hqmafn/cpp_consteval_tuple_automaton.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpx_hqmafn/cpp_consteval_tuple_automaton.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

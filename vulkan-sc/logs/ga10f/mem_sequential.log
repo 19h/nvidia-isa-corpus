@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpka20i_c5/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] mem_sequential.json
+[INFO] Parsing JSON: /tmp/tmpka20i_c5/mem_sequential.json
+[INFO] Compiling JSON: /tmp/tmpka20i_c5/mem_sequential.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpka20i_c5/mem_sequential.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpvjgk2m6e/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_nested.json
+[INFO] Parsing JSON: /tmp/tmpvjgk2m6e/call_nested.json
+[INFO] Compiling JSON: /tmp/tmpvjgk2m6e/call_nested.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpvjgk2m6e/call_nested.spv
+[INFO] Compiled JSON: /tmp/tmpvjgk2m6e/call_nested.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpvjgk2m6e/cache.bin

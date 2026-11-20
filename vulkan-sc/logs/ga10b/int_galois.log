@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpljb8z4tb/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] int_galois.json
+[INFO] Parsing JSON: /tmp/tmpljb8z4tb/int_galois.json
+[INFO] Compiling JSON: /tmp/tmpljb8z4tb/int_galois.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpljb8z4tb/int_galois.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

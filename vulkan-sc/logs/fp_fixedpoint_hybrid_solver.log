@@ -1,0 +1,42 @@
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 96
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 160
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 352
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 416
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 608
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 672
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 864
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 928
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 1120
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 1184
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 1376
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 1440
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 1632
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 1696
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 1888
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 1952
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 2144
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 2208
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 2400
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 2464
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 2656
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 2720
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 2912
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 2976
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 3168
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 3232
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 3424
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 3488
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 3680
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 3744
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 3936
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 4000
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 4192
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 4256
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 4448
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 4512
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = i32 - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 4704
+Err: SrcTy = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - DstTy = float - Ty = %struct.SolverNode = type { i32, i32, i32, float, double, i32 } - CstVal = 4768
+error: line 1189: OpAccessChain result type <id> '426[%ulong]' (OpTypeInt) does not match the type that results from indexing into the base <id> '1[%uint]' (OpTypeInt). (The types must be the exact same Id, so the two types referenced are slighlty different)
+  %964 = OpAccessChain %_ptr_Function_ulong %81 %uint_1
+
+Exit status 1.

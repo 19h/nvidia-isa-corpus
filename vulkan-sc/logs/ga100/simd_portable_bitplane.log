@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpp4bdba0h/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] simd_portable_bitplane.json
+[INFO] Parsing JSON: /tmp/tmpp4bdba0h/simd_portable_bitplane.json
+[INFO] Compiling JSON: /tmp/tmpp4bdba0h/simd_portable_bitplane.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpp4bdba0h/simd_portable_bitplane.spv
+[INFO] Compiled JSON: /tmp/tmpp4bdba0h/simd_portable_bitplane.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpp4bdba0h/cache.bin

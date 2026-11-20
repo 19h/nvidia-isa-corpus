@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpcg37gmqu/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] min_shift_chain.json
+[INFO] Parsing JSON: /tmp/tmpcg37gmqu/min_shift_chain.json
+[INFO] Compiling JSON: /tmp/tmpcg37gmqu/min_shift_chain.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpcg37gmqu/min_shift_chain.spv
+[INFO] Compiled JSON: /tmp/tmpcg37gmqu/min_shift_chain.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpcg37gmqu/cache.bin

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpokpp971g/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] simd_matrix_mul.json
+[INFO] Parsing JSON: /tmp/tmpokpp971g/simd_matrix_mul.json
+[INFO] Compiling JSON: /tmp/tmpokpp971g/simd_matrix_mul.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpokpp971g/simd_matrix_mul.spv
+[INFO] Compiled JSON: /tmp/tmpokpp971g/simd_matrix_mul.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpokpp971g/cache.bin

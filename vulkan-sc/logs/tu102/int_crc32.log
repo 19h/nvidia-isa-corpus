@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpkr2k0797/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] int_crc32.json
+[INFO] Parsing JSON: /tmp/tmpkr2k0797/int_crc32.json
+[INFO] Compiling JSON: /tmp/tmpkr2k0797/int_crc32.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpkr2k0797/int_crc32.spv
+[INFO] Compiled JSON: /tmp/tmpkr2k0797/int_crc32.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpkr2k0797/cache.bin

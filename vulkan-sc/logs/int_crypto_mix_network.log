@@ -1,0 +1,2 @@
+  %4273 = add i32 1808, %4270*** stack smashing detected ***: terminated
+Exit status -6.

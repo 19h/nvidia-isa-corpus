@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpwelm_qli/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] 01_hello_world.json
+[INFO] Parsing JSON: /tmp/tmpwelm_qli/01_hello_world.json
+[INFO] Compiling JSON: /tmp/tmpwelm_qli/01_hello_world.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpwelm_qli/01_hello_world.spv
+[INFO] Compiled JSON: /tmp/tmpwelm_qli/01_hello_world.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpwelm_qli/cache.bin

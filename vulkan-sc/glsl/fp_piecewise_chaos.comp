@@ -1,0 +1,180 @@
+/*
+ * Floating-Point Piecewise Chaos
+ *
+ * Iterates several bounded piecewise maps and folds their output into an
+ * integer checksum. The workload stresses floating-point arithmetic, branch
+ * selection on FP ranges, loop-carried dependencies, and FP-to-integer
+ * quantization without requiring libm.
+ *
+ * Features exercised:
+ *   - Double and float arithmetic
+ *   - Piecewise FP branches
+ *   - Quantized checksum accumulation
+ *   - Bounded chaotic recurrence
+ */
+
+
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result {
+    uint words[];
+} output_data;
+
+#define ORBITS 32
+#define STEPS 384
+
+struct Orbit {
+    precise double x;
+    precise double y;
+    precise double z;
+    precise double carry;
+};
+
+
+Orbit orbits[ORBITS];
+
+uint lcg_next(inout uint state) {
+    state = state * 1664525u + 1013904223u;
+    return state;
+}
+
+double unit_from_u32(uint x) {
+    return (double(x >> 8) / 16777216.0LF) * 2.0LF - 1.0LF;
+}
+
+double fold_signed(double v) {
+    if (v > 1.0LF) {
+        v = 2.0LF - v;
+    } else if (v < -1.0LF) {
+        v = -2.0LF - v;
+    }
+
+    if (v > 1.0LF) {
+        v = 1.0LF;
+    } else if (v < -1.0LF) {
+        v = -1.0LF;
+    }
+
+    return v;
+}
+
+uint64_t mix64(uint64_t h, uint64_t v) {
+    h ^= v + 0x9e3779b97f4a7c15UL + (h << 6) + (h >> 2);
+    h ^= h >> 33;
+    h *= 0xff51afd7ed558ccdUL;
+    h ^= h >> 29;
+    return h;
+}
+
+uint quantize(double v) {
+    if (v > 1.25LF) {
+        v = 1.25LF;
+    } else if (v < -1.25LF) {
+        v = -1.25LF;
+    }
+
+    int q;
+    if (v >= 0.0LF) {
+        q = int(v * 1000000.0LF + 0.5LF);
+    } else {
+        q = int(v * 1000000.0LF - 0.5LF);
+    }
+    return uint(q);
+}
+
+void init_orbits() {
+    uint seed = 0x4d6f726fu;
+
+    for (int i = 0; i < ORBITS; i++) {
+        precise double sx = unit_from_u32(lcg_next(seed));
+        precise double sy = unit_from_u32(lcg_next(seed));
+        precise double sz = unit_from_u32(lcg_next(seed));
+
+        orbits[i].x = 0.73LF * sx;
+        orbits[i].y = 0.67LF * sy;
+        orbits[i].z = 0.59LF * sz;
+        orbits[i].carry = 0.125LF + 0.00390625LF * double(i + 1);
+    }
+}
+
+uint step_orbit(inout Orbit o, int step, int index) {
+    precise double x = o.x;
+    precise double y = o.y;
+    precise double z = o.z;
+    precise double drive = 0.001953125LF * double((step * 17 + index * 29) & 63) - 0.0615234375LF;
+
+    precise double nx;
+    if (x < -0.42LF) {
+        nx = -0.71LF * x + 0.29LF * y * y - 0.17LF * z + drive;
+    } else if (x < 0.11LF) {
+        nx = x * (1.28LF - 0.43LF * y) + 0.24LF * z * z - 0.35LF * drive;
+    } else if (x < 0.58LF) {
+        nx = 0.61LF - x * x + 0.21LF * y - 0.12LF * z * drive;
+    } else {
+        nx = 0.39LF * x - 0.56LF * y + 0.18LF * x * z + 0.07LF * drive;
+    }
+
+    precise double ny;
+    precise double gate = y + 0.25LF * x - 0.125LF * z;
+    if (gate < -0.55LF) {
+        ny = 0.64LF * y + 0.19LF * x * z + 0.03125LF * double(index & 7);
+    } else if (gate < -0.05LF) {
+        ny = -0.82LF * y + 0.33LF * x - 0.14LF * z * z;
+    } else if (gate < 0.47LF) {
+        ny = y + 0.27LF * (x - y * z) + drive;
+    } else {
+        ny = -0.37LF * x + 0.72LF * z - 0.22LF * y * y;
+    }
+
+    precise double nz;
+    if (z < -0.25LF) {
+        nz = 0.48LF * z + 0.31LF * x - 0.26LF * y + o.carry;
+    } else if (z < 0.33LF) {
+        nz = z * (0.93LF - 0.25LF * x) + 0.18LF * x * y - drive;
+    } else {
+        nz = -0.58LF * z + 0.34LF * y + 0.16LF * x * x - o.carry;
+    }
+
+    o.x = fold_signed(nx);
+    o.y = fold_signed(ny);
+    o.z = fold_signed(nz);
+
+    precise float fx = float(o.x);
+    precise float fy = float(o.y);
+    precise float fz = float(o.z);
+    precise float fc = float(o.carry);
+    o.carry = 0.5LF * o.carry + double(0.125f * fx + 0.0625f * fy - 0.03125f * fz + 0.015625f * fc);
+    o.carry = fold_signed(o.carry);
+
+    return quantize(o.x + 0.5LF * o.y - 0.25LF * o.z + 0.125LF * o.carry);
+}
+
+void main() {
+    init_orbits();
+
+    uint64_t checksum = 0x6d6f726f5f667031UL;
+    uint64_t branch_score = 0;
+
+    for (int step = 0; step < STEPS; step++) {
+        for (int i = 0; i < ORBITS; i++) {
+            uint q = step_orbit(orbits[i], step, i);
+            checksum = mix64(checksum, uint64_t(q) ^ (uint64_t(uint(step)) << 32) ^ uint(i));
+
+            if (orbits[i].x < -0.33LF) {
+                branch_score += 3u;
+            } else if (orbits[i].x < 0.33LF) {
+                branch_score += 5u;
+            } else {
+                branch_score += 7u;
+            }
+        }
+    }
+
+    uint64_t sink = checksum ^ (branch_score << 1);
+    output_data.words[0] = 0;
+    for (uint byte = 0; byte < 8; ++byte) {
+        output_data.words[1 + byte] = uint((sink >> (8u * byte)) & 255UL);
+        output_data.words[17 + byte] = uint((branch_score >> (8u * byte)) & 255UL);
+    }
+}

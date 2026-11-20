@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpeh3yn4mx/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] min_bitwise.json
+[INFO] Parsing JSON: /tmp/tmpeh3yn4mx/min_bitwise.json
+[INFO] Compiling JSON: /tmp/tmpeh3yn4mx/min_bitwise.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpeh3yn4mx/min_bitwise.spv
+[INFO] Compiled JSON: /tmp/tmpeh3yn4mx/min_bitwise.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpeh3yn4mx/cache.bin

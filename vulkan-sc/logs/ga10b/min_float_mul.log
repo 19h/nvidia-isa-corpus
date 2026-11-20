@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp4vgyyjhn/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] min_float_mul.json
+[INFO] Parsing JSON: /tmp/tmp4vgyyjhn/min_float_mul.json
+[INFO] Compiling JSON: /tmp/tmp4vgyyjhn/min_float_mul.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp4vgyyjhn/min_float_mul.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

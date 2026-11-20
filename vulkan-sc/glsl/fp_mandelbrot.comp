@@ -1,0 +1,123 @@
+/*
+ * Mandelbrot Set Computation
+ *
+ * Computes Mandelbrot set escape times.
+ * Heavy use of floating point multiplication, addition, comparison.
+ *
+ * Features exercised:
+ *   - FP multiply, add, compare
+ *   - FP to integer conversion
+ *   - Loop-carried dependencies
+ */
+
+#version 450
+#extension GL_ARB_gpu_shader_fp64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Data {
+    uint words[64];
+    uint image[256][256];
+} io;
+
+#define WIDTH 256
+#define HEIGHT 256
+#define MAX_ITER 100
+
+
+
+/* Compute escape time for a single point */
+int mandelbrot_point(double cr, double ci) {
+    precise double zr = 0.0LF;
+    precise double zi = 0.0LF;
+
+    for (int i = 0; i < MAX_ITER; i++) {
+        precise double zr2 = zr * zr;
+        precise double zi2 = zi * zi;
+
+        if (zr2 + zi2 > 4.0LF) {
+            return i;
+        }
+
+        zi = 2.0LF * zr * zi + ci;
+        zr = zr2 - zi2 + cr;
+    }
+
+    return MAX_ITER;
+}
+
+/* Single precision version */
+int mandelbrot_point_f(float cr, float ci) {
+    precise float zr = 0.0f;
+    precise float zi = 0.0f;
+
+    for (int i = 0; i < MAX_ITER; i++) {
+        precise float zr2 = zr * zr;
+        precise float zi2 = zi * zi;
+
+        if (zr2 + zi2 > 4.0f) {
+            return i;
+        }
+
+        zi = 2.0f * zr * zi + ci;
+        zr = zr2 - zi2 + cr;
+    }
+
+    return MAX_ITER;
+}
+
+void main() {
+    /* Region: [-2.5LF, 1] x [-1, 1] */
+    precise double x_min = -2.5LF;
+    precise double x_max = 1.0LF;
+    precise double y_min = -1.0LF;
+    precise double y_max = 1.0LF;
+
+    precise double x_step = (x_max - x_min) / WIDTH;
+    precise double y_step = (y_max - y_min) / HEIGHT;
+
+    uint checksum = 0;
+
+    /* Multiple iterations for timing */
+    for (int iter = 0; iter < 10; iter++) {
+        /* Double precision computation */
+        for (int py = 0; py < HEIGHT; py++) {
+            precise double ci = y_min + py * y_step;
+            for (int px = 0; px < WIDTH; px++) {
+                precise double cr = x_min + px * x_step;
+                int escape = mandelbrot_point(cr, ci);
+                io.image[py][px] = uint(escape % 256);
+            }
+        }
+
+        /* Accumulate checksum */
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                checksum += io.image[y][x];
+            }
+        }
+
+        /* Single precision computation */
+        precise float fx_min = -2.5f;
+        precise float fx_step = 3.5f / WIDTH;
+        precise float fy_min = -1.0f;
+        precise float fy_step = 2.0f / HEIGHT;
+
+        for (int py = 0; py < HEIGHT; py++) {
+            precise float ci = fy_min + py * fy_step;
+            for (int px = 0; px < WIDTH; px++) {
+                precise float cr = fx_min + px * fx_step;
+                int escape = mandelbrot_point_f(cr, ci);
+                io.image[py][px] = uint(escape % 256);
+            }
+        }
+
+        for (int y = 0; y < HEIGHT; y++) {
+            for (int x = 0; x < WIDTH; x++) {
+                checksum += io.image[y][x];
+            }
+        }
+    }
+
+    io.words[0] = 0;
+    for (uint byte = 0; byte < 4; ++byte)
+        io.words[1 + byte] = (checksum >> (8u * byte)) & 255u;
+}

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp1yaa30o7/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] int_sha256.json
+[INFO] Parsing JSON: /tmp/tmp1yaa30o7/int_sha256.json
+[INFO] Compiling JSON: /tmp/tmp1yaa30o7/int_sha256.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp1yaa30o7/int_sha256.spv
+[INFO] Compiled JSON: /tmp/tmp1yaa30o7/int_sha256.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmp1yaa30o7/cache.bin

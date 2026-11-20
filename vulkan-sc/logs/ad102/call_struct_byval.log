@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp419hb6kf/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_struct_byval.json
+[INFO] Parsing JSON: /tmp/tmp419hb6kf/call_struct_byval.json
+[INFO] Compiling JSON: /tmp/tmp419hb6kf/call_struct_byval.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp419hb6kf/call_struct_byval.spv
+[INFO] Compiled JSON: /tmp/tmp419hb6kf/call_struct_byval.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmp419hb6kf/cache.bin

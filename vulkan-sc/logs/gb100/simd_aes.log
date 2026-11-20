@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpuej8msbj/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] simd_aes.json
+[INFO] Parsing JSON: /tmp/tmpuej8msbj/simd_aes.json
+[INFO] Compiling JSON: /tmp/tmpuej8msbj/simd_aes.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpuej8msbj/simd_aes.spv
+[INFO] Compiled JSON: /tmp/tmpuej8msbj/simd_aes.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpuej8msbj/cache.bin

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpzdz0042b/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cf_musttail.json
+[INFO] Parsing JSON: /tmp/tmpzdz0042b/cf_musttail.json
+[INFO] Compiling JSON: /tmp/tmpzdz0042b/cf_musttail.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpzdz0042b/cf_musttail.spv
+[INFO] Compiled JSON: /tmp/tmpzdz0042b/cf_musttail.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpzdz0042b/cache.bin

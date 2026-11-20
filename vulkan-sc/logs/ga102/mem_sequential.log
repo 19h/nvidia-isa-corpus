@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp12oyuhre/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] mem_sequential.json
+[INFO] Parsing JSON: /tmp/tmp12oyuhre/mem_sequential.json
+[INFO] Compiling JSON: /tmp/tmp12oyuhre/mem_sequential.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp12oyuhre/mem_sequential.spv
+[INFO] Compiled JSON: /tmp/tmp12oyuhre/mem_sequential.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmp12oyuhre/cache.bin

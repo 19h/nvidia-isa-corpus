@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpxc8m80rl/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] fp_dsp_filter.json
+[INFO] Parsing JSON: /tmp/tmpxc8m80rl/fp_dsp_filter.json
+[INFO] Compiling JSON: /tmp/tmpxc8m80rl/fp_dsp_filter.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpxc8m80rl/fp_dsp_filter.spv
+[INFO] Compiled JSON: /tmp/tmpxc8m80rl/fp_dsp_filter.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpxc8m80rl/cache.bin

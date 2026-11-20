@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpe1ui3287/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_many_int_args.json
+[INFO] Parsing JSON: /tmp/tmpe1ui3287/call_many_int_args.json
+[INFO] Compiling JSON: /tmp/tmpe1ui3287/call_many_int_args.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpe1ui3287/call_many_int_args.spv
+[INFO] Compiled JSON: /tmp/tmpe1ui3287/call_many_int_args.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpe1ui3287/cache.bin

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpu77z1o_a/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] fp_physics_sim.json
+[INFO] Parsing JSON: /tmp/tmpu77z1o_a/fp_physics_sim.json
+[INFO] Compiling JSON: /tmp/tmpu77z1o_a/fp_physics_sim.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpu77z1o_a/fp_physics_sim.spv
+[INFO] Compiled JSON: /tmp/tmpu77z1o_a/fp_physics_sim.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpu77z1o_a/cache.bin

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpj1tb59ur/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cf_irreducible_state_maze.json
+[INFO] Parsing JSON: /tmp/tmpj1tb59ur/cf_irreducible_state_maze.json
+[INFO] Compiling JSON: /tmp/tmpj1tb59ur/cf_irreducible_state_maze.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpj1tb59ur/cf_irreducible_state_maze.spv
+[INFO] Compiled JSON: /tmp/tmpj1tb59ur/cf_irreducible_state_maze.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpj1tb59ur/cache.bin

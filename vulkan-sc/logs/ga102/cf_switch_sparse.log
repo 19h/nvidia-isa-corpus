@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpwmx58n7u/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cf_switch_sparse.json
+[INFO] Parsing JSON: /tmp/tmpwmx58n7u/cf_switch_sparse.json
+[INFO] Compiling JSON: /tmp/tmpwmx58n7u/cf_switch_sparse.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpwmx58n7u/cf_switch_sparse.spv
+[INFO] Compiled JSON: /tmp/tmpwmx58n7u/cf_switch_sparse.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpwmx58n7u/cache.bin

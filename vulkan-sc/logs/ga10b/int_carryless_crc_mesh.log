@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp4myx6dr8/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] int_carryless_crc_mesh.json
+[INFO] Parsing JSON: /tmp/tmp4myx6dr8/int_carryless_crc_mesh.json
+[INFO] Compiling JSON: /tmp/tmp4myx6dr8/int_carryless_crc_mesh.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp4myx6dr8/int_carryless_crc_mesh.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpaa1x452j/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] min_float_mul.json
+[INFO] Parsing JSON: /tmp/tmpaa1x452j/min_float_mul.json
+[INFO] Compiling JSON: /tmp/tmpaa1x452j/min_float_mul.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpaa1x452j/min_float_mul.spv
+[INFO] Compiled JSON: /tmp/tmpaa1x452j/min_float_mul.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpaa1x452j/cache.bin

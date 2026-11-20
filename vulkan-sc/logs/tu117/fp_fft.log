@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpojazj9nw/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] fp_fft.json
+[INFO] Parsing JSON: /tmp/tmpojazj9nw/fp_fft.json
+[INFO] Compiling JSON: /tmp/tmpojazj9nw/fp_fft.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpojazj9nw/fp_fft.spv
+[INFO] Compiled JSON: /tmp/tmpojazj9nw/fp_fft.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpojazj9nw/cache.bin

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpffjhbzl0/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] int_divrem_wide_lattice.json
+[INFO] Parsing JSON: /tmp/tmpffjhbzl0/int_divrem_wide_lattice.json
+[INFO] Compiling JSON: /tmp/tmpffjhbzl0/int_divrem_wide_lattice.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpffjhbzl0/int_divrem_wide_lattice.spv
+[INFO] Compiled JSON: /tmp/tmpffjhbzl0/int_divrem_wide_lattice.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpffjhbzl0/cache.bin

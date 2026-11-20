@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpyee4a9_a/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] mem_tls.json
+[INFO] Parsing JSON: /tmp/tmpyee4a9_a/mem_tls.json
+[INFO] Compiling JSON: /tmp/tmpyee4a9_a/mem_tls.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpyee4a9_a/mem_tls.spv
+[INFO] Compiled JSON: /tmp/tmpyee4a9_a/mem_tls.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpyee4a9_a/cache.bin

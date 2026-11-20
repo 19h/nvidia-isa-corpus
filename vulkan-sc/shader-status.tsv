@@ -1,0 +1,98 @@
+program	spirv_status	details
+01_hello_world.c	ok	
+02_fibonacci.c	ok	
+03_linked_list.c	not ported	Requires a GPU-specific bounded arena and pointer representation.
+04_bst.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+05_thread_pool.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+06_allocator.c	not ported	Requires a GPU-specific bounded arena and pointer representation.
+07_regex.c	not ported	Requires porting host library calls, I/O, or dynamic data structures.
+08_json_parser.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+09_bytecode_vm.c	not ported	Requires porting host library calls, I/O, or dynamic data structures.
+10_template_madness.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+asm_arch_detect.c	not ported	The workload exercises CPU instructions or a CPU calling context.
+asm_atomic_ops.c	not ported	The workload exercises CPU instructions or a CPU calling context.
+asm_barriers.c	not ported	The workload exercises CPU instructions or a CPU calling context.
+asm_context_switch.c	not ported	The workload exercises CPU instructions or a CPU calling context.
+asm_syscall_raw.c	not ported	POSIX kernel interfaces require a host process.
+call_abi_stress_matrix.c	not ported	Exercises CPU variadic and aggregate calling conventions.
+call_many_float_args.c	ok	
+call_many_int_args.c	ok	
+call_mixed_aggregates.c	ok	
+call_mixed_args.c	ok	
+call_nested.c	ok	
+call_struct_byval.cpp	ok	
+call_struct_return.c	ok	
+call_tail_recursive.c	ok	
+call_variadic.c	failed	logs/call_variadic.log
+cf_computed_goto.c	not ported	Requires an explicit shader stack or state machine for host control transfers.
+cf_duff_device_parser.c	ok	
+cf_exception.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+cf_indirect_call.c	ok	
+cf_irreducible_state_maze.c	ok	
+cf_license_crackme.c	not ported	Requires porting host library calls, I/O, or dynamic data structures.
+cf_longjmp_threaded_vm.c	not ported	Requires an explicit shader stack or state machine for host control transfers.
+cf_musttail.cpp	ok	
+cf_rorog.c	not ported	Requires porting host library calls, I/O, or dynamic data structures.
+cf_setjmp.c	not ported	Requires an explicit shader stack or state machine for host control transfers.
+cf_switch_dense.c	ok	
+cf_switch_sparse.c	ok	
+cpp_allocator_polymorph_zoo.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+cpp_consteval_tuple_automaton.cpp	ok	
+cpp_constexpr_variant_graph.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+cpp_coroutine_lifetime.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+cpp_exception_variant_unwind.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+cpp_lambda.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+cpp_rtti.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+cpp_type_erased_callmaze.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+cpp_virtual.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+fp_denormal_rounding_lab.c	failed	logs/fp_denormal_rounding_lab.log
+fp_dsp_filter.c	ok	
+fp_fft.c	ok	
+fp_fixedpoint_hybrid_solver.c	failed	logs/fp_fixedpoint_hybrid_solver.log
+fp_mandelbrot.c	ok	
+fp_neural_layer.c	ok	
+fp_physics_sim.c	ok	
+fp_piecewise_chaos.c	ok	
+int_atomic_orders.c	not ported	Exercises C atomics on 8-bit and 16-bit storage as well as wider values.
+int_bigint.c	ok	
+int_bitfields.c	ok	
+int_carryless_crc_mesh.c	ok	
+int_crc32.c	ok	
+int_crypto_mix_network.c	failed	logs/int_crypto_mix_network.log
+int_divrem_wide_lattice.c	ok	
+int_galois.c	ok	
+int_int128_ops.c	ok	
+int_popcount.c	ok	
+int_sha256.c	ok	
+int_woma_keygen.c	not ported	Requires porting host library calls, I/O, or dynamic data structures.
+mem_alias_lifetime_graph.c	ok	
+mem_flexible_arena_rewriter.c	not ported	Requires a GPU-specific bounded arena and pointer representation.
+mem_provenance_launder_lab.c	failed	logs/mem_provenance_launder_lab.log
+mem_random.c	failed	logs/mem_random.log
+mem_sequential.c	ok	
+mem_stack_realign.c	ok	
+mem_strided.c	ok	
+mem_tls.c	ok	
+mem_unaligned_packed.c	ok	
+min_add_chain.c	ok	
+min_bitwise.c	ok	
+min_branch_chain.c	ok	
+min_div_chain.c	ok	
+min_float_add.c	ok	
+min_float_mul.c	ok	
+min_load_chain.c	ok	
+min_mul_chain.c	ok	
+min_nop_sled.c	not ported	The workload exercises CPU instructions or a CPU calling context.
+min_shift_chain.c	ok	
+min_store_chain.c	ok	
+simd_aes.c	ok	
+simd_dot_product.c	ok	
+simd_image_filter.c	ok	
+simd_matrix_mul.c	ok	
+simd_portable_bitplane.c	ok	
+simd_string_search.c	ok	
+syscall_file_ops.c	not ported	POSIX kernel interfaces require a host process.
+syscall_fork_exec.c	not ported	POSIX kernel interfaces require a host process.
+syscall_mmap.c	not ported	POSIX kernel interfaces require a host process.
+syscall_signals.c	not ported	POSIX kernel interfaces require a host process.
+syscall_socket.c	not ported	POSIX kernel interfaces require a host process.

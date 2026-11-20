@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp_eaxmp_8/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] min_float_add.json
+[INFO] Parsing JSON: /tmp/tmp_eaxmp_8/min_float_add.json
+[INFO] Compiling JSON: /tmp/tmp_eaxmp_8/min_float_add.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp_eaxmp_8/min_float_add.spv
+[INFO] Compiled JSON: /tmp/tmp_eaxmp_8/min_float_add.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmp_eaxmp_8/cache.bin

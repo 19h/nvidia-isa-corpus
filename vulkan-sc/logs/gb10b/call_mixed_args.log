@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpzht9uxab/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_mixed_args.json
+[INFO] Parsing JSON: /tmp/tmpzht9uxab/call_mixed_args.json
+[INFO] Compiling JSON: /tmp/tmpzht9uxab/call_mixed_args.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpzht9uxab/call_mixed_args.spv
+[INFO] Compiled JSON: /tmp/tmpzht9uxab/call_mixed_args.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpzht9uxab/cache.bin

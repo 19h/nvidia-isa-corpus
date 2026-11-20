@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpo7mk9zi3/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] fp_fft.json
+[INFO] Parsing JSON: /tmp/tmpo7mk9zi3/fp_fft.json
+[INFO] Compiling JSON: /tmp/tmpo7mk9zi3/fp_fft.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpo7mk9zi3/fp_fft.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpd1120ni2/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cf_switch_dense.json
+[INFO] Parsing JSON: /tmp/tmpd1120ni2/cf_switch_dense.json
+[INFO] Compiling JSON: /tmp/tmpd1120ni2/cf_switch_dense.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpd1120ni2/cf_switch_dense.spv
+[INFO] Compiled JSON: /tmp/tmpd1120ni2/cf_switch_dense.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpd1120ni2/cache.bin

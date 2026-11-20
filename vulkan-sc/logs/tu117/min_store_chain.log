@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpveaaxe94/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] min_store_chain.json
+[INFO] Parsing JSON: /tmp/tmpveaaxe94/min_store_chain.json
+[INFO] Compiling JSON: /tmp/tmpveaaxe94/min_store_chain.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpveaaxe94/min_store_chain.spv
+[INFO] Compiled JSON: /tmp/tmpveaaxe94/min_store_chain.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpveaaxe94/cache.bin

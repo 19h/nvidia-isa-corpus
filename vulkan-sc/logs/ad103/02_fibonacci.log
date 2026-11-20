@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpxdx2qiim/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] 02_fibonacci.json
+[INFO] Parsing JSON: /tmp/tmpxdx2qiim/02_fibonacci.json
+[INFO] Compiling JSON: /tmp/tmpxdx2qiim/02_fibonacci.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpxdx2qiim/02_fibonacci.spv
+[INFO] Compiled JSON: /tmp/tmpxdx2qiim/02_fibonacci.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpxdx2qiim/cache.bin

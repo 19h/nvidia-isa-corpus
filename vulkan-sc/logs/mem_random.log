@@ -1,0 +1,4 @@
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/mem_random.cl:102:20: error: recursive structures are not supported
+  102 | uint32_t prng_next(__private ProgramState *program_state) {
+      |                    ^
+Exit status 255.

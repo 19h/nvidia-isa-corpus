@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp5ae21xrh/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_many_int_args.json
+[INFO] Parsing JSON: /tmp/tmp5ae21xrh/call_many_int_args.json
+[INFO] Compiling JSON: /tmp/tmp5ae21xrh/call_many_int_args.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp5ae21xrh/call_many_int_args.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

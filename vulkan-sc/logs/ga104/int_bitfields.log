@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpybd70idy/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] int_bitfields.json
+[INFO] Parsing JSON: /tmp/tmpybd70idy/int_bitfields.json
+[INFO] Compiling JSON: /tmp/tmpybd70idy/int_bitfields.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpybd70idy/int_bitfields.spv
+[INFO] Compiled JSON: /tmp/tmpybd70idy/int_bitfields.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpybd70idy/cache.bin

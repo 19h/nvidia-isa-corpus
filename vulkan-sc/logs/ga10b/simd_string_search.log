@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp2s25nv33/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] simd_string_search.json
+[INFO] Parsing JSON: /tmp/tmp2s25nv33/simd_string_search.json
+[INFO] Compiling JSON: /tmp/tmp2s25nv33/simd_string_search.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp2s25nv33/simd_string_search.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

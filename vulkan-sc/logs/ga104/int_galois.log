@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpwysq2kdg/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] int_galois.json
+[INFO] Parsing JSON: /tmp/tmpwysq2kdg/int_galois.json
+[INFO] Compiling JSON: /tmp/tmpwysq2kdg/int_galois.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpwysq2kdg/int_galois.spv
+[INFO] Compiled JSON: /tmp/tmpwysq2kdg/int_galois.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpwysq2kdg/cache.bin

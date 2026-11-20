@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpvywn3tfp/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_struct_return.json
+[INFO] Parsing JSON: /tmp/tmpvywn3tfp/call_struct_return.json
+[INFO] Compiling JSON: /tmp/tmpvywn3tfp/call_struct_return.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpvywn3tfp/call_struct_return.spv
+[INFO] Compiled JSON: /tmp/tmpvywn3tfp/call_struct_return.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpvywn3tfp/cache.bin

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmprfnoi8b8/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_struct_byval.json
+[INFO] Parsing JSON: /tmp/tmprfnoi8b8/call_struct_byval.json
+[INFO] Compiling JSON: /tmp/tmprfnoi8b8/call_struct_byval.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmprfnoi8b8/call_struct_byval.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

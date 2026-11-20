@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpavgr3w3s/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] min_branch_chain.json
+[INFO] Parsing JSON: /tmp/tmpavgr3w3s/min_branch_chain.json
+[INFO] Compiling JSON: /tmp/tmpavgr3w3s/min_branch_chain.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpavgr3w3s/min_branch_chain.spv
+[INFO] Compiled JSON: /tmp/tmpavgr3w3s/min_branch_chain.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpavgr3w3s/cache.bin

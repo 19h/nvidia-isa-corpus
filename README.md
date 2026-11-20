@@ -15,3 +15,7 @@ The SIMD adaptations use the sources' scalar or portable paths. The first-genera
 Modern builds used GCC 13 as the host compiler. Legacy toolchains came from the NVIDIA package archives and were extracted under `/tmp/nvidia-legacy` without a system-wide installation. CUDA 11.8 supplied the `sm_35` and `sm_37` builds of `int_bitfields` and `int_int128_ops`. The build matrix records the actual NVCC version per successful build.
 
 Each CUDA binary was checked for its ELF machine type, SM number, and kernel symbol. Each corresponding PTX module was checked for its target and entry point. Four `sm_89` workloads ran on the RTX 4090 and their device results matched CPU references.
+
+## Vulkan SC
+
+The [Vulkan SC build](vulkan-sc/README.md) contains compute shader ports, validated SPIR-V, and NVIDIA device-specific offline pipeline caches.

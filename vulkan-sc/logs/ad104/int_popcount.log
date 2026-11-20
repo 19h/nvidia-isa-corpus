@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp0ulzkpl8/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] int_popcount.json
+[INFO] Parsing JSON: /tmp/tmp0ulzkpl8/int_popcount.json
+[INFO] Compiling JSON: /tmp/tmp0ulzkpl8/int_popcount.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp0ulzkpl8/int_popcount.spv
+[INFO] Compiled JSON: /tmp/tmp0ulzkpl8/int_popcount.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmp0ulzkpl8/cache.bin

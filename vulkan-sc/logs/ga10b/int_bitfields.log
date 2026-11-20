@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpft36_y7w/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] int_bitfields.json
+[INFO] Parsing JSON: /tmp/tmpft36_y7w/int_bitfields.json
+[INFO] Compiling JSON: /tmp/tmpft36_y7w/int_bitfields.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpft36_y7w/int_bitfields.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

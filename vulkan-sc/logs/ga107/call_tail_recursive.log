@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp6d4qbeig/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_tail_recursive.json
+[INFO] Parsing JSON: /tmp/tmp6d4qbeig/call_tail_recursive.json
+[INFO] Compiling JSON: /tmp/tmp6d4qbeig/call_tail_recursive.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp6d4qbeig/call_tail_recursive.spv
+[INFO] Compiled JSON: /tmp/tmp6d4qbeig/call_tail_recursive.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmp6d4qbeig/cache.bin

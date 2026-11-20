@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpc663xriy/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] int_carryless_crc_mesh.json
+[INFO] Parsing JSON: /tmp/tmpc663xriy/int_carryless_crc_mesh.json
+[INFO] Compiling JSON: /tmp/tmpc663xriy/int_carryless_crc_mesh.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpc663xriy/int_carryless_crc_mesh.spv
+[INFO] Compiled JSON: /tmp/tmpc663xriy/int_carryless_crc_mesh.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpc663xriy/cache.bin

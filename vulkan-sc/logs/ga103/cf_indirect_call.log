@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp7dkq8yn5/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cf_indirect_call.json
+[INFO] Parsing JSON: /tmp/tmp7dkq8yn5/cf_indirect_call.json
+[INFO] Compiling JSON: /tmp/tmp7dkq8yn5/cf_indirect_call.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp7dkq8yn5/cf_indirect_call.spv
+[INFO] Compiled JSON: /tmp/tmp7dkq8yn5/cf_indirect_call.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmp7dkq8yn5/cache.bin

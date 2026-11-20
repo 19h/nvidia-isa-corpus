@@ -1,0 +1,160 @@
+/*
+ * Fast Fourier Transform (Radix-2 Cooley-Tukey)
+ *
+ * Computes FFT of complex signal.
+ * Heavy use of trig functions, complex arithmetic.
+ *
+ * Features exercised:
+ *   - FP sin/cos (or table lookup)
+ *   - Complex multiply/add
+ *   - Bit reversal permutation
+ */
+
+#version 450
+#extension GL_ARB_gpu_shader_fp64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Result {
+    uint words[64];
+    dvec2 data[1024];
+    dvec2 twiddle[512];
+} io;
+
+/* Simple inline math since we avoid libm dependency */
+#define PI 3.14159265358979323846LF
+
+#define FFT_SIZE 1024
+
+
+/* Approximate sine using Taylor series */
+double approx_sin(double x) {
+    /* Reduce to [-pi, pi] */
+    while (x > PI) x -= 2 * PI;
+    while (x < -PI) x += 2 * PI;
+
+    double x2 = x * x;
+    double x3 = x2 * x;
+    double x5 = x3 * x2;
+    double x7 = x5 * x2;
+    double x9 = x7 * x2;
+
+    return x - x3 / 6.0LF + x5 / 120.0LF - x7 / 5040.0LF + x9 / 362880.0LF;
+}
+
+/* Approximate cosine using Taylor series */
+double approx_cos(double x) {
+    /* Reduce to [-pi, pi] */
+    while (x > PI) x -= 2 * PI;
+    while (x < -PI) x += 2 * PI;
+
+    double x2 = x * x;
+    double x4 = x2 * x2;
+    double x6 = x4 * x2;
+    double x8 = x6 * x2;
+
+    return 1.0LF - x2 / 2.0LF + x4 / 24.0LF - x6 / 720.0LF + x8 / 40320.0LF;
+}
+
+/* Precompute twiddle factors */
+void init_twiddle() {
+    for (uint k = 0; k < FFT_SIZE / 2; k++) {
+        double angle = -2.0LF * PI * k / FFT_SIZE;
+        io.twiddle[k].x = approx_cos(angle);
+        io.twiddle[k].y = approx_sin(angle);
+    }
+}
+
+/* In-place FFT */
+void fft(uint n) {
+    int bits = 0;
+    uint temp = n;
+    while (temp > 1) {
+        temp >>= 1;
+        bits++;
+    }
+
+    /* Bit-reversal permutation */
+    for (uint i = 0; i < n; i++) {
+        uint j = bitfieldReverse(i) >> (32 - bits);
+        if (i < j) {
+            dvec2 t = io.data[i];
+            io.data[i] = io.data[j];
+            io.data[j] = t;
+        }
+    }
+
+    /* Cooley-Tukey iterative FFT */
+    for (uint len = 2u; len <= n; len *= 2u) {
+        uint half_count = len / 2;
+        uint step = n / len;
+
+        for (uint i = 0; i < n; i += len) {
+            for (uint j = 0; j < half_count; j++) {
+                dvec2 w = io.twiddle[j * step];
+                uint a = i + j;
+                uint b = i + j + half_count;
+                dvec2 v = io.data[b];
+                precise dvec2 t = dvec2(w.x * v.x - w.y * v.y, w.x * v.y + w.y * v.x);
+                dvec2 u = io.data[a];
+                io.data[a] = u + t;
+                io.data[b] = u - t;
+            }
+        }
+    }
+}
+
+/* Inverse FFT */
+void ifft(uint n) {
+    /* Conjugate */
+    for (uint i = 0; i < n; i++) {
+        io.data[i].y = -io.data[i].y;
+    }
+
+    fft(n);
+
+    /* Conjugate and scale */
+    double scale = 1.0LF / n;
+    for (uint i = 0; i < n; i++) {
+        io.data[i].x *= scale;
+        io.data[i].y = -io.data[i].y * scale;
+    }
+}
+
+void main() {
+    init_twiddle();
+
+    double result_sum = 0.0LF;
+
+    for (int iter = 0; iter < 1000; iter++) {
+        /* Initialize with test signal */
+        for (uint i = 0; i < FFT_SIZE; i++) {
+            /* Mix of frequencies */
+            double t = double(i) / FFT_SIZE;
+            io.data[i].x = approx_sin(2 * PI * 10 * t)
+                       + 0.5LF * approx_sin(2 * PI * 50 * t)
+                       + 0.25LF * approx_sin(2 * PI * 100 * t);
+            io.data[i].y = 0.0LF;
+        }
+
+        /* Forward FFT */
+        fft(FFT_SIZE);
+
+        /* Accumulate magnitude at some frequencies */
+        for (uint i = 0; i < FFT_SIZE / 2; i += 10) {
+            double mag = io.data[i].x * io.data[i].x + io.data[i].y * io.data[i].y;
+            result_sum += mag;
+        }
+
+        /* Inverse FFT */
+        ifft(FFT_SIZE);
+
+        /* Verify reconstruction */
+        for (uint i = 0; i < FFT_SIZE; i += 100) {
+            result_sum += io.data[i].x;
+        }
+    }
+
+    io.words[0] = 0;
+    uvec2 bits = unpackDouble2x32(result_sum);
+    for (uint byte = 0; byte < 8; ++byte)
+        io.words[1 + byte] = (bits[byte / 4] >> (8u * (byte % 4))) & 255u;
+}

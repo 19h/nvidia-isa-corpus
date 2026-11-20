@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpd8qmvxql/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] fp_piecewise_chaos.json
+[INFO] Parsing JSON: /tmp/tmpd8qmvxql/fp_piecewise_chaos.json
+[INFO] Compiling JSON: /tmp/tmpd8qmvxql/fp_piecewise_chaos.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpd8qmvxql/fp_piecewise_chaos.spv
+[INFO] Compiled JSON: /tmp/tmpd8qmvxql/fp_piecewise_chaos.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpd8qmvxql/cache.bin

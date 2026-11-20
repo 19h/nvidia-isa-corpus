@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpfh2642wo/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] 02_fibonacci.json
+[INFO] Parsing JSON: /tmp/tmpfh2642wo/02_fibonacci.json
+[INFO] Compiling JSON: /tmp/tmpfh2642wo/02_fibonacci.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpfh2642wo/02_fibonacci.spv
+[INFO] Compiled JSON: /tmp/tmpfh2642wo/02_fibonacci.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpfh2642wo/cache.bin

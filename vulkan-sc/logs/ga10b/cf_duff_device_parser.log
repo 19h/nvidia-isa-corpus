@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp1ghu_r3j/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cf_duff_device_parser.json
+[INFO] Parsing JSON: /tmp/tmp1ghu_r3j/cf_duff_device_parser.json
+[INFO] Compiling JSON: /tmp/tmp1ghu_r3j/cf_duff_device_parser.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp1ghu_r3j/cf_duff_device_parser.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

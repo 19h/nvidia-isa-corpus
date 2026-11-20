@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmphrg58yt0/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] mem_strided.json
+[INFO] Parsing JSON: /tmp/tmphrg58yt0/mem_strided.json
+[INFO] Compiling JSON: /tmp/tmphrg58yt0/mem_strided.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmphrg58yt0/mem_strided.spv
+[INFO] Compiled JSON: /tmp/tmphrg58yt0/mem_strided.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmphrg58yt0/cache.bin

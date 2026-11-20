@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpc11g0l3n/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_many_int_args.json
+[INFO] Parsing JSON: /tmp/tmpc11g0l3n/call_many_int_args.json
+[INFO] Compiling JSON: /tmp/tmpc11g0l3n/call_many_int_args.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpc11g0l3n/call_many_int_args.spv
+[INFO] Compiled JSON: /tmp/tmpc11g0l3n/call_many_int_args.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpc11g0l3n/cache.bin

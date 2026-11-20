@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpemzts52x/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] simd_dot_product.json
+[INFO] Parsing JSON: /tmp/tmpemzts52x/simd_dot_product.json
+[INFO] Compiling JSON: /tmp/tmpemzts52x/simd_dot_product.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpemzts52x/simd_dot_product.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

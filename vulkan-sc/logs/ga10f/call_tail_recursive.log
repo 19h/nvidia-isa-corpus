@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpaz6qs9af/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_tail_recursive.json
+[INFO] Parsing JSON: /tmp/tmpaz6qs9af/call_tail_recursive.json
+[INFO] Compiling JSON: /tmp/tmpaz6qs9af/call_tail_recursive.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpaz6qs9af/call_tail_recursive.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

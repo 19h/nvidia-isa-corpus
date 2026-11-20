@@ -1,0 +1,147 @@
+/*
+ * Struct Return Values
+ *
+ * Functions returning structs of various sizes.
+ * Small structs may be returned in registers, large ones via hidden pointer.
+ *
+ * Features exercised:
+ *   - Register return (small structs)
+ *   - Hidden pointer return (large structs)
+ *   - Struct packing and alignment
+ */
+
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result {
+    uint words[];
+} output_data;
+
+/* Small struct - may fit in registers */
+struct Point2D {
+    int x, y;
+};
+
+struct Point3D {
+    int x, y, z;
+};
+
+struct Point4D {
+    int x, y, z, w;
+};
+
+/* Larger structs - require hidden pointer */
+struct Array8 {
+    int data[8];
+};
+
+struct Array16 {
+    int data[16];
+};
+
+/* Mixed types */
+struct IntDouble {
+    int i;
+    double d;
+};
+
+struct FloatIntDouble {
+    float f;
+    int i;
+    double d;
+};
+
+/* Nested */
+struct TwoPoints {
+    Point2D p1;
+    Point2D p2;
+};
+
+Point2D make_point2d(int x, int y) {
+    Point2D p = Point2D(x, y);
+    return p;
+}
+
+Point3D make_point3d(int x, int y, int z) {
+    Point3D p = Point3D(x, y, z);
+    return p;
+}
+
+Point4D make_point4d(int x, int y, int z, int w) {
+    Point4D p = Point4D(x, y, z, w);
+    return p;
+}
+
+Array8 make_array8(int base) {
+    Array8 a;
+    for (int i = 0; i < 8; i++) {
+        a.data[i] = base + i;
+    }
+    return a;
+}
+
+Array16 make_array16(int base) {
+    Array16 a;
+    for (int i = 0; i < 16; i++) {
+        a.data[i] = base + i;
+    }
+    return a;
+}
+
+IntDouble make_int_double(int i, double d) {
+    IntDouble s = IntDouble(i, d);
+    return s;
+}
+
+FloatIntDouble make_fid(float f, int i, double d) {
+    FloatIntDouble s = FloatIntDouble(f, i, d);
+    return s;
+}
+
+TwoPoints make_two_points(int x1, int y1, int x2, int y2) {
+    TwoPoints tp = TwoPoints(Point2D(x1, y1), Point2D(x2, y2));
+    return tp;
+}
+
+Point2D add_points(Point2D a, Point2D b) {
+    Point2D r = Point2D(a.x + b.x, a.y + b.y);
+    return r;
+}
+
+void main() {
+    int64_t result = 0;
+
+    for (int i = 0; i < 100000; i++) {
+        Point2D p2 = make_point2d(i, i + 1);
+        result += p2.x + p2.y;
+
+        Point3D p3 = make_point3d(i, i + 1, i + 2);
+        result += p3.x + p3.y + p3.z;
+
+        Point4D p4 = make_point4d(i, i + 1, i + 2, i + 3);
+        result += p4.x + p4.y + p4.z + p4.w;
+
+        Array8 a8 = make_array8(i);
+        for (int j = 0; j < 8; j++) result += a8.data[j];
+
+        Array16 a16 = make_array16(i);
+        for (int j = 0; j < 16; j++) result += a16.data[j];
+
+        IntDouble id = make_int_double(i, double(i) * 0.5LF);
+        result += id.i + int64_t(id.d);
+
+        FloatIntDouble fid = make_fid(float(i), i, double(i));
+        result += int64_t(fid.f) + fid.i + int64_t(fid.d);
+
+        TwoPoints tp = make_two_points(i, i+1, i+2, i+3);
+        result += tp.p1.x + tp.p1.y + tp.p2.x + tp.p2.y;
+
+        Point2D sum = add_points(p2, make_point2d(1, 1));
+        result += sum.x + sum.y;
+    }
+
+    output_data.words[0] = 0;
+    uint64_t bits = uint64_t(result);
+    for (uint byte = 0; byte < 8; ++byte)
+        output_data.words[1 + byte] = uint((bits >> (8u * byte)) & 255UL);
+}

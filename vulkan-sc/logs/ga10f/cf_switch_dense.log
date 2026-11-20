@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpra6_r4_b/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cf_switch_dense.json
+[INFO] Parsing JSON: /tmp/tmpra6_r4_b/cf_switch_dense.json
+[INFO] Compiling JSON: /tmp/tmpra6_r4_b/cf_switch_dense.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpra6_r4_b/cf_switch_dense.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

@@ -1,0 +1,226 @@
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:49:5: error: invalid prototype, variadic arguments are not allowed in OpenCL
+   49 | int sum_ints(__private ProgramState *program_state, int count, ...) {
+      |     ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:50:5: error: use of undeclared identifier 'va_list'
+   50 |     va_list args;
+      |     ^~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:51:5: error: use of undeclared identifier 'va_start'
+   51 |     va_start(args, count);
+      |     ^~~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:51:14: error: use of undeclared identifier 'args'
+   51 |     va_start(args, count);
+      |              ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:55:16: error: use of undeclared identifier 'va_arg'
+   55 |         sum += va_arg(args, int);
+      |                ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:55:23: error: use of undeclared identifier 'args'
+   55 |         sum += va_arg(args, int);
+      |                       ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:55:29: error: expected expression
+   55 |         sum += va_arg(args, int);
+      |                             ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:58:5: error: use of undeclared identifier 'va_end'
+   58 |     va_end(args);
+      |     ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:58:12: error: use of undeclared identifier 'args'
+   58 |     va_end(args);
+      |            ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:63:8: error: invalid prototype, variadic arguments are not allowed in OpenCL
+   63 | double sum_doubles(__private ProgramState *program_state, int count, ...) {
+      |        ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:64:5: error: use of undeclared identifier 'va_list'
+   64 |     va_list args;
+      |     ^~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:65:5: error: use of undeclared identifier 'va_start'
+   65 |     va_start(args, count);
+      |     ^~~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:65:14: error: use of undeclared identifier 'args'
+   65 |     va_start(args, count);
+      |              ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:69:16: error: use of undeclared identifier 'va_arg'
+   69 |         sum += va_arg(args, double);
+      |                ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:69:23: error: use of undeclared identifier 'args'
+   69 |         sum += va_arg(args, double);
+      |                       ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:69:29: error: expected expression
+   69 |         sum += va_arg(args, double);
+      |                             ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:72:5: error: use of undeclared identifier 'va_end'
+   72 |     va_end(args);
+      |     ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:72:12: error: use of undeclared identifier 'args'
+   72 |     va_end(args);
+      |            ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:77:9: error: invalid prototype, variadic arguments are not allowed in OpenCL
+   77 | int64_t sum_mixed(__private ProgramState *program_state, const char *format, ...) {
+      |         ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:78:5: error: use of undeclared identifier 'va_list'
+   78 |     va_list args;
+      |     ^~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:79:5: error: use of undeclared identifier 'va_start'
+   79 |     va_start(args, format);
+      |     ^~~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:79:14: error: use of undeclared identifier 'args'
+   79 |     va_start(args, format);
+      |              ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:85:24: error: use of undeclared identifier 'va_arg'
+   85 |                 sum += va_arg(args, int);
+      |                        ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:85:31: error: use of undeclared identifier 'args'
+   85 |                 sum += va_arg(args, int);
+      |                               ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:85:37: error: expected expression
+   85 |                 sum += va_arg(args, int);
+      |                                     ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:88:33: error: use of undeclared identifier 'va_arg'
+   88 |                 sum += (int64_t)va_arg(args, double);
+      |                                 ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:88:40: error: use of undeclared identifier 'args'
+   88 |                 sum += (int64_t)va_arg(args, double);
+      |                                        ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:88:46: error: expected expression
+   88 |                 sum += (int64_t)va_arg(args, double);
+      |                                              ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:91:24: error: use of undeclared identifier 'va_arg'
+   91 |                 sum += va_arg(args, int64_t);
+      |                        ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:91:31: error: use of undeclared identifier 'args'
+   91 |                 sum += va_arg(args, int64_t);
+      |                               ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:91:37: error: unexpected type name 'int64_t': expected expression
+   91 |                 sum += va_arg(args, int64_t);
+      |                                     ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:94:43: error: use of undeclared identifier 'va_arg'
+   94 |                 sum += (int64_t)(intptr_t)va_arg(args, void *);
+      |                                           ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:94:50: error: use of undeclared identifier 'args'
+   94 |                 sum += (int64_t)(intptr_t)va_arg(args, void *);
+      |                                                  ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:94:56: error: expected expression
+   94 |                 sum += (int64_t)(intptr_t)va_arg(args, void *);
+      |                                                        ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:100:5: error: use of undeclared identifier 'va_end'
+  100 |     va_end(args);
+      |     ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:100:12: error: use of undeclared identifier 'args'
+  100 |     va_end(args);
+      |            ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:106:72: error: unknown type name 'va_list'
+  106 | int sum_from_va_list(__private ProgramState *program_state, int count, va_list args) {
+      |                                                                        ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:109:16: error: use of undeclared identifier 'va_arg'
+  109 |         sum += va_arg(args, int);
+      |                ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:109:29: error: expected expression
+  109 |         sum += va_arg(args, int);
+      |                             ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:115:5: error: invalid prototype, variadic arguments are not allowed in OpenCL
+  115 | int wrapper_sum(__private ProgramState *program_state, int count, ...) {
+      |     ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:116:5: error: use of undeclared identifier 'va_list'
+  116 |     va_list args;
+      |     ^~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:117:5: error: use of undeclared identifier 'va_start'
+  117 |     va_start(args, count);
+      |     ^~~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:117:14: error: use of undeclared identifier 'args'
+  117 |     va_start(args, count);
+      |              ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:118:57: error: use of undeclared identifier 'args'
+  118 |     int result = sum_from_va_list(program_state, count, args);
+      |                                                         ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:119:5: error: use of undeclared identifier 'va_end'
+  119 |     va_end(args);
+      |     ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:119:12: error: use of undeclared identifier 'args'
+  119 |     va_end(args);
+      |            ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:125:5: error: invalid prototype, variadic arguments are not allowed in OpenCL
+  125 | int double_sum(__private ProgramState *program_state, int count, ...) {
+      |     ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:126:5: error: use of undeclared identifier 'va_list'
+  126 |     va_list args, args_copy;
+      |     ^~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:127:5: error: use of undeclared identifier 'va_start'
+  127 |     va_start(args, count);
+      |     ^~~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:127:14: error: use of undeclared identifier 'args'
+  127 |     va_start(args, count);
+      |              ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:128:5: error: use of undeclared identifier 'va_copy'
+  128 |     va_copy(args_copy, args);
+      |     ^~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:128:13: error: use of undeclared identifier 'args_copy'
+  128 |     va_copy(args_copy, args);
+      |             ^~~~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:128:24: error: use of undeclared identifier 'args'
+  128 |     va_copy(args_copy, args);
+      |                        ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:132:17: error: use of undeclared identifier 'va_arg'
+  132 |         sum1 += va_arg(args, int);
+      |                 ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:132:24: error: use of undeclared identifier 'args'
+  132 |         sum1 += va_arg(args, int);
+      |                        ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:132:30: error: expected expression
+  132 |         sum1 += va_arg(args, int);
+      |                              ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:135:17: error: use of undeclared identifier 'va_arg'
+  135 |         sum2 += va_arg(args_copy, int);
+      |                 ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:135:24: error: use of undeclared identifier 'args_copy'
+  135 |         sum2 += va_arg(args_copy, int);
+      |                        ^~~~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:135:35: error: expected expression
+  135 |         sum2 += va_arg(args_copy, int);
+      |                                   ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:138:5: error: use of undeclared identifier 'va_end'
+  138 |     va_end(args);
+      |     ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:138:12: error: use of undeclared identifier 'args'
+  138 |     va_end(args);
+      |            ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:139:5: error: use of undeclared identifier 'va_end'
+  139 |     va_end(args_copy);
+      |     ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:139:12: error: use of undeclared identifier 'args_copy'
+  139 |     va_end(args_copy);
+      |            ^~~~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:147:6: error: invalid prototype, variadic arguments are not allowed in OpenCL
+  147 | Pair min_max(__private ProgramState *program_state, int count, ...) {
+      |      ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:148:5: error: use of undeclared identifier 'va_list'
+  148 |     va_list args;
+      |     ^~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:149:5: error: use of undeclared identifier 'va_start'
+  149 |     va_start(args, count);
+      |     ^~~~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:149:14: error: use of undeclared identifier 'args'
+  149 |     va_start(args, count);
+      |              ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:151:19: error: use of undeclared identifier 'va_arg'
+  151 |     int min_val = va_arg(args, int);
+      |                   ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:151:26: error: use of undeclared identifier 'args'
+  151 |     int min_val = va_arg(args, int);
+      |                          ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:151:32: error: expected expression
+  151 |     int min_val = va_arg(args, int);
+      |                                ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:155:17: error: use of undeclared identifier 'va_arg'
+  155 |         int v = va_arg(args, int);
+      |                 ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:155:24: error: use of undeclared identifier 'args'
+  155 |         int v = va_arg(args, int);
+      |                        ^~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:155:30: error: expected expression
+  155 |         int v = va_arg(args, int);
+      |                              ^
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:160:5: error: use of undeclared identifier 'va_end'
+  160 |     va_end(args);
+      |     ^~~~~~
+/media/null/ares/hexrays/nvidia/vulkan-sc/opencl/call_variadic.cl:160:12: error: use of undeclared identifier 'args'
+  160 |     va_end(args);
+      |            ^~~~
+Exit status 255.
