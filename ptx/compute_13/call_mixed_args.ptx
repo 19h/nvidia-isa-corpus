@@ -1,0 +1,405 @@
+	.version 1.4
+	.target sm_13
+	// compiled with /tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/open64/lib//be
+	// nvopencc 4.1 built on 2013-07-17
+
+	.func (.reg .f64 %fdv1) _Z7mixed_8idididid (.reg .u32 %ra1, .reg .f64 %fda2, .reg .u32 %ra3, .reg .f64 %fda4, .reg .u32 %ra5, .reg .f64 %fda6, .reg .u32 %ra7, .reg .f64 %fda8)
+
+	.func (.reg .f64 %fdv1) _Z8mixed_16idididididididid (.reg .u32 %ra1, .reg .f64 %fda2, .reg .u32 %ra3, .reg .f64 %fda4, .reg .u32 %ra5, .reg .f64 %fda6, .reg .u32 %ra7, .reg .f64 %fda8, .reg .u32 %ra9, .reg .f64 %fda10, .reg .u32 %ra11, .reg .f64 %fda12, .reg .u32 %ra13, .reg .f64 %fda14, .reg .u32 %ra15, .reg .f64 %fda16)
+
+	.func (.reg .f64 %fdv1) _Z15float_int_floatfifififi (.reg .f32 %fa1, .reg .u32 %ra2, .reg .f32 %fa3, .reg .u32 %ra4, .reg .f32 %fa5, .reg .u32 %ra6, .reg .f32 %fa7, .reg .u32 %ra8)
+
+	.func (.reg .f64 %fdv1) _Z10many_mixedafsdifldhftd (.reg .u32 %ra1, .reg .f32 %fa2, .reg .u32 %ra3, .reg .f64 %fda4, .reg .u32 %ra5, .reg .f32 %fa6, .reg .u64 %rda7, .reg .f64 %fda8, .reg .u32 %ra9, .reg .f32 %fa10, .reg .u32 %ra11, .reg .f64 %fda12)
+
+	//-----------------------------------------------------------
+	// Compiling /tmp/tmpxft_0006a082_00000000-9_call_mixed_args.cpp3.i (/tmp/ccBI#.LbhlKu)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:sm_13, Endian:little, Pointer Size:64
+	//  -O3	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m2	(Report advisories)
+	//-----------------------------------------------------------
+
+	.file	1	"<command-line>"
+	.file	2	"/tmp/nvidia-legacy/bionic/usr/include/stdc-predef.h"
+	.file	3	"/tmp/tmpxft_0006a082_00000000-8_call_mixed_args.cudafe2.gpu"
+	.file	4	"/usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h"
+	.file	5	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/crt/device_runtime.h"
+	.file	6	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/host_defines.h"
+	.file	7	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/builtin_types.h"
+	.file	8	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/device_types.h"
+	.file	9	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/driver_types.h"
+	.file	10	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/surface_types.h"
+	.file	11	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/texture_types.h"
+	.file	12	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/vector_types.h"
+	.file	13	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/device_launch_parameters.h"
+	.file	14	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/crt/storage_class.h"
+	.file	15	"/tmp/nvidia-legacy/bionic/usr/include/x86_64-linux-gnu/bits/types.h"
+	.file	16	"/tmp/nvidia-legacy/bionic/usr/include/x86_64-linux-gnu/bits/stdint-intn.h"
+	.file	17	"/tmp/nvidia-legacy/bionic/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h"
+	.file	18	"build/nvcc/cuda-src/call_mixed_args.cu"
+	.file	19	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/common_functions.h"
+	.file	20	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/math_functions.h"
+	.file	21	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/math_constants.h"
+	.file	22	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/device_functions.h"
+	.file	23	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_11_atomic_functions.h"
+	.file	24	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_12_atomic_functions.h"
+	.file	25	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_13_double_functions.h"
+	.file	26	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_20_atomic_functions.h"
+	.file	27	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_32_atomic_functions.h"
+	.file	28	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_35_atomic_functions.h"
+	.file	29	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_20_intrinsics.h"
+	.file	30	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_30_intrinsics.h"
+	.file	31	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_32_intrinsics.h"
+	.file	32	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_35_intrinsics.h"
+	.file	33	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/surface_functions.h"
+	.file	34	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/texture_fetch_functions.h"
+	.file	35	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/texture_indirect_functions.h"
+	.file	36	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/surface_indirect_functions.h"
+	.file	37	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/math_functions_dbl_ptx3.h"
+
+
+	.func (.reg .f64 %fdv1) _Z7mixed_8idididid (.reg .u32 %ra1, .reg .f64 %fda2, .reg .u32 %ra3, .reg .f64 %fda4, .reg .u32 %ra5, .reg .f64 %fda6, .reg .u32 %ra7, .reg .f64 %fda8)
+	{
+	.reg .u32 %ra2,%ra4,%ra6;
+	.reg .u32 %r<6>;
+	.reg .f64 %fda1,%fda3,%fda5,%fda7;
+	.reg .f64 %fd<16>;
+	.loc	18	19	0
+$LDWbegin__Z7mixed_8idididid:
+	mov.s32 	%r1, %ra1;
+	mov.f64 	%fd1, %fda2;
+	mov.s32 	%r2, %ra3;
+	mov.f64 	%fd2, %fda4;
+	mov.s32 	%r3, %ra5;
+	mov.f64 	%fd3, %fda6;
+	mov.s32 	%r4, %ra7;
+	mov.f64 	%fd4, %fda8;
+	.loc	18	20	0
+	cvt.rn.f64.s32 	%fd5, %r4;
+	cvt.rn.f64.s32 	%fd6, %r3;
+	cvt.rn.f64.s32 	%fd7, %r2;
+	cvt.rn.f64.s32 	%fd8, %r1;
+	add.f64 	%fd9, %fd8, %fd1;
+	add.f64 	%fd10, %fd7, %fd9;
+	add.f64 	%fd11, %fd2, %fd10;
+	add.f64 	%fd12, %fd6, %fd11;
+	add.f64 	%fd13, %fd3, %fd12;
+	add.f64 	%fd14, %fd5, %fd13;
+	add.f64 	%fdv1, %fd4, %fd14;
+	ret;
+$LDWend__Z7mixed_8idididid:
+	} // _Z7mixed_8idididid
+
+	.func (.reg .f64 %fdv1) _Z8mixed_16idididididididid (.reg .u32 %ra1, .reg .f64 %fda2, .reg .u32 %ra3, .reg .f64 %fda4, .reg .u32 %ra5, .reg .f64 %fda6, .reg .u32 %ra7, .reg .f64 %fda8, .reg .u32 %ra9, .reg .f64 %fda10, .reg .u32 %ra11, .reg .f64 %fda12, .reg .u32 %ra13, .reg .f64 %fda14, .reg .u32 %ra15, .reg .f64 %fda16)
+	{
+	.reg .u32 %ra2,%ra4,%ra6,%ra8,%ra10,%ra12,%ra14;
+	.reg .u32 %r<17>;
+	.reg .f64 %fda1,%fda3,%fda5,%fda7,%fda9,%fda11,%fda13,%fda15;
+	.reg .f64 %fd<18>;
+	.loc	18	27	0
+$LDWbegin__Z8mixed_16idididididididid:
+	mov.s32 	%r1, %ra1;
+	mov.f64 	%fd1, %fda2;
+	mov.s32 	%r2, %ra3;
+	mov.f64 	%fd2, %fda4;
+	mov.s32 	%r3, %ra5;
+	mov.f64 	%fd3, %fda6;
+	mov.s32 	%r4, %ra7;
+	mov.f64 	%fd4, %fda8;
+	mov.s32 	%r5, %ra9;
+	mov.f64 	%fd5, %fda10;
+	mov.s32 	%r6, %ra11;
+	mov.f64 	%fd6, %fda12;
+	mov.s32 	%r7, %ra13;
+	mov.f64 	%fd7, %fda14;
+	mov.s32 	%r8, %ra15;
+	mov.f64 	%fd8, %fda16;
+	.loc	18	28	0
+	add.s32 	%r9, %r7, %r8;
+	add.s32 	%r10, %r5, %r6;
+	add.s32 	%r11, %r1, %r2;
+	add.s32 	%r12, %r3, %r4;
+	add.s32 	%r13, %r11, %r12;
+	add.s32 	%r14, %r10, %r13;
+	add.s32 	%r15, %r9, %r14;
+	cvt.rn.f64.s32 	%fd9, %r15;
+	add.f64 	%fd10, %fd9, %fd1;
+	add.f64 	%fd11, %fd2, %fd10;
+	add.f64 	%fd12, %fd3, %fd11;
+	add.f64 	%fd13, %fd4, %fd12;
+	add.f64 	%fd14, %fd5, %fd13;
+	add.f64 	%fd15, %fd6, %fd14;
+	add.f64 	%fd16, %fd7, %fd15;
+	add.f64 	%fdv1, %fd8, %fd16;
+	ret;
+$LDWend__Z8mixed_16idididididididid:
+	} // _Z8mixed_16idididididididid
+
+	.func (.reg .f64 %fdv1) _Z15float_int_floatfifififi (.reg .f32 %fa1, .reg .u32 %ra2, .reg .f32 %fa3, .reg .u32 %ra4, .reg .f32 %fa5, .reg .u32 %ra6, .reg .f32 %fa7, .reg .u32 %ra8)
+	{
+	.reg .u32 %ra1,%ra3,%ra5,%ra7;
+	.reg .u32 %r<6>;
+	.reg .f32 %fa2,%fa4,%fa6;
+	.reg .f32 %f<6>;
+	.reg .f64 %fd<16>;
+	.loc	18	34	0
+$LDWbegin__Z15float_int_floatfifififi:
+	mov.f32 	%f1, %fa1;
+	mov.s32 	%r1, %ra2;
+	mov.f32 	%f2, %fa3;
+	mov.s32 	%r2, %ra4;
+	mov.f32 	%f3, %fa5;
+	mov.s32 	%r3, %ra6;
+	mov.f32 	%f4, %fa7;
+	mov.s32 	%r4, %ra8;
+	.loc	18	35	0
+	cvt.rn.f64.s32 	%fd1, %r4;
+	cvt.f64.f32 	%fd2, %f4;
+	cvt.rn.f64.s32 	%fd3, %r3;
+	cvt.f64.f32 	%fd4, %f3;
+	cvt.rn.f64.s32 	%fd5, %r2;
+	cvt.f64.f32 	%fd6, %f2;
+	cvt.rn.f64.s32 	%fd7, %r1;
+	cvt.f64.f32 	%fd8, %f1;
+	add.f64 	%fd9, %fd7, %fd8;
+	add.f64 	%fd10, %fd6, %fd9;
+	add.f64 	%fd11, %fd5, %fd10;
+	add.f64 	%fd12, %fd4, %fd11;
+	add.f64 	%fd13, %fd3, %fd12;
+	add.f64 	%fd14, %fd2, %fd13;
+	add.f64 	%fdv1, %fd1, %fd14;
+	ret;
+$LDWend__Z15float_int_floatfifififi:
+	} // _Z15float_int_floatfifififi
+
+	.func (.reg .f64 %fdv1) _Z10many_mixedafsdifldhftd (.reg .u32 %ra1, .reg .f32 %fa2, .reg .u32 %ra3, .reg .f64 %fda4, .reg .u32 %ra5, .reg .f32 %fa6, .reg .u64 %rda7, .reg .f64 %fda8, .reg .u32 %ra9, .reg .f32 %fa10, .reg .u32 %ra11, .reg .f64 %fda12)
+	{
+	.reg .u32 %ra2,%ra4,%ra6,%ra7,%ra8,%ra10;
+	.reg .u32 %r<7>;
+	.reg .u64 %rda1,%rda2,%rda3,%rda4,%rda5,%rda6;
+	.reg .u64 %rd<3>;
+	.reg .f32 %fa1,%fa3,%fa4,%fa5,%fa7,%fa8,%fa9;
+	.reg .f32 %f<5>;
+	.reg .f64 %fda1,%fda2,%fda3,%fda5,%fda6,%fda7,%fda9,%fda10,%fda11;
+	.reg .f64 %fd<24>;
+	.loc	18	49	0
+$LDWbegin__Z10many_mixedafsdifldhftd:
+	cvt.s8.s32 	%r1, %ra1;
+	mov.f32 	%f1, %fa2;
+	cvt.s16.s32 	%r2, %ra3;
+	mov.f64 	%fd1, %fda4;
+	mov.s32 	%r3, %ra5;
+	mov.f32 	%f2, %fa6;
+	mov.s64 	%rd1, %rda7;
+	mov.f64 	%fd2, %fda8;
+	cvt.u8.u32 	%r4, %ra9;
+	mov.f32 	%f3, %fa10;
+	cvt.u16.u32 	%r5, %ra11;
+	mov.f64 	%fd3, %fda12;
+	.loc	18	50	0
+	cvt.rn.f64.u32 	%fd4, %r5;
+	cvt.f64.f32 	%fd5, %f3;
+	cvt.rn.f64.u32 	%fd6, %r4;
+	cvt.rn.f64.s64 	%fd7, %rd1;
+	cvt.f64.f32 	%fd8, %f2;
+	cvt.rn.f64.s32 	%fd9, %r3;
+	cvt.rn.f64.s32 	%fd10, %r2;
+	cvt.rn.f64.s32 	%fd11, %r1;
+	cvt.f64.f32 	%fd12, %f1;
+	add.f64 	%fd13, %fd11, %fd12;
+	add.f64 	%fd14, %fd10, %fd13;
+	add.f64 	%fd15, %fd1, %fd14;
+	add.f64 	%fd16, %fd9, %fd15;
+	add.f64 	%fd17, %fd8, %fd16;
+	add.f64 	%fd18, %fd7, %fd17;
+	add.f64 	%fd19, %fd2, %fd18;
+	add.f64 	%fd20, %fd6, %fd19;
+	add.f64 	%fd21, %fd5, %fd20;
+	add.f64 	%fd22, %fd4, %fd21;
+	add.f64 	%fdv1, %fd3, %fd22;
+	ret;
+$LDWend__Z10many_mixedafsdifldhftd:
+	} // _Z10many_mixedafsdifldhftd
+	.global .f64 sink;
+
+	.entry program_entry (
+		.param .u64 __cudaparm_program_entry_status)
+	{
+	.reg .u32 %ra1,%ra2,%ra3,%ra4,%ra5,%ra6,%ra7,%ra8,%ra9,%ra10,%ra11,%ra12,%ra13,%ra14,%ra15;
+	.reg .u32 %r<39>;
+	.reg .u64 %rda1,%rda2,%rda3,%rda4,%rda5,%rda6,%rda7;
+	.reg .u64 %rd<8>;
+	.reg .f32 %fa1,%fa2,%fa3,%fa4,%fa5,%fa6,%fa7,%fa8,%fa9,%fa10;
+	.reg .f32 %f<3>;
+	.reg .f64 %fdv1;
+	.reg .f64 %fda1,%fda2,%fda3,%fda4,%fda5,%fda6,%fda7,%fda8,%fda9,%fda10,%fda11,%fda12,%fda13,%fda14,%fda15,%fda16;
+	.reg .f64 %fd<32>;
+	.reg .pred %p<4>;
+	.local .align 4 .b8 __cuda___cuda_local_var_17617_9_non_const_vals_168[32];
+	.loc	18	83	0
+$LDWbegin_program_entry:
+	cvt.u32.u16 	%r1, %tid.x;
+	mov.u32 	%r2, 0;
+	set.eq.u32.u32 	%r3, %r1, %r2;
+	neg.s32 	%r4, %r3;
+	cvt.u32.u16 	%r5, %ctaid.x;
+	mov.u32 	%r6, 0;
+	set.eq.u32.u32 	%r7, %r5, %r6;
+	neg.s32 	%r8, %r7;
+	and.b32 	%r9, %r4, %r8;
+	mov.u32 	%r10, 0;
+	setp.eq.s32 	%p1, %r9, %r10;
+	@%p1 bra 	$Lt_4_2306;
+	.loc	18	56	0
+	mov.s32 	%r11, 1;
+	st.local.s32 	[__cuda___cuda_local_var_17617_9_non_const_vals_168+0], %r11;
+	mov.s32 	%r12, 2;
+	st.local.s32 	[__cuda___cuda_local_var_17617_9_non_const_vals_168+4], %r12;
+	mov.s32 	%r13, 3;
+	st.local.s32 	[__cuda___cuda_local_var_17617_9_non_const_vals_168+8], %r13;
+	mov.s32 	%r14, 4;
+	st.local.s32 	[__cuda___cuda_local_var_17617_9_non_const_vals_168+12], %r14;
+	mov.s32 	%r15, 5;
+	st.local.s32 	[__cuda___cuda_local_var_17617_9_non_const_vals_168+16], %r15;
+	mov.s32 	%r16, 6;
+	st.local.s32 	[__cuda___cuda_local_var_17617_9_non_const_vals_168+20], %r16;
+	mov.s32 	%r17, 7;
+	st.local.s32 	[__cuda___cuda_local_var_17617_9_non_const_vals_168+24], %r17;
+	mov.s32 	%r18, 8;
+	st.local.s32 	[__cuda___cuda_local_var_17617_9_non_const_vals_168+28], %r18;
+	mov.s64 	%rd1, 0;
+	mov.s32 	%r19, 0;
+	mov.f64 	%fd1, 0d0000000000000000;	// 0
+	mov.u64 	%rd2, __cuda___cuda_local_var_17617_9_non_const_vals_168;
+$Lt_4_3330:
+ //<loop> Loop body line 56, nesting depth: 1, iterations: 100000
+	.loc	18	61	0
+	add.s32 	%r20, %r19, 1;
+	add.s32 	%r21, %r19, 2;
+	add.s32 	%r22, %r19, 3;
+	cvt.rn.f64.s32 	%fd2, %r19;
+	mov.f64 	%fd3, 0d3f50624dd2f1a9fc;	// 0.001
+	mul.f64 	%fd4, %fd2, %fd3;
+	mov.f64 	%fd5, 0d3fb999999999999a;	// 0.1
+	add.f64 	%fd6, %fd4, %fd5;
+	mov.f64 	%fd7, 0d3fc999999999999a;	// 0.2
+	add.f64 	%fd8, %fd4, %fd7;
+	mov.f64 	%fd9, 0d3fd3333333333333;	// 0.3
+	add.f64 	%fd10, %fd4, %fd9;
+	mov.s32 	%ra1, %r19;
+	mov.f64 	%fda2, %fd4;
+	mov.s32 	%ra3, %r20;
+	mov.f64 	%fda4, %fd6;
+	mov.s32 	%ra5, %r21;
+	mov.f64 	%fda6, %fd8;
+	mov.s32 	%ra7, %r22;
+	mov.f64 	%fda8, %fd10;
+	call.uni (%fdv1), _Z7mixed_8idididid, (%ra1, %fda2, %ra3, %fda4, %ra5, %fda6, %ra7, %fda8);
+	mov.f64 	%fd11, %fdv1;
+	add.f64 	%fd1, %fd11, %fd1;
+	.loc	18	63	0
+	mov.s32 	%ra1, %r19;
+	mov.f64 	%fda2, %fd4;
+	mov.s32 	%ra3, %r20;
+	mov.f64 	%fda4, %fd6;
+	mov.s32 	%ra5, %r21;
+	mov.f64 	%fda6, %fd8;
+	mov.s32 	%ra7, %r22;
+	mov.f64 	%fda8, %fd10;
+	add.s32 	%ra9, %r19, 4;
+	mov.f64 	%fd12, 0d3fd999999999999a;	// 0.4
+	add.f64 	%fda10, %fd4, %fd12;
+	add.s32 	%ra11, %r19, 5;
+	mov.f64 	%fd13, 0d3fe0000000000000;	// 0.5
+	add.f64 	%fda12, %fd4, %fd13;
+	add.s32 	%ra13, %r19, 6;
+	mov.f64 	%fd14, 0d3fe3333333333333;	// 0.6
+	add.f64 	%fda14, %fd4, %fd14;
+	add.s32 	%ra15, %r19, 7;
+	mov.f64 	%fd15, 0d3fe6666666666666;	// 0.7
+	add.f64 	%fda16, %fd4, %fd15;
+	call.uni (%fdv1), _Z8mixed_16idididididididid, (%ra1, %fda2, %ra3, %fda4, %ra5, %fda6, %ra7, %fda8, %ra9, %fda10, %ra11, %fda12, %ra13, %fda14, %ra15, %fda16);
+	mov.f64 	%fd16, %fdv1;
+	add.f64 	%fd1, %fd16, %fd1;
+	.loc	18	66	0
+	cvt.rn.f32.f64 	%f1, %fd4;
+	mov.f32 	%fa1, %f1;
+	mov.s32 	%ra2, %r19;
+	cvt.rn.f32.f64 	%fa3, %fd6;
+	mov.s32 	%ra4, %r20;
+	cvt.rn.f32.f64 	%fa5, %fd8;
+	mov.s32 	%ra6, %r21;
+	cvt.rn.f32.f64 	%fa7, %fd10;
+	mov.s32 	%ra8, %r22;
+	call.uni (%fdv1), _Z15float_int_floatfifififi, (%fa1, %ra2, %fa3, %ra4, %fa5, %ra6, %fa7, %ra8);
+	mov.f64 	%fd17, %fdv1;
+	add.f64 	%fd18, %fd17, %fd1;
+	.loc	18	69	0
+	ld.local.s32 	%r23, [__cuda___cuda_local_var_17617_9_non_const_vals_168+12];
+	cvt.rn.f64.s32 	%fd19, %r23;
+	ld.local.s32 	%r24, [__cuda___cuda_local_var_17617_9_non_const_vals_168+8];
+	cvt.rn.f64.s32 	%fd20, %r24;
+	ld.local.s32 	%r25, [__cuda___cuda_local_var_17617_9_non_const_vals_168+4];
+	cvt.rn.f64.s32 	%fd21, %r25;
+	ld.local.s32 	%r26, [__cuda___cuda_local_var_17617_9_non_const_vals_168+0];
+	cvt.rn.f64.s32 	%fd22, %r26;
+	add.f64 	%fd23, %fd22, %fd4;
+	add.f64 	%fd24, %fd21, %fd23;
+	add.f64 	%fd25, %fd6, %fd24;
+	add.f64 	%fd26, %fd20, %fd25;
+	add.f64 	%fd27, %fd8, %fd26;
+	add.f64 	%fd28, %fd19, %fd27;
+	add.f64 	%fd29, %fd10, %fd28;
+	add.f64 	%fd1, %fd18, %fd29;
+	.loc	18	72	0
+	cvt.s8.s32 	%r27, %r19;
+	cvt.s16.s32 	%r28, %r19;
+	mov.s32 	%ra1, %r27;
+	mov.f32 	%fa2, %f1;
+	mov.s32 	%ra3, %r28;
+	mov.f64 	%fda4, %fd4;
+	mov.s32 	%ra5, %r19;
+	mov.f32 	%fa6, %f1;
+	mov.s64 	%rda7, %rd1;
+	mov.f64 	%fda8, %fd4;
+	cvt.u8.u32 	%ra9, %r27;
+	mov.f32 	%fa10, %f1;
+	cvt.u16.u32 	%ra11, %r28;
+	mov.f64 	%fda12, %fd4;
+	call.uni (%fdv1), _Z10many_mixedafsdifldhftd, (%ra1, %fa2, %ra3, %fda4, %ra5, %fa6, %rda7, %fda8, %ra9, %fa10, %ra11, %fda12);
+	mov.f64 	%fd30, %fdv1;
+	add.f64 	%fd1, %fd30, %fd1;
+	.loc	18	76	0
+	shr.s32 	%r29, %r19, 31;
+	mov.s32 	%r30, 7;
+	and.b32 	%r31, %r29, %r30;
+	add.s32 	%r32, %r31, %r19;
+	shr.s32 	%r33, %r32, 3;
+	mul.lo.s32 	%r34, %r33, 8;
+	sub.s32 	%r35, %r19, %r34;
+	cvt.s64.s32 	%rd3, %r35;
+	mul.wide.s32 	%rd4, %r35, 4;
+	add.u64 	%rd5, %rd2, %rd4;
+	st.local.s32 	[%rd5+0], %r19;
+	mov.s32 	%r19, %r20;
+	add.s64 	%rd1, %rd1, 1;
+	mov.u32 	%r36, 100000;
+	setp.ne.s32 	%p2, %r20, %r36;
+	@%p2 bra 	$Lt_4_3330;
+	.loc	18	79	0
+	st.volatile.global.f64 	[sink], %fd1;
+	.loc	18	85	0
+	mov.s32 	%r37, 0;
+	ld.param.u64 	%rd6, [__cudaparm_program_entry_status];
+	st.global.s32 	[%rd6+0], %r37;
+$Lt_4_2306:
+	.loc	18	86	0
+	exit;
+$LDWend_program_entry:
+	} // program_entry
+

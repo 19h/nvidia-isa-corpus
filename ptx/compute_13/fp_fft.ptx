@@ -1,0 +1,674 @@
+	.version 1.4
+	.target sm_13
+	// compiled with /tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/open64/lib//be
+	// nvopencc 4.1 built on 2013-07-17
+
+	//-----------------------------------------------------------
+	// Compiling /tmp/tmpxft_0006a213_00000000-9_fp_fft.cpp3.i (/tmp/ccBI#.Kfy0Zc)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:sm_13, Endian:little, Pointer Size:64
+	//  -O3	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m2	(Report advisories)
+	//-----------------------------------------------------------
+
+	.file	1	"<command-line>"
+	.file	2	"/tmp/nvidia-legacy/bionic/usr/include/stdc-predef.h"
+	.file	3	"/tmp/tmpxft_0006a213_00000000-8_fp_fft.cudafe2.gpu"
+	.file	4	"build/nvcc/cuda-src/fp_fft.cu"
+	.file	5	"/usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h"
+	.file	6	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/crt/device_runtime.h"
+	.file	7	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/host_defines.h"
+	.file	8	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/builtin_types.h"
+	.file	9	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/device_types.h"
+	.file	10	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/driver_types.h"
+	.file	11	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/surface_types.h"
+	.file	12	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/texture_types.h"
+	.file	13	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/vector_types.h"
+	.file	14	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/device_launch_parameters.h"
+	.file	15	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/crt/storage_class.h"
+	.file	16	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/common_functions.h"
+	.file	17	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/math_functions.h"
+	.file	18	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/math_constants.h"
+	.file	19	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/device_functions.h"
+	.file	20	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_11_atomic_functions.h"
+	.file	21	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_12_atomic_functions.h"
+	.file	22	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_13_double_functions.h"
+	.file	23	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_20_atomic_functions.h"
+	.file	24	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_32_atomic_functions.h"
+	.file	25	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_35_atomic_functions.h"
+	.file	26	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_20_intrinsics.h"
+	.file	27	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_30_intrinsics.h"
+	.file	28	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_32_intrinsics.h"
+	.file	29	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_35_intrinsics.h"
+	.file	30	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/surface_functions.h"
+	.file	31	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/texture_fetch_functions.h"
+	.file	32	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/texture_indirect_functions.h"
+	.file	33	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/surface_indirect_functions.h"
+	.file	34	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/math_functions_dbl_ptx3.h"
+
+	.global .f64 sink;
+	.global .align 8 .b8 data[16384];
+	.global .align 8 .b8 twiddle[8192];
+
+	.entry program_entry (
+		.param .u64 __cudaparm_program_entry_status)
+	{
+	.reg .u32 %r<33>;
+	.reg .u64 %rd<78>;
+	.reg .f64 %fd<212>;
+	.reg .pred %p<46>;
+	.loc	4	179	0
+$LDWbegin_program_entry:
+	cvt.u32.u16 	%r1, %tid.x;
+	mov.u32 	%r2, 0;
+	set.eq.u32.u32 	%r3, %r1, %r2;
+	neg.s32 	%r4, %r3;
+	cvt.u32.u16 	%r5, %ctaid.x;
+	mov.u32 	%r6, 0;
+	set.eq.u32.u32 	%r7, %r5, %r6;
+	neg.s32 	%r8, %r7;
+	and.b32 	%r9, %r4, %r8;
+	mov.u32 	%r10, 0;
+	setp.eq.s32 	%p1, %r9, %r10;
+	@%p1 bra 	$Lt_0_32514;
+	.loc	4	181	0
+	mov.u64 	%rd1, twiddle;
+	mov.s64 	%rd2, %rd1;
+	mov.u64 	%rd3, 0;
+$Lt_0_33538:
+ //<loop> Loop body line 181, nesting depth: 1, iterations: 512
+	.loc	4	74	0
+	cvt.rn.f64.u64 	%fd1, %rd3;
+	mov.f64 	%fd2, 0dc01921fb54442d18;	// -6.28319
+	mul.f64 	%fd3, %fd1, %fd2;
+	mov.f64 	%fd4, 0d3f50000000000000;	// 0.000976562
+	mul.f64 	%fd5, %fd3, %fd4;
+	mov.f64 	%fd6, %fd5;
+	mov.f64 	%fd7, 0d400921fb54442d18;	// 3.14159
+	setp.gt.f64 	%p2, %fd5, %fd7;
+	@!%p2 bra 	$Lt_0_33794;
+$Lt_0_34306:
+	mov.f64 	%fd8, 0dc01921fb54442d18;	// -6.28319
+	add.f64 	%fd6, %fd6, %fd8;
+	mov.f64 	%fd9, 0d400921fb54442d18;	// 3.14159
+	setp.gt.f64 	%p3, %fd6, %fd9;
+	@%p3 bra 	$Lt_0_34306;
+$Lt_0_33794:
+	mov.f64 	%fd10, 0dc00921fb54442d18;	// -3.14159
+	setp.lt.f64 	%p4, %fd6, %fd10;
+	@!%p4 bra 	$Lt_0_34818;
+$Lt_0_35330:
+	.loc	4	50	0
+	mov.f64 	%fd11, 0d401921fb54442d18;	// 6.28319
+	add.f64 	%fd6, %fd6, %fd11;
+	mov.f64 	%fd12, 0dc00921fb54442d18;	// -3.14159
+	setp.lt.f64 	%p5, %fd6, %fd12;
+	@%p5 bra 	$Lt_0_35330;
+$Lt_0_34818:
+	.loc	4	74	0
+	mul.f64 	%fd13, %fd6, %fd6;
+	mul.f64 	%fd14, %fd13, %fd13;
+	mul.f64 	%fd15, %fd13, %fd14;
+	mul.f64 	%fd16, %fd13, %fd15;
+	mov.f64 	%fd17, 0d40e3b00000000000;	// 40320
+	div.rn.f64 	%fd18, %fd16, %fd17;
+	mov.f64 	%fd19, 0d4038000000000000;	// 24
+	div.rn.f64 	%fd20, %fd14, %fd19;
+	mov.f64 	%fd21, 0d3ff0000000000000;	// 1
+	mov.f64 	%fd22, 0d3fe0000000000000;	// 0.5
+	mul.f64 	%fd23, %fd13, %fd22;
+	sub.f64 	%fd24, %fd21, %fd23;
+	add.f64 	%fd25, %fd20, %fd24;
+	mov.f64 	%fd26, 0d4086800000000000;	// 720
+	div.rn.f64 	%fd27, %fd15, %fd26;
+	sub.f64 	%fd28, %fd25, %fd27;
+	add.f64 	%fd29, %fd18, %fd28;
+	st.global.f64 	[%rd2+0], %fd29;
+	.loc	4	75	0
+	mov.f64 	%fd30, %fd5;
+	@!%p2 bra 	$Lt_0_35842;
+$Lt_0_36354:
+	mov.f64 	%fd31, 0dc01921fb54442d18;	// -6.28319
+	add.f64 	%fd30, %fd30, %fd31;
+	mov.f64 	%fd32, 0d400921fb54442d18;	// 3.14159
+	setp.gt.f64 	%p6, %fd30, %fd32;
+	@%p6 bra 	$Lt_0_36354;
+$Lt_0_35842:
+	mov.f64 	%fd33, 0dc00921fb54442d18;	// -3.14159
+	setp.lt.f64 	%p7, %fd30, %fd33;
+	@!%p7 bra 	$Lt_0_36866;
+$Lt_0_37378:
+	.loc	4	35	0
+	mov.f64 	%fd34, 0d401921fb54442d18;	// 6.28319
+	add.f64 	%fd30, %fd30, %fd34;
+	mov.f64 	%fd35, 0dc00921fb54442d18;	// -3.14159
+	setp.lt.f64 	%p8, %fd30, %fd35;
+	@%p8 bra 	$Lt_0_37378;
+$Lt_0_36866:
+	.loc	4	75	0
+	mul.f64 	%fd36, %fd30, %fd30;
+	mul.f64 	%fd37, %fd36, %fd30;
+	mul.f64 	%fd38, %fd36, %fd37;
+	mul.f64 	%fd39, %fd36, %fd38;
+	mul.f64 	%fd40, %fd36, %fd39;
+	mov.f64 	%fd41, 0d4116260000000000;	// 362880
+	div.rn.f64 	%fd42, %fd40, %fd41;
+	mov.f64 	%fd43, 0d405e000000000000;	// 120
+	div.rn.f64 	%fd44, %fd38, %fd43;
+	mov.f64 	%fd45, 0d4018000000000000;	// 6
+	div.rn.f64 	%fd46, %fd37, %fd45;
+	sub.f64 	%fd47, %fd30, %fd46;
+	add.f64 	%fd48, %fd44, %fd47;
+	mov.f64 	%fd49, 0d40b3b00000000000;	// 5040
+	div.rn.f64 	%fd50, %fd39, %fd49;
+	sub.f64 	%fd51, %fd48, %fd50;
+	add.f64 	%fd52, %fd42, %fd51;
+	st.global.f64 	[%rd2+8], %fd52;
+	add.u64 	%rd3, %rd3, 1;
+	add.u64 	%rd2, %rd2, 16;
+	mov.u64 	%rd4, 512;
+	setp.ne.u64 	%p9, %rd3, %rd4;
+	@%p9 bra 	$Lt_0_33538;
+	.loc	4	142	0
+	mov.u64 	%rd5, data;
+	add.u64 	%rd6, %rd5, 8176;
+	add.u64 	%rd7, %rd5, 16384;
+	mov.s32 	%r11, 0;
+	mov.f64 	%fd53, 0d0000000000000000;	// 0
+$Lt_0_38658:
+ //<loop> Loop body line 142, nesting depth: 1, iterations: 1000
+	mov.s64 	%rd8, %rd5;
+	mov.u64 	%rd9, 0;
+$Lt_0_39426:
+ //<loop> Loop body line 142, nesting depth: 2, iterations: 1024
+	.loc	4	151	0
+	cvt.rn.f64.u64 	%fd54, %rd9;
+	mov.f64 	%fd55, 0d3f50000000000000;	// 0.000976562
+	mul.f64 	%fd56, %fd54, %fd55;
+	mov.f64 	%fd57, 0d404f6a7a2955385e;	// 62.8319
+	mul.f64 	%fd58, %fd56, %fd57;
+	mov.f64 	%fd59, %fd58;
+	mov.f64 	%fd60, 0d400921fb54442d18;	// 3.14159
+	setp.gt.f64 	%p10, %fd58, %fd60;
+	@!%p10 bra 	$Lt_0_39682;
+$Lt_0_40194:
+	mov.f64 	%fd61, 0dc01921fb54442d18;	// -6.28319
+	add.f64 	%fd59, %fd59, %fd61;
+	mov.f64 	%fd62, 0d400921fb54442d18;	// 3.14159
+	setp.gt.f64 	%p11, %fd59, %fd62;
+	@%p11 bra 	$Lt_0_40194;
+$Lt_0_39682:
+	mov.f64 	%fd63, 0dc00921fb54442d18;	// -3.14159
+	setp.lt.f64 	%p12, %fd59, %fd63;
+	@!%p12 bra 	$Lt_0_40706;
+$Lt_0_41218:
+	.loc	4	35	0
+	mov.f64 	%fd64, 0d401921fb54442d18;	// 6.28319
+	add.f64 	%fd59, %fd59, %fd64;
+	mov.f64 	%fd65, 0dc00921fb54442d18;	// -3.14159
+	setp.lt.f64 	%p13, %fd59, %fd65;
+	@%p13 bra 	$Lt_0_41218;
+$Lt_0_40706:
+	.loc	4	151	0
+	mov.f64 	%fd66, 0d4073a28c59d5433b;	// 314.159
+	mul.f64 	%fd67, %fd56, %fd66;
+	mov.f64 	%fd68, %fd67;
+	mov.f64 	%fd69, 0d400921fb54442d18;	// 3.14159
+	setp.gt.f64 	%p14, %fd67, %fd69;
+	@!%p14 bra 	$Lt_0_41730;
+$Lt_0_42242:
+	mov.f64 	%fd70, 0dc01921fb54442d18;	// -6.28319
+	add.f64 	%fd68, %fd68, %fd70;
+	mov.f64 	%fd71, 0d400921fb54442d18;	// 3.14159
+	setp.gt.f64 	%p15, %fd68, %fd71;
+	@%p15 bra 	$Lt_0_42242;
+$Lt_0_41730:
+	mov.f64 	%fd72, 0dc00921fb54442d18;	// -3.14159
+	setp.lt.f64 	%p16, %fd68, %fd72;
+	@!%p16 bra 	$Lt_0_42754;
+$Lt_0_43266:
+	.loc	4	35	0
+	mov.f64 	%fd73, 0d401921fb54442d18;	// 6.28319
+	add.f64 	%fd68, %fd68, %fd73;
+	mov.f64 	%fd74, 0dc00921fb54442d18;	// -3.14159
+	setp.lt.f64 	%p17, %fd68, %fd74;
+	@%p17 bra 	$Lt_0_43266;
+$Lt_0_42754:
+	.loc	4	151	0
+	mov.f64 	%fd75, 0d4083a28c59d5433b;	// 628.319
+	mul.f64 	%fd76, %fd56, %fd75;
+	mov.f64 	%fd77, %fd76;
+	mov.f64 	%fd78, 0d400921fb54442d18;	// 3.14159
+	setp.gt.f64 	%p18, %fd76, %fd78;
+	@!%p18 bra 	$Lt_0_43778;
+$Lt_0_44290:
+	mov.f64 	%fd79, 0dc01921fb54442d18;	// -6.28319
+	add.f64 	%fd77, %fd77, %fd79;
+	mov.f64 	%fd80, 0d400921fb54442d18;	// 3.14159
+	setp.gt.f64 	%p19, %fd77, %fd80;
+	@%p19 bra 	$Lt_0_44290;
+$Lt_0_43778:
+	mov.f64 	%fd81, 0dc00921fb54442d18;	// -3.14159
+	setp.lt.f64 	%p20, %fd77, %fd81;
+	@!%p20 bra 	$Lt_0_44802;
+$Lt_0_45314:
+	.loc	4	35	0
+	mov.f64 	%fd82, 0d401921fb54442d18;	// 6.28319
+	add.f64 	%fd77, %fd77, %fd82;
+	mov.f64 	%fd83, 0dc00921fb54442d18;	// -3.14159
+	setp.lt.f64 	%p21, %fd77, %fd83;
+	@%p21 bra 	$Lt_0_45314;
+$Lt_0_44802:
+	.loc	4	151	0
+	mul.f64 	%fd84, %fd59, %fd59;
+	mul.f64 	%fd85, %fd68, %fd68;
+	mul.f64 	%fd86, %fd77, %fd77;
+	mul.f64 	%fd87, %fd84, %fd59;
+	mul.f64 	%fd88, %fd85, %fd68;
+	mul.f64 	%fd89, %fd86, %fd77;
+	mul.f64 	%fd90, %fd84, %fd87;
+	mul.f64 	%fd91, %fd85, %fd88;
+	mul.f64 	%fd92, %fd86, %fd89;
+	mul.f64 	%fd93, %fd84, %fd90;
+	mul.f64 	%fd94, %fd85, %fd91;
+	mul.f64 	%fd95, %fd86, %fd92;
+	mul.f64 	%fd96, %fd84, %fd93;
+	mov.f64 	%fd97, 0d4116260000000000;	// 362880
+	div.rn.f64 	%fd98, %fd96, %fd97;
+	mov.f64 	%fd99, 0d405e000000000000;	// 120
+	div.rn.f64 	%fd100, %fd90, %fd99;
+	mov.f64 	%fd101, 0d4018000000000000;	// 6
+	div.rn.f64 	%fd102, %fd87, %fd101;
+	sub.f64 	%fd103, %fd59, %fd102;
+	add.f64 	%fd104, %fd100, %fd103;
+	mov.f64 	%fd105, 0d40b3b00000000000;	// 5040
+	div.rn.f64 	%fd106, %fd93, %fd105;
+	sub.f64 	%fd107, %fd104, %fd106;
+	add.f64 	%fd108, %fd98, %fd107;
+	mul.f64 	%fd109, %fd85, %fd94;
+	mov.f64 	%fd110, 0d4116260000000000;	// 362880
+	div.rn.f64 	%fd111, %fd109, %fd110;
+	mov.f64 	%fd112, 0d405e000000000000;	// 120
+	div.rn.f64 	%fd113, %fd91, %fd112;
+	mov.f64 	%fd114, 0d4018000000000000;	// 6
+	div.rn.f64 	%fd115, %fd88, %fd114;
+	sub.f64 	%fd116, %fd68, %fd115;
+	add.f64 	%fd117, %fd113, %fd116;
+	mov.f64 	%fd118, 0d40b3b00000000000;	// 5040
+	div.rn.f64 	%fd119, %fd94, %fd118;
+	sub.f64 	%fd120, %fd117, %fd119;
+	add.f64 	%fd121, %fd111, %fd120;
+	mov.f64 	%fd122, 0d3fe0000000000000;	// 0.5
+	mad.rn.f64 	%fd123, %fd121, %fd122, %fd108;
+	mul.f64 	%fd124, %fd86, %fd95;
+	mov.f64 	%fd125, 0d4116260000000000;	// 362880
+	div.rn.f64 	%fd126, %fd124, %fd125;
+	mov.f64 	%fd127, 0d405e000000000000;	// 120
+	div.rn.f64 	%fd128, %fd92, %fd127;
+	mov.f64 	%fd129, 0d4018000000000000;	// 6
+	div.rn.f64 	%fd130, %fd89, %fd129;
+	sub.f64 	%fd131, %fd77, %fd130;
+	add.f64 	%fd132, %fd128, %fd131;
+	mov.f64 	%fd133, 0d40b3b00000000000;	// 5040
+	div.rn.f64 	%fd134, %fd95, %fd133;
+	sub.f64 	%fd135, %fd132, %fd134;
+	add.f64 	%fd136, %fd126, %fd135;
+	mov.f64 	%fd137, 0d3fd0000000000000;	// 0.25
+	mad.rn.f64 	%fd138, %fd136, %fd137, %fd123;
+	st.global.f64 	[%rd8+0], %fd138;
+	.loc	4	154	0
+	mov.f64 	%fd139, 0d0000000000000000;	// 0
+	st.global.f64 	[%rd8+8], %fd139;
+	add.u64 	%rd9, %rd9, 1;
+	add.u64 	%rd8, %rd8, 16;
+	mov.u64 	%rd10, 1024;
+	setp.ne.u64 	%p22, %rd9, %rd10;
+	@%p22 bra 	$Lt_0_39426;
+	.loc	4	158	0
+	mov.u64 	%rd11, 1024;
+	mov.s32 	%r12, 0;
+$Lt_0_46594:
+ //<loop> Loop body line 158, nesting depth: 2, estimated iterations: unknown
+	.loc	4	84	0
+	shr.u64 	%rd11, %rd11, 1;
+	.loc	4	85	0
+	add.s32 	%r12, %r12, 1;
+	mov.u64 	%rd12, 1;
+	setp.gt.u64 	%p23, %rd11, %rd12;
+	@%p23 bra 	$Lt_0_46594;
+	mov.s32 	%r13, 0;
+	setp.gt.s32 	%p24, %r12, %r13;
+	mov.u64 	%rd13, 0;
+$Lt_0_47618:
+ //<loop> Loop body line 85, nesting depth: 2, iterations: 1024
+	.loc	4	90	0
+	cvt.u32.u64 	%r14, %rd13;
+	@!%p24 bra 	$Lt_0_66562;
+	mov.s32 	%r15, %r12;
+	mov.s32 	%r16, 0;
+	mov.u32 	%r17, 0;
+	mov.s32 	%r18, %r15;
+$Lt_0_48386:
+ //<loop> Loop body line 90, nesting depth: 3, estimated iterations: unknown
+	.loc	4	64	0
+	and.b32 	%r19, %r14, 1;
+	shl.b32 	%r20, %r17, 1;
+	or.b32 	%r17, %r19, %r20;
+	.loc	4	65	0
+	shr.u32 	%r14, %r14, 1;
+	add.s32 	%r16, %r16, 1;
+	setp.ne.s32 	%p25, %r16, %r12;
+	@%p25 bra 	$Lt_0_48386;
+	bra.uni 	$Lt_0_47874;
+$Lt_0_66562:
+	mov.u32 	%r17, 0;
+$Lt_0_47874:
+	.loc	4	90	0
+	cvt.u64.u32 	%rd14, %r17;
+	setp.le.u64 	%p26, %rd14, %rd13;
+	@%p26 bra 	$Lt_0_48898;
+	.loc	4	92	0
+	mul.lo.u64 	%rd15, %rd13, 16;
+	add.u64 	%rd16, %rd5, %rd15;
+	ld.global.f64 	%fd140, [%rd16+0];
+	ld.global.f64 	%fd141, [%rd16+8];
+	.loc	4	93	0
+	mul.lo.u64 	%rd17, %rd14, 16;
+	add.u64 	%rd18, %rd5, %rd17;
+	ld.global.f64 	%fd142, [%rd18+0];
+	st.global.f64 	[%rd16+0], %fd142;
+	ld.global.f64 	%fd143, [%rd18+8];
+	st.global.f64 	[%rd16+8], %fd143;
+	.loc	4	94	0
+	st.global.f64 	[%rd18+0], %fd140;
+	st.global.f64 	[%rd18+8], %fd141;
+$Lt_0_48898:
+	add.u64 	%rd13, %rd13, 1;
+	mov.u64 	%rd19, 1024;
+	setp.ne.u64 	%p27, %rd13, %rd19;
+	@%p27 bra 	$Lt_0_47618;
+	mov.u64 	%rd20, 2;
+$Lt_0_50178:
+ //<loop> Loop body line 94, nesting depth: 2, estimated iterations: unknown
+	mov.u64 	%rd21, 1024;
+	div.u64 	%rd22, %rd21, %rd20;
+	shr.u64 	%rd23, %rd20, 1;
+	mov.u64 	%rd24, 0;
+	setp.gt.u64 	%p28, %rd23, %rd24;
+	mov.u64 	%rd25, 0;
+$Lt_0_50946:
+ //<loop> Loop body line 94, nesting depth: 2, estimated iterations: unknown
+	@!%p28 bra 	$Lt_0_51202;
+	mov.s64 	%rd26, %rd23;
+	mul.lo.u64 	%rd27, %rd25, 16;
+	mul.lo.u64 	%rd28, %rd22, 16;
+	add.u64 	%rd29, %rd27, %rd5;
+	mul.lo.u64 	%rd30, %rd23, 16;
+	add.s64 	%rd31, %rd27, %rd30;
+	add.u64 	%rd32, %rd5, %rd31;
+	mov.s64 	%rd33, %rd1;
+	mov.u64 	%rd34, 0;
+	mov.s64 	%rd35, %rd26;
+$Lt_0_51714:
+ //<loop> Loop body line 94, nesting depth: 3, estimated iterations: unknown
+	.loc	4	105	0
+	ld.global.f64 	%fd144, [%rd33+0];
+	ld.global.f64 	%fd145, [%rd33+8];
+	.loc	4	111	0
+	add.u64 	%rd36, %rd34, %rd25;
+	add.u64 	%rd37, %rd23, %rd36;
+	mul.lo.u64 	%rd38, %rd37, 16;
+	add.u64 	%rd39, %rd5, %rd38;
+	ld.global.f64 	%fd146, [%rd39+8];
+	ld.global.f64 	%fd147, [%rd39+0];
+	mul.f64 	%fd148, %fd146, %fd145;
+	mul.f64 	%fd149, %fd147, %fd144;
+	sub.f64 	%fd150, %fd149, %fd148;
+	.loc	4	112	0
+	mul.f64 	%fd151, %fd146, %fd144;
+	mad.rn.f64 	%fd152, %fd147, %fd145, %fd151;
+	.loc	4	114	0
+	ld.global.f64 	%fd153, [%rd29+0];
+	ld.global.f64 	%fd154, [%rd29+8];
+	.loc	4	115	0
+	add.f64 	%fd155, %fd150, %fd153;
+	st.global.f64 	[%rd29+0], %fd155;
+	.loc	4	116	0
+	add.f64 	%fd156, %fd152, %fd154;
+	st.global.f64 	[%rd29+8], %fd156;
+	.loc	4	117	0
+	sub.f64 	%fd157, %fd153, %fd150;
+	st.global.f64 	[%rd39+0], %fd157;
+	.loc	4	118	0
+	sub.f64 	%fd158, %fd154, %fd152;
+	st.global.f64 	[%rd39+8], %fd158;
+	add.u64 	%rd34, %rd34, 1;
+	add.u64 	%rd33, %rd28, %rd33;
+	add.u64 	%rd29, %rd29, 16;
+	setp.ne.u64 	%p29, %rd29, %rd32;
+	@%p29 bra 	$Lt_0_51714;
+$Lt_0_51202:
+	add.u64 	%rd25, %rd25, %rd20;
+	mov.u64 	%rd40, 1024;
+	setp.lt.u64 	%p30, %rd25, %rd40;
+	@%p30 bra 	$Lt_0_50946;
+	.loc	4	99	0
+	mul.lo.u64 	%rd20, %rd20, 2;
+	mov.u64 	%rd41, 1024;
+	setp.le.u64 	%p31, %rd20, %rd41;
+	@%p31 bra 	$Lt_0_50178;
+	mov.s64 	%rd42, %rd5;
+$Lt_0_53250:
+ //<loop> Loop body line 99, nesting depth: 2, iterations: 52
+	.loc	4	163	0
+	ld.global.f64 	%fd159, [%rd42+8];
+	ld.global.f64 	%fd160, [%rd42+0];
+	mul.f64 	%fd161, %fd159, %fd159;
+	mad.rn.f64 	%fd162, %fd160, %fd160, %fd161;
+	add.f64 	%fd53, %fd53, %fd162;
+	add.u64 	%rd42, %rd42, 160;
+	setp.le.u64 	%p32, %rd42, %rd6;
+	@%p32 bra 	$Lt_0_53250;
+	mov.s64 	%rd43, %rd5;
+$Lt_0_54274:
+ //<loop> Loop body line 163, nesting depth: 2, iterations: 1024
+	.loc	4	128	0
+	ld.global.f64 	%fd163, [%rd43+8];
+	neg.f64 	%fd164, %fd163;
+	st.global.f64 	[%rd43+8], %fd164;
+	add.u64 	%rd43, %rd43, 16;
+	setp.ne.u64 	%p33, %rd43, %rd7;
+	@%p33 bra 	$Lt_0_54274;
+	.loc	4	131	0
+	mov.u64 	%rd44, 1024;
+	mov.s32 	%r21, 0;
+$Lt_0_55298:
+ //<loop> Loop body line 131, nesting depth: 2, estimated iterations: unknown
+	.loc	4	84	0
+	shr.u64 	%rd44, %rd44, 1;
+	.loc	4	85	0
+	add.s32 	%r21, %r21, 1;
+	mov.u64 	%rd45, 1;
+	setp.gt.u64 	%p34, %rd44, %rd45;
+	@%p34 bra 	$Lt_0_55298;
+	mov.s32 	%r22, 0;
+	setp.gt.s32 	%p35, %r21, %r22;
+	mov.u64 	%rd46, 0;
+$Lt_0_56322:
+ //<loop> Loop body line 85, nesting depth: 2, iterations: 1024
+	.loc	4	90	0
+	cvt.u32.u64 	%r23, %rd46;
+	@!%p35 bra 	$Lt_0_67074;
+	mov.s32 	%r24, %r21;
+	mov.s32 	%r25, 0;
+	mov.u32 	%r26, 0;
+	mov.s32 	%r27, %r24;
+$Lt_0_57090:
+ //<loop> Loop body line 90, nesting depth: 3, estimated iterations: unknown
+	.loc	4	64	0
+	and.b32 	%r28, %r23, 1;
+	shl.b32 	%r29, %r26, 1;
+	or.b32 	%r26, %r28, %r29;
+	.loc	4	65	0
+	shr.u32 	%r23, %r23, 1;
+	add.s32 	%r25, %r25, 1;
+	setp.ne.s32 	%p36, %r25, %r21;
+	@%p36 bra 	$Lt_0_57090;
+	bra.uni 	$Lt_0_56578;
+$Lt_0_67074:
+	mov.u32 	%r26, 0;
+$Lt_0_56578:
+	.loc	4	90	0
+	cvt.u64.u32 	%rd47, %r26;
+	setp.le.u64 	%p37, %rd47, %rd46;
+	@%p37 bra 	$Lt_0_57602;
+	.loc	4	92	0
+	mul.lo.u64 	%rd48, %rd46, 16;
+	add.u64 	%rd49, %rd5, %rd48;
+	ld.global.f64 	%fd165, [%rd49+0];
+	ld.global.f64 	%fd166, [%rd49+8];
+	.loc	4	93	0
+	mul.lo.u64 	%rd50, %rd47, 16;
+	add.u64 	%rd51, %rd5, %rd50;
+	ld.global.f64 	%fd167, [%rd51+0];
+	st.global.f64 	[%rd49+0], %fd167;
+	ld.global.f64 	%fd168, [%rd51+8];
+	st.global.f64 	[%rd49+8], %fd168;
+	.loc	4	94	0
+	st.global.f64 	[%rd51+0], %fd165;
+	st.global.f64 	[%rd51+8], %fd166;
+$Lt_0_57602:
+	add.u64 	%rd46, %rd46, 1;
+	mov.u64 	%rd52, 1024;
+	setp.ne.u64 	%p38, %rd46, %rd52;
+	@%p38 bra 	$Lt_0_56322;
+	mov.u64 	%rd53, 2;
+$Lt_0_58882:
+ //<loop> Loop body line 94, nesting depth: 2, estimated iterations: unknown
+	mov.u64 	%rd54, 1024;
+	div.u64 	%rd55, %rd54, %rd53;
+	shr.u64 	%rd56, %rd53, 1;
+	mov.u64 	%rd57, 0;
+	setp.gt.u64 	%p39, %rd56, %rd57;
+	mov.u64 	%rd58, 0;
+$Lt_0_59650:
+ //<loop> Loop body line 94, nesting depth: 2, estimated iterations: unknown
+	@!%p39 bra 	$Lt_0_59906;
+	mov.s64 	%rd59, %rd56;
+	mul.lo.u64 	%rd60, %rd58, 16;
+	mul.lo.u64 	%rd61, %rd55, 16;
+	add.u64 	%rd62, %rd60, %rd5;
+	mul.lo.u64 	%rd63, %rd56, 16;
+	add.s64 	%rd64, %rd60, %rd63;
+	add.u64 	%rd65, %rd5, %rd64;
+	mov.s64 	%rd66, %rd1;
+	mov.u64 	%rd67, 0;
+	mov.s64 	%rd68, %rd59;
+$Lt_0_60418:
+ //<loop> Loop body line 94, nesting depth: 3, estimated iterations: unknown
+	.loc	4	105	0
+	ld.global.f64 	%fd169, [%rd66+0];
+	ld.global.f64 	%fd170, [%rd66+8];
+	.loc	4	111	0
+	add.u64 	%rd69, %rd67, %rd58;
+	add.u64 	%rd70, %rd56, %rd69;
+	mul.lo.u64 	%rd71, %rd70, 16;
+	add.u64 	%rd72, %rd5, %rd71;
+	ld.global.f64 	%fd171, [%rd72+8];
+	ld.global.f64 	%fd172, [%rd72+0];
+	mul.f64 	%fd173, %fd171, %fd170;
+	mul.f64 	%fd174, %fd172, %fd169;
+	sub.f64 	%fd175, %fd174, %fd173;
+	.loc	4	112	0
+	mul.f64 	%fd176, %fd171, %fd169;
+	mad.rn.f64 	%fd177, %fd172, %fd170, %fd176;
+	.loc	4	114	0
+	ld.global.f64 	%fd178, [%rd62+0];
+	ld.global.f64 	%fd179, [%rd62+8];
+	.loc	4	115	0
+	add.f64 	%fd180, %fd175, %fd178;
+	st.global.f64 	[%rd62+0], %fd180;
+	.loc	4	116	0
+	add.f64 	%fd181, %fd177, %fd179;
+	st.global.f64 	[%rd62+8], %fd181;
+	.loc	4	117	0
+	sub.f64 	%fd182, %fd178, %fd175;
+	st.global.f64 	[%rd72+0], %fd182;
+	.loc	4	118	0
+	sub.f64 	%fd183, %fd179, %fd177;
+	st.global.f64 	[%rd72+8], %fd183;
+	add.u64 	%rd67, %rd67, 1;
+	add.u64 	%rd66, %rd61, %rd66;
+	add.u64 	%rd62, %rd62, 16;
+	setp.ne.u64 	%p40, %rd62, %rd65;
+	@%p40 bra 	$Lt_0_60418;
+$Lt_0_59906:
+	add.u64 	%rd58, %rd58, %rd53;
+	mov.u64 	%rd73, 1024;
+	setp.lt.u64 	%p41, %rd58, %rd73;
+	@%p41 bra 	$Lt_0_59650;
+	.loc	4	99	0
+	mul.lo.u64 	%rd53, %rd53, 2;
+	mov.u64 	%rd74, 1024;
+	setp.le.u64 	%p42, %rd53, %rd74;
+	@%p42 bra 	$Lt_0_58882;
+	mov.s64 	%rd75, %rd5;
+$Lt_0_61954:
+ //<loop> Loop body line 99, nesting depth: 2, iterations: 1024
+	.loc	4	136	0
+	ld.global.f64 	%fd184, [%rd75+0];
+	mov.f64 	%fd185, 0d3f50000000000000;	// 0.000976562
+	mul.f64 	%fd186, %fd184, %fd185;
+	st.global.f64 	[%rd75+0], %fd186;
+	.loc	4	137	0
+	ld.global.f64 	%fd187, [%rd75+8];
+	mov.f64 	%fd188, 0dbf50000000000000;	// -0.000976562
+	mul.f64 	%fd189, %fd187, %fd188;
+	st.global.f64 	[%rd75+8], %fd189;
+	add.u64 	%rd75, %rd75, 16;
+	setp.ne.u64 	%p43, %rd75, %rd7;
+	@%p43 bra 	$Lt_0_61954;
+	.loc	4	171	0
+	ld.global.f64 	%fd190, [data+16000];
+	ld.global.f64 	%fd191, [data+14400];
+	ld.global.f64 	%fd192, [data+12800];
+	ld.global.f64 	%fd193, [data+11200];
+	ld.global.f64 	%fd194, [data+9600];
+	ld.global.f64 	%fd195, [data+8000];
+	ld.global.f64 	%fd196, [data+6400];
+	ld.global.f64 	%fd197, [data+4800];
+	ld.global.f64 	%fd198, [data+3200];
+	ld.global.f64 	%fd199, [data+1600];
+	ld.global.f64 	%fd200, [data+0];
+	add.f64 	%fd201, %fd200, %fd53;
+	add.f64 	%fd202, %fd199, %fd201;
+	add.f64 	%fd203, %fd198, %fd202;
+	add.f64 	%fd204, %fd197, %fd203;
+	add.f64 	%fd205, %fd196, %fd204;
+	add.f64 	%fd206, %fd195, %fd205;
+	add.f64 	%fd207, %fd194, %fd206;
+	add.f64 	%fd208, %fd193, %fd207;
+	add.f64 	%fd209, %fd192, %fd208;
+	add.f64 	%fd210, %fd191, %fd209;
+	add.f64 	%fd53, %fd190, %fd210;
+	add.s32 	%r11, %r11, 1;
+	mov.u32 	%r30, 1000;
+	setp.ne.s32 	%p44, %r11, %r30;
+	@%p44 bra 	$Lt_0_38658;
+	.loc	4	175	0
+	st.volatile.global.f64 	[sink], %fd53;
+	.loc	4	181	0
+	mov.s32 	%r31, 0;
+	ld.param.u64 	%rd76, [__cudaparm_program_entry_status];
+	st.global.s32 	[%rd76+0], %r31;
+$Lt_0_32514:
+	.loc	4	182	0
+	exit;
+$LDWend_program_entry:
+	} // program_entry
+

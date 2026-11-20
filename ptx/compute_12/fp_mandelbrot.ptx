@@ -1,0 +1,276 @@
+	.version 1.4
+	.target sm_12, map_f64_to_f32
+	// compiled with /tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/open64/lib//be
+	// nvopencc 4.1 built on 2013-07-17
+
+	//-----------------------------------------------------------
+	// Compiling /tmp/tmpxft_00069a60_00000000-9_fp_mandelbrot.cpp3.i (/tmp/ccBI#.8I2tXc)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:sm_12, Endian:little, Pointer Size:64
+	//  -O3	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m2	(Report advisories)
+	//-----------------------------------------------------------
+
+	.file	1	"<command-line>"
+	.file	2	"/tmp/nvidia-legacy/bionic/usr/include/stdc-predef.h"
+	.file	3	"/tmp/tmpxft_00069a60_00000000-8_fp_mandelbrot.cudafe2.gpu"
+	.file	4	"/usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h"
+	.file	5	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/crt/device_runtime.h"
+	.file	6	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/host_defines.h"
+	.file	7	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/builtin_types.h"
+	.file	8	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/device_types.h"
+	.file	9	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/driver_types.h"
+	.file	10	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/surface_types.h"
+	.file	11	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/texture_types.h"
+	.file	12	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/vector_types.h"
+	.file	13	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/device_launch_parameters.h"
+	.file	14	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/crt/storage_class.h"
+	.file	15	"/tmp/nvidia-legacy/bionic/usr/include/x86_64-linux-gnu/bits/types.h"
+	.file	16	"/tmp/nvidia-legacy/bionic/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h"
+	.file	17	"build/nvcc/cuda-src/fp_mandelbrot.cu"
+	.file	18	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/common_functions.h"
+	.file	19	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/math_functions.h"
+	.file	20	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/math_constants.h"
+	.file	21	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/device_functions.h"
+	.file	22	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_11_atomic_functions.h"
+	.file	23	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_12_atomic_functions.h"
+	.file	24	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_13_double_functions.h"
+	.file	25	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_20_atomic_functions.h"
+	.file	26	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_32_atomic_functions.h"
+	.file	27	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_35_atomic_functions.h"
+	.file	28	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_20_intrinsics.h"
+	.file	29	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_30_intrinsics.h"
+	.file	30	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_32_intrinsics.h"
+	.file	31	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_35_intrinsics.h"
+	.file	32	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/surface_functions.h"
+	.file	33	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/texture_fetch_functions.h"
+	.file	34	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/texture_indirect_functions.h"
+	.file	35	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/surface_indirect_functions.h"
+	.file	36	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/math_functions_dbl_ptx1.h"
+
+	.global .u32 sink;
+	.global .align 1 .b8 image[65536];
+
+	.entry program_entry (
+		.param .u64 __cudaparm_program_entry_status)
+	{
+	.reg .u32 %r<54>;
+	.reg .u64 %rd<12>;
+	.reg .f32 %f<18>;
+	.reg .f64 %fd<18>;
+	.reg .pred %p<16>;
+	.loc	17	120	0
+$LDWbegin_program_entry:
+	cvt.u32.u16 	%r1, %tid.x;
+	mov.u32 	%r2, 0;
+	set.eq.u32.u32 	%r3, %r1, %r2;
+	neg.s32 	%r4, %r3;
+	cvt.u32.u16 	%r5, %ctaid.x;
+	mov.u32 	%r6, 0;
+	set.eq.u32.u32 	%r7, %r5, %r6;
+	neg.s32 	%r8, %r7;
+	and.b32 	%r9, %r4, %r8;
+	mov.u32 	%r10, 0;
+	setp.eq.s32 	%p1, %r9, %r10;
+	@%p1 bra 	$Lt_0_15106;
+	.loc	17	71	0
+	mov.s32 	%r11, 0;
+	mov.u32 	%r12, 0;
+	mov.u64 	%rd1, image;
+$Lt_0_16130:
+ //<loop> Loop body line 71, nesting depth: 1, iterations: 10
+	mov.s64 	%rd2, 0;
+	mov.s32 	%r13, 0;
+$Lt_0_16898:
+ //<loop> Loop body line 71, nesting depth: 2, iterations: 256
+	mov.f64 	%fd1, 0dbff0000000000000;	// -1
+	cvt.rn.f64.s32 	%fd2, %r13;
+	mov.f64 	%fd3, 0d3f80000000000000;	// 0.0078125
+	mad.rn.f64 	%fd4, %fd2, %fd3, %fd1;
+	add.u64 	%rd3, %rd2, %rd1;
+	mov.s32 	%r14, 0;
+$Lt_0_17666:
+ //<loop> Loop body line 71, nesting depth: 3, iterations: 256
+	.loc	17	82	0
+	mov.f64 	%fd5, 0dc004000000000000;	// -2.5
+	cvt.rn.f64.s32 	%fd6, %r14;
+	mov.f64 	%fd7, 0d3f8c000000000000;	// 0.0136719
+	mad.rn.f64 	%fd8, %fd6, %fd7, %fd5;
+	mov.s32 	%r15, 0;
+	mov.f64 	%fd9, 0d0000000000000000;	// 0
+	mov.f64 	%fd10, 0d0000000000000000;	// 0
+$Lt_0_18434:
+ //<loop> Loop body line 82, nesting depth: 4, iterations: 100
+	.loc	17	30	0
+	mul.f64 	%fd11, %fd9, %fd9;
+	mul.f64 	%fd12, %fd10, %fd10;
+	add.f64 	%fd13, %fd12, %fd11;
+	mov.f64 	%fd14, 0d4010000000000000;	// 4
+	setp.gt.f64 	%p2, %fd13, %fd14;
+	@!%p2 bra 	$Lt_0_18690;
+	.loc	17	33	0
+	mov.s32 	%r16, %r15;
+	bra.uni 	$LDWendi__Z16mandelbrot_pointdd_243_3;
+$Lt_0_18690:
+	.loc	17	36	0
+	add.f64 	%fd15, %fd10, %fd10;
+	mad.rn.f64 	%fd9, %fd9, %fd15, %fd4;
+	.loc	17	37	0
+	sub.f64 	%fd16, %fd12, %fd11;
+	add.f64 	%fd10, %fd8, %fd16;
+	.loc	17	28	0
+	add.s32 	%r15, %r15, 1;
+	mov.u32 	%r17, 100;
+	setp.ne.s32 	%p3, %r15, %r17;
+	@%p3 bra 	$Lt_0_18434;
+	.loc	17	40	0
+	mov.s32 	%r16, 100;
+$LDWendi__Z16mandelbrot_pointdd_243_3:
+	.loc	17	83	0
+	shr.s32 	%r18, %r16, 31;
+	mov.s32 	%r19, 255;
+	and.b32 	%r20, %r18, %r19;
+	add.s32 	%r21, %r20, %r16;
+	shr.s32 	%r22, %r21, 8;
+	mul.lo.s32 	%r23, %r22, 256;
+	sub.s32 	%r24, %r16, %r23;
+	st.global.u8 	[%rd3+0], %r24;
+	add.s32 	%r14, %r14, 1;
+	add.u64 	%rd3, %rd3, 1;
+	mov.u32 	%r25, 256;
+	setp.ne.s32 	%p4, %r14, %r25;
+	@%p4 bra 	$Lt_0_17666;
+	add.s32 	%r13, %r13, 1;
+	add.u64 	%rd2, %rd2, 256;
+	mov.u32 	%r26, 256;
+	setp.ne.s32 	%p5, %r13, %r26;
+	@%p5 bra 	$Lt_0_16898;
+	mov.s64 	%rd4, %rd1;
+	mov.s32 	%r27, 0;
+$Lt_0_20482:
+ //<loop> Loop body line 83, nesting depth: 2, iterations: 256
+	mov.s64 	%rd5, %rd4;
+	mov.s32 	%r28, 0;
+$Lt_0_21250:
+ //<loop> Loop body line 83, nesting depth: 3, iterations: 256
+	.loc	17	90	0
+	ld.global.u8 	%r29, [%rd5+0];
+	add.u32 	%r12, %r29, %r12;
+	add.s32 	%r28, %r28, 1;
+	add.u64 	%rd5, %rd5, 1;
+	mov.u32 	%r30, 256;
+	setp.ne.s32 	%p6, %r28, %r30;
+	@%p6 bra 	$Lt_0_21250;
+	add.s32 	%r27, %r27, 1;
+	add.u64 	%rd4, %rd4, 256;
+	mov.u32 	%r31, 256;
+	setp.ne.s32 	%p7, %r27, %r31;
+	@%p7 bra 	$Lt_0_20482;
+	mov.s64 	%rd6, %rd1;
+	mov.s32 	%r32, 0;
+$Lt_0_22530:
+ //<loop> Loop body line 90, nesting depth: 2, iterations: 256
+	cvt.rn.f32.s32 	%f1, %r32;
+	mov.f32 	%f2, 0fbf800000;     	// -1
+	mov.f32 	%f3, 0f3c000000;     	// 0.0078125
+	mad.f32 	%f4, %f1, %f3, %f2;
+	mov.s64 	%rd7, %rd6;
+	mov.s32 	%r33, 0;
+$Lt_0_23298:
+ //<loop> Loop body line 90, nesting depth: 3, iterations: 256
+	.loc	17	104	0
+	cvt.rn.f32.s32 	%f5, %r33;
+	mov.f32 	%f6, 0fc0200000;     	// -2.5
+	mov.f32 	%f7, 0f3c600000;     	// 0.0136719
+	mad.f32 	%f8, %f5, %f7, %f6;
+	mov.s32 	%r34, 0;
+	mov.f32 	%f9, 0f00000000;     	// 0
+	mov.f32 	%f10, 0f00000000;    	// 0
+$Lt_0_24066:
+ //<loop> Loop body line 104, nesting depth: 4, iterations: 100
+	.loc	17	50	0
+	mul.f32 	%f11, %f9, %f9;
+	mul.f32 	%f12, %f10, %f10;
+	add.f32 	%f13, %f12, %f11;
+	mov.f32 	%f14, 0f40800000;    	// 4
+	setp.gt.f32 	%p8, %f13, %f14;
+	@!%p8 bra 	$Lt_0_24322;
+	.loc	17	53	0
+	mov.s32 	%r35, %r34;
+	bra.uni 	$LDWendi__Z18mandelbrot_point_fff_243_1;
+$Lt_0_24322:
+	.loc	17	56	0
+	add.f32 	%f15, %f10, %f10;
+	mad.f32 	%f9, %f9, %f15, %f4;
+	.loc	17	57	0
+	sub.f32 	%f16, %f12, %f11;
+	add.f32 	%f10, %f8, %f16;
+	.loc	17	48	0
+	add.s32 	%r34, %r34, 1;
+	mov.u32 	%r36, 100;
+	setp.ne.s32 	%p9, %r34, %r36;
+	@%p9 bra 	$Lt_0_24066;
+	.loc	17	60	0
+	mov.s32 	%r35, 100;
+$LDWendi__Z18mandelbrot_point_fff_243_1:
+	.loc	17	105	0
+	shr.s32 	%r37, %r35, 31;
+	mov.s32 	%r38, 255;
+	and.b32 	%r39, %r37, %r38;
+	add.s32 	%r40, %r39, %r35;
+	shr.s32 	%r41, %r40, 8;
+	mul.lo.s32 	%r42, %r41, 256;
+	sub.s32 	%r43, %r35, %r42;
+	st.global.u8 	[%rd7+0], %r43;
+	add.s32 	%r33, %r33, 1;
+	add.u64 	%rd7, %rd7, 1;
+	mov.u32 	%r44, 256;
+	setp.ne.s32 	%p10, %r33, %r44;
+	@%p10 bra 	$Lt_0_23298;
+	add.s32 	%r32, %r32, 1;
+	add.u64 	%rd6, %rd6, 256;
+	mov.u32 	%r45, 256;
+	setp.ne.s32 	%p11, %r32, %r45;
+	@%p11 bra 	$Lt_0_22530;
+	mov.s64 	%rd8, %rd1;
+	mov.s32 	%r46, 0;
+$Lt_0_26114:
+ //<loop> Loop body line 105, nesting depth: 2, iterations: 256
+	mov.s64 	%rd9, %rd8;
+	mov.s32 	%r47, 0;
+$Lt_0_26882:
+ //<loop> Loop body line 105, nesting depth: 3, iterations: 256
+	.loc	17	111	0
+	ld.global.u8 	%r48, [%rd9+0];
+	add.u32 	%r12, %r48, %r12;
+	add.s32 	%r47, %r47, 1;
+	add.u64 	%rd9, %rd9, 1;
+	mov.u32 	%r49, 256;
+	setp.ne.s32 	%p12, %r47, %r49;
+	@%p12 bra 	$Lt_0_26882;
+	add.s32 	%r46, %r46, 1;
+	add.u64 	%rd8, %rd8, 256;
+	mov.u32 	%r50, 256;
+	setp.ne.s32 	%p13, %r46, %r50;
+	@%p13 bra 	$Lt_0_26114;
+	add.s32 	%r11, %r11, 1;
+	mov.u32 	%r51, 10;
+	setp.ne.s32 	%p14, %r11, %r51;
+	@%p14 bra 	$Lt_0_16130;
+	.loc	17	116	0
+	st.volatile.global.u32 	[sink], %r12;
+	.loc	17	122	0
+	mov.s32 	%r52, 0;
+	ld.param.u64 	%rd10, [__cudaparm_program_entry_status];
+	st.global.s32 	[%rd10+0], %r52;
+$Lt_0_15106:
+	.loc	17	123	0
+	exit;
+$LDWend_program_entry:
+	} // program_entry
+

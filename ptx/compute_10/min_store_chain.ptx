@@ -1,0 +1,209 @@
+	.version 1.4
+	.target sm_10, map_f64_to_f32
+	// compiled with /tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/open64/lib//be
+	// nvopencc 4.1 built on 2013-07-17
+
+	//-----------------------------------------------------------
+	// Compiling /tmp/tmpxft_00068f6f_00000000-9_min_store_chain.cpp3.i (/tmp/ccBI#.PfeXnb)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:sm_10, Endian:little, Pointer Size:64
+	//  -O3	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m2	(Report advisories)
+	//-----------------------------------------------------------
+
+	.file	1	"<command-line>"
+	.file	2	"/tmp/nvidia-legacy/bionic/usr/include/stdc-predef.h"
+	.file	3	"/tmp/tmpxft_00068f6f_00000000-8_min_store_chain.cudafe2.gpu"
+	.file	4	"/usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h"
+	.file	5	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/crt/device_runtime.h"
+	.file	6	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/host_defines.h"
+	.file	7	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/builtin_types.h"
+	.file	8	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/device_types.h"
+	.file	9	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/driver_types.h"
+	.file	10	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/surface_types.h"
+	.file	11	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/texture_types.h"
+	.file	12	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/vector_types.h"
+	.file	13	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/device_launch_parameters.h"
+	.file	14	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/crt/storage_class.h"
+	.file	15	"build/nvcc/cuda-src/min_store_chain.cu"
+	.file	16	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/bin/../targets/x86_64-linux/include/common_functions.h"
+	.file	17	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/math_functions.h"
+	.file	18	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/math_constants.h"
+	.file	19	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/device_functions.h"
+	.file	20	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_11_atomic_functions.h"
+	.file	21	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_12_atomic_functions.h"
+	.file	22	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_13_double_functions.h"
+	.file	23	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_20_atomic_functions.h"
+	.file	24	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_32_atomic_functions.h"
+	.file	25	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_35_atomic_functions.h"
+	.file	26	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_20_intrinsics.h"
+	.file	27	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_30_intrinsics.h"
+	.file	28	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_32_intrinsics.h"
+	.file	29	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/sm_35_intrinsics.h"
+	.file	30	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/surface_functions.h"
+	.file	31	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/texture_fetch_functions.h"
+	.file	32	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/texture_indirect_functions.h"
+	.file	33	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/surface_indirect_functions.h"
+	.file	34	"/tmp/nvidia-legacy/5-5/usr/local/cuda-5.5/targets/x86_64-linux/include/math_functions_dbl_ptx1.h"
+
+	.global .s32 sink;
+	.global .align 4 .b8 data[16384];
+	.global .align 1 .b8 bytes[4096];
+	.global .align 2 .b8 shorts[8192];
+
+	.entry program_entry (
+		.param .u64 __cudaparm_program_entry_status)
+	{
+	.reg .u32 %r<48>;
+	.reg .u64 %rd<9>;
+	.reg .pred %p<7>;
+	.loc	15	72	0
+$LDWbegin_program_entry:
+	cvt.u32.u16 	%r1, %tid.x;
+	mov.u32 	%r2, 0;
+	set.eq.u32.u32 	%r3, %r1, %r2;
+	neg.s32 	%r4, %r3;
+	cvt.u32.u16 	%r5, %ctaid.x;
+	mov.u32 	%r6, 0;
+	set.eq.u32.u32 	%r7, %r5, %r6;
+	neg.s32 	%r8, %r7;
+	and.b32 	%r9, %r4, %r8;
+	mov.u32 	%r10, 0;
+	setp.eq.s32 	%p1, %r9, %r10;
+	@%p1 bra 	$Lt_0_5378;
+	.loc	15	74	0
+	mov.s32 	%r11, 0;
+	mov.s32 	%r12, 42;
+	mov.u64 	%rd1, shorts;
+	mov.u64 	%rd2, data;
+	mov.u64 	%rd3, bytes;
+$Lt_0_6402:
+ //<loop> Loop body line 74, nesting depth: 1, iterations: 1000
+	mov.s64 	%rd4, %rd2;
+	mov.s32 	%r13, 0;
+$Lt_0_7170:
+ //<loop> Loop body line 74, nesting depth: 2, iterations: 512
+	.loc	15	29	0
+	st.global.s32 	[%rd4+0], %r12;
+	.loc	15	30	0
+	add.s32 	%r14, %r12, 1;
+	st.global.s32 	[%rd4+4], %r14;
+	.loc	15	31	0
+	add.s32 	%r15, %r12, 2;
+	st.global.s32 	[%rd4+8], %r15;
+	.loc	15	32	0
+	add.s32 	%r16, %r12, 3;
+	st.global.s32 	[%rd4+12], %r16;
+	.loc	15	33	0
+	add.s32 	%r17, %r12, 4;
+	st.global.s32 	[%rd4+16], %r17;
+	.loc	15	34	0
+	add.s32 	%r18, %r12, 5;
+	st.global.s32 	[%rd4+20], %r18;
+	.loc	15	35	0
+	add.s32 	%r19, %r12, 6;
+	st.global.s32 	[%rd4+24], %r19;
+	.loc	15	36	0
+	add.s32 	%r20, %r12, 7;
+	st.global.s32 	[%rd4+28], %r20;
+	.loc	15	37	0
+	add.s32 	%r12, %r12, 8;
+	add.s32 	%r13, %r13, 8;
+	add.u64 	%rd4, %rd4, 32;
+	mov.u32 	%r21, 4095;
+	setp.le.s32 	%p2, %r13, %r21;
+	@%p2 bra 	$Lt_0_7170;
+	mov.s64 	%rd5, %rd3;
+	mov.s32 	%r22, 0;
+$Lt_0_8194:
+ //<loop> Loop body line 37, nesting depth: 2, iterations: 512
+	.loc	15	42	0
+	st.global.s8 	[%rd5+0], %r12;
+	.loc	15	43	0
+	add.s32 	%r23, %r12, 1;
+	st.global.s8 	[%rd5+1], %r23;
+	.loc	15	44	0
+	add.s32 	%r24, %r12, 2;
+	st.global.s8 	[%rd5+2], %r24;
+	.loc	15	45	0
+	add.s32 	%r25, %r12, 3;
+	st.global.s8 	[%rd5+3], %r25;
+	.loc	15	46	0
+	add.s32 	%r26, %r12, 4;
+	st.global.s8 	[%rd5+4], %r26;
+	.loc	15	47	0
+	add.s32 	%r27, %r12, 5;
+	st.global.s8 	[%rd5+5], %r27;
+	.loc	15	48	0
+	add.s32 	%r28, %r12, 6;
+	st.global.s8 	[%rd5+6], %r28;
+	.loc	15	49	0
+	add.s32 	%r29, %r12, 7;
+	st.global.s8 	[%rd5+7], %r29;
+	.loc	15	50	0
+	add.s32 	%r12, %r12, 8;
+	add.s32 	%r22, %r22, 8;
+	add.u64 	%rd5, %rd5, 8;
+	mov.u32 	%r30, 4095;
+	setp.le.s32 	%p3, %r22, %r30;
+	@%p3 bra 	$Lt_0_8194;
+	mov.s64 	%rd6, %rd1;
+	mov.s32 	%r31, 0;
+$Lt_0_9218:
+ //<loop> Loop body line 50, nesting depth: 2, iterations: 512
+	.loc	15	55	0
+	st.global.s16 	[%rd6+0], %r12;
+	.loc	15	56	0
+	add.s32 	%r32, %r12, 1;
+	st.global.s16 	[%rd6+2], %r32;
+	.loc	15	57	0
+	add.s32 	%r33, %r12, 2;
+	st.global.s16 	[%rd6+4], %r33;
+	.loc	15	58	0
+	add.s32 	%r34, %r12, 3;
+	st.global.s16 	[%rd6+6], %r34;
+	.loc	15	59	0
+	add.s32 	%r35, %r12, 4;
+	st.global.s16 	[%rd6+8], %r35;
+	.loc	15	60	0
+	add.s32 	%r36, %r12, 5;
+	st.global.s16 	[%rd6+10], %r36;
+	.loc	15	61	0
+	add.s32 	%r37, %r12, 6;
+	st.global.s16 	[%rd6+12], %r37;
+	.loc	15	62	0
+	add.s32 	%r38, %r12, 7;
+	st.global.s16 	[%rd6+14], %r38;
+	.loc	15	63	0
+	add.s32 	%r12, %r12, 8;
+	add.s32 	%r31, %r31, 8;
+	add.u64 	%rd6, %rd6, 16;
+	mov.u32 	%r39, 4095;
+	setp.le.s32 	%p4, %r31, %r39;
+	@%p4 bra 	$Lt_0_9218;
+	add.s32 	%r11, %r11, 1;
+	mov.u32 	%r40, 1000;
+	setp.ne.s32 	%p5, %r11, %r40;
+	@%p5 bra 	$Lt_0_6402;
+	.loc	15	68	0
+	ld.global.s16 	%r41, [shorts+0];
+	ld.global.s8 	%r42, [bytes+0];
+	ld.global.s32 	%r43, [data+0];
+	add.s32 	%r44, %r42, %r43;
+	add.s32 	%r45, %r41, %r44;
+	st.volatile.global.s32 	[sink], %r45;
+	.loc	15	74	0
+	mov.s32 	%r46, 0;
+	ld.param.u64 	%rd7, [__cudaparm_program_entry_status];
+	st.global.s32 	[%rd7+0], %r46;
+$Lt_0_5378:
+	.loc	15	75	0
+	exit;
+$LDWend_program_entry:
+	} // program_entry
+
