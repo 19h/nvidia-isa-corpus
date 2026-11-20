@@ -2,13 +2,13 @@ program	spirv_status	details
 01_hello_world.c	ok	spirv/01_hello_world.spv
 02_fibonacci.c	ok	spirv/02_fibonacci.spv
 03_linked_list.c	ok	spirv/03_linked_list.spv
-04_bst.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
-05_thread_pool.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
-06_allocator.c	not ported	Requires a GPU-specific bounded arena and pointer representation.
-07_regex.c	not ported	Requires porting host library calls, I/O, or dynamic data structures.
-08_json_parser.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
-09_bytecode_vm.c	not ported	Requires porting host library calls, I/O, or dynamic data structures.
-10_template_madness.cpp	not ported	Requires a dedicated port of its C++ runtime or library features.
+04_bst.cpp	ok	spirv/04_bst.spv
+05_thread_pool.cpp	ok	spirv/05_thread_pool.spv
+06_allocator.c	ok	spirv/06_allocator.spv
+07_regex.c	ok	spirv/07_regex.spv
+08_json_parser.cpp	ok	spirv/08_json_parser.spv
+09_bytecode_vm.c	ok	spirv/09_bytecode_vm.spv
+10_template_madness.cpp	ok	spirv/10_template_madness.spv
 asm_arch_detect.c	not ported	The workload exercises CPU instructions or a CPU calling context.
 asm_atomic_ops.c	ok	spirv/asm_atomic_ops.spv
 asm_barriers.c	ok	spirv/asm_barriers.spv
@@ -29,10 +29,10 @@ cf_duff_device_parser.c	ok	spirv/cf_duff_device_parser.spv
 cf_exception.cpp	ok	spirv/cf_exception.spv
 cf_indirect_call.c	ok	spirv/cf_indirect_call.spv
 cf_irreducible_state_maze.c	ok	spirv/cf_irreducible_state_maze.spv
-cf_license_crackme.c	not ported	Requires porting host library calls, I/O, or dynamic data structures.
+cf_license_crackme.c	ok	spirv/cf_license_crackme.spv
 cf_longjmp_threaded_vm.c	ok	spirv/cf_longjmp_threaded_vm.spv
 cf_musttail.cpp	ok	spirv/cf_musttail.spv
-cf_rorog.c	not ported	Requires porting host library calls, I/O, or dynamic data structures.
+cf_rorog.c	ok	spirv/cf_rorog.spv
 cf_setjmp.c	ok	spirv/cf_setjmp.spv
 cf_switch_dense.c	ok	spirv/cf_switch_dense.spv
 cf_switch_sparse.c	ok	spirv/cf_switch_sparse.spv
@@ -64,7 +64,7 @@ int_galois.c	ok	spirv/int_galois.spv
 int_int128_ops.c	ok	spirv/int_int128_ops.spv
 int_popcount.c	ok	spirv/int_popcount.spv
 int_sha256.c	ok	spirv/int_sha256.spv
-int_woma_keygen.c	not ported	Requires porting host library calls, I/O, or dynamic data structures.
+int_woma_keygen.c	not ported	Generates activation credentials for third-party software.
 mem_alias_lifetime_graph.c	ok	spirv/mem_alias_lifetime_graph.spv
 mem_flexible_arena_rewriter.c	ok	spirv/mem_flexible_arena_rewriter.spv
 mem_provenance_launder_lab.c	ok	spirv/mem_provenance_launder_lab.spv

@@ -1,0 +1,71 @@
+// Each worker computes one output channel, retaining native dot-product order.
+#version 450
+layout(local_size_x = 128) in;
+layout(set = 0, binding = 0, std430) coherent buffer Result {
+    uint words[64];
+    float weights[32768];
+    float bias[128];
+    float activations[409600];
+} data;
+
+const uint INPUT_SIZE = 256u, OUTPUT_SIZE = 128u, BATCH_SIZE = 32u;
+const uint PERIOD = 100u, ITERATIONS = 1000u;
+shared float input_values[8192];
+
+float next_weight(inout uint seed, float scale) {
+    seed = seed * 1103515245u + 12345u;
+    int sample_value = int((seed >> 16u) & 32767u) - 16384;
+    return scale * float(sample_value) / 16384.0;
+}
+
+float approx_tanh(float x) {
+    if (x < -3.0) return -1.0;
+    if (x > 3.0) return 1.0;
+    precise float x2 = x * x;
+    precise float numerator = x * (27.0 + x2);
+    precise float denominator = 27.0 + 9.0 * x2;
+    return numerator / denominator;
+}
+
+void main() {
+    uint channel = gl_LocalInvocationIndex;
+    if (channel == 0u) {
+        uint seed = 12345u;
+        for (uint i = 0u; i < OUTPUT_SIZE * INPUT_SIZE; ++i)
+            data.weights[i] = next_weight(seed, 0.1);
+        for (uint i = 0u; i < OUTPUT_SIZE; ++i)
+            data.bias[i] = next_weight(seed, 0.01);
+    }
+    memoryBarrierBuffer();
+    barrier();
+    for (uint iteration = 0u; iteration < PERIOD; ++iteration) {
+        for (uint index = channel; index < BATCH_SIZE * INPUT_SIZE; index += OUTPUT_SIZE)
+            input_values[index] = 0.1 * float((index + iteration) % PERIOD);
+        barrier();
+        for (uint batch = 0u; batch < BATCH_SIZE; ++batch) {
+            precise float sum = data.bias[channel];
+            for (uint i = 0u; i < INPUT_SIZE; ++i)
+                sum += data.weights[channel * INPUT_SIZE + i] * input_values[batch * INPUT_SIZE + i];
+            uint index = (iteration * BATCH_SIZE + batch) * OUTPUT_SIZE + channel;
+            data.activations[index] = (iteration & 1u) == 0u ? max(sum, 0.0) : approx_tanh(sum);
+        }
+        barrier();
+    }
+    memoryBarrierBuffer();
+    barrier();
+    if (channel != 0u)
+        return;
+
+    // Input values and activation selection both repeat every 100 iterations.
+    // Reuse identical activations while preserving the original reduction order.
+    precise float total = 0.0;
+    for (uint iteration = 0u; iteration < ITERATIONS; ++iteration) {
+        uint offset = (iteration % PERIOD) * BATCH_SIZE * OUTPUT_SIZE;
+        for (uint i = 0u; i < BATCH_SIZE * OUTPUT_SIZE; ++i)
+            total += data.activations[offset + i];
+    }
+    uint bits = floatBitsToUint(total);
+    data.words[0] = 0u;
+    for (uint i = 0u; i < 4u; ++i)
+        data.words[1u + i] = (bits >> (8u * i)) & 255u;
+}

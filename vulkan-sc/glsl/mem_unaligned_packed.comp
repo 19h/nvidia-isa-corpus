@@ -1,0 +1,82 @@
+// Byte offsets reproduce the packed records independently of shader struct layout.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Result {
+    uint words[64];
+    uint bytes[35];
+} data;
+
+const uint RECORD_SIZE = 15u, BLOCK_TAIL = 121u, TAIL = 123u;
+
+void store(uint address, uint length, uint64_t value) {
+    for (uint i = 0u; i < length; ++i) {
+        uint offset = address + i;
+        uint shift = (offset & 3u) * 8u;
+        uint byte = uint((value >> (8u * i)) & 255UL);
+        data.bytes[offset / 4u] = (data.bytes[offset / 4u] & ~(255u << shift)) | (byte << shift);
+    }
+}
+
+uint64_t load(uint address, uint length) {
+    uint64_t value = 0UL;
+    for (uint i = 0u; i < length; ++i) {
+        uint offset = address + i;
+        uint byte = (data.bytes[offset / 4u] >> ((offset & 3u) * 8u)) & 255u;
+        value |= uint64_t(byte) << (8u * i);
+    }
+    return value;
+}
+
+void init_block(uint seed) {
+    store(0u, 1u, uint64_t(seed));
+    store(BLOCK_TAIL, 2u, uint64_t(seed ^ 0x5a5au));
+    for (uint i = 0u; i < 8u; ++i) {
+        uint record = 1u + i * RECORD_SIZE;
+        uint tag = (seed + i) & 255u;
+        uint length = ((seed >> 1u) + i * 3u) & 65535u;
+        uint id = seed ^ (i * 0x9e37u);
+        store(record, 1u, uint64_t(tag));
+        store(record + 1u, 2u, uint64_t(length));
+        store(record + 3u, 4u, uint64_t(id));
+        store(record + 7u, 8u, (uint64_t(id) << 32u) | uint64_t(length | (tag << 16u)));
+    }
+}
+
+uint64_t sum_block() {
+    uint64_t sum = load(0u, 1u) + load(BLOCK_TAIL, 2u);
+    for (uint i = 0u; i < 8u; ++i) {
+        uint record = 1u + i * RECORD_SIZE;
+        sum += load(record, 1u);
+        sum += load(record + 1u, 2u);
+        sum += load(record + 3u, 4u);
+        uint64_t payload = load(record + 7u, 8u);
+        sum ^= payload;
+        sum += payload >> 32u;
+    }
+    return sum;
+}
+
+uint64_t mix_tail(uint seed) {
+    store(TAIL, 1u, uint64_t(seed ^ 0xa5u));
+    for (uint i = 0u; i < 7u; ++i)
+        store(TAIL + 1u + i, 1u, uint64_t(seed + i * 11u));
+    store(TAIL + 8u, 8u, (uint64_t(seed) << 48u) | (uint64_t(seed) << 16u) | uint64_t(seed));
+    uint64_t sum = load(TAIL, 1u);
+    for (uint i = 0u; i < 7u; ++i)
+        sum += load(TAIL + 1u + i, 1u);
+    uint64_t value = load(TAIL + 8u, 8u);
+    return (sum ^ value) + (value >> 17u);
+}
+
+void main() {
+    uint64_t result = 0UL;
+    for (uint i = 0u; i < 1000u; ++i) {
+        init_block(i * 3u + 1u);
+        result += sum_block();
+        result += mix_tail(i ^ 0x1234u);
+    }
+    data.words[0] = 0u;
+    for (uint i = 0u; i < 8u; ++i)
+        data.words[1u + i] = uint((result >> (i * 8u)) & 255UL);
+}

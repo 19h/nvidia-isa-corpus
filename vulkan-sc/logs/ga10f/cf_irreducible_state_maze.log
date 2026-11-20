@@ -1,18 +1,20 @@
+PCC override: /tmp/vksc-orin-36.5.2/pcc-qemu
 
 Starting PCC tool
 ----------------------------
 Build information:
-Driver Version  595.99.02
+Driver Version  540.5.0
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmp0qysbjm1/
+[INFO] Reading JSON files from /tmp/tmpbgh3pocu/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] cf_irreducible_state_maze.json
-[INFO] Parsing JSON: /tmp/tmp0qysbjm1/cf_irreducible_state_maze.json
-[INFO] Compiling JSON: /tmp/tmp0qysbjm1/cf_irreducible_state_maze.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmp0qysbjm1/cf_irreducible_state_maze.spv
-NVVM compilation failed: 3
-[ERROR] Pipeline creation failed
-[ERROR] PCC::run
-Exit status 1.
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmpbgh3pocu/input.json
+[INFO] Parsing DescriptorSet: pSetLayouts_0
+[INFO] Compiling JSON: /tmp/tmpbgh3pocu/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpbgh3pocu/input.spv
+[INFO] Compiled JSON: /tmp/tmpbgh3pocu/input.json successfully.
+[INFO]
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpbgh3pocu/cache.bin

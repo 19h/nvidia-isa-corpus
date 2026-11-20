@@ -1,0 +1,321 @@
+// The test suite's trees use slot indices and explicit traversal stacks.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result {
+    uint words[64];
+} data;
+
+const int NIL = -1, CAPACITY = 16;
+const int INORDER = 0, PREORDER = 1, POSTORDER = 2, LEVELORDER = 3;
+const int APPLE = 0, BANANA = 1, CHERRY = 2, GRAPE = 3, KIWI = 4, MANGO = 5,
+    ORANGE = 6, PINEAPPLE = 7, STRAWBERRY = 8, WATERMELON = 9, ZEBRA = 10;
+// String fixture values map to lexicographically ordered IDs.
+struct Node {
+    int key;
+    ivec2 children;
+};
+struct Tree {
+    int root;
+    uint live;
+    Node nodes[CAPACITY];
+};
+Tree trees[3];
+uint64_t digest = 14695981039346656037UL;
+uint snapshots = 0u;
+int visited[CAPACITY];
+int visited_count;
+bool capacity_exceeded = false;
+
+void clear_tree(int tree) {
+    trees[tree].root = NIL;
+    trees[tree].live = 0u;
+}
+
+int size_of(int tree) { return bitCount(trees[tree].live); }
+
+void link_node(int tree, int parent, int side, int node) {
+    if (parent == NIL)
+        trees[tree].root = node;
+    else
+        trees[tree].nodes[parent].children[side] = node;
+}
+
+int locate(int tree, int key, out int parent, out int side) {
+    int node = trees[tree].root;
+    parent = NIL;
+    side = 0;
+    while (node != NIL && trees[tree].nodes[node].key != key) {
+        parent = node;
+        side = int(key > trees[tree].nodes[node].key);
+        node = trees[tree].nodes[node].children[side];
+    }
+    return node;
+}
+
+bool contains(int tree, int key) {
+    int parent, side;
+    return locate(tree, key, parent, side) != NIL;
+}
+
+void insert(int tree, int key) {
+    int parent, side;
+    if (locate(tree, key, parent, side) != NIL)
+        return;
+    int slot = findLSB((~trees[tree].live) & ((1u << CAPACITY) - 1u));
+    if (slot == NIL) {
+        capacity_exceeded = true;
+        return;
+    }
+    trees[tree].nodes[slot] = Node(key, ivec2(NIL));
+    trees[tree].live |= 1u << slot;
+    link_node(tree, parent, side, slot);
+}
+
+int extremum(int tree, int side) {
+    int node = trees[tree].root;
+    if (node == NIL)
+        return NIL;
+    while (trees[tree].nodes[node].children[side] != NIL)
+        node = trees[tree].nodes[node].children[side];
+    return trees[tree].nodes[node].key;
+}
+
+bool remove_key(int tree, int key) {
+    int parent, side;
+    int slot = locate(tree, key, parent, side);
+    if (slot == NIL)
+        return false;
+    ivec2 children = trees[tree].nodes[slot].children;
+    if (children.x != NIL && children.y != NIL) {
+        int original = slot;
+        parent = slot;
+        side = 1;
+        slot = children.y;
+        while (trees[tree].nodes[slot].children.x != NIL) {
+            parent = slot;
+            side = 0;
+            slot = trees[tree].nodes[slot].children.x;
+        }
+        trees[tree].nodes[original].key = trees[tree].nodes[slot].key;
+        children = trees[tree].nodes[slot].children;
+    }
+    link_node(tree, parent, side, children.x != NIL ? children.x : children.y);
+    trees[tree].live &= ~(1u << slot);
+    return true;
+}
+
+void copy_tree(int from, int to) {
+    trees[to].root = trees[from].root;
+    trees[to].live = trees[from].live;
+    for (int slot = 0; slot < CAPACITY; ++slot)
+        if ((trees[to].live & (1u << slot)) != 0u)
+            trees[to].nodes[slot] = trees[from].nodes[slot];
+}
+
+void move_tree(int from, int to) {
+    copy_tree(from, to);
+    clear_tree(from);
+}
+
+ivec2 properties(int tree) {
+    int root = trees[tree].root;
+    if (root == NIL)
+        return ivec2(-1, 1);
+    int order[CAPACITY];
+    int heights[CAPACITY];
+    int count = 1;
+    order[0] = root;
+    for (int i = 0; i < count; ++i) {
+        ivec2 children = trees[tree].nodes[order[i]].children;
+        if (children.x != NIL) order[count++] = children.x;
+        if (children.y != NIL) order[count++] = children.y;
+    }
+    bool balanced = true;
+    while (count > 0) {
+        int slot = order[--count];
+        ivec2 children = trees[tree].nodes[slot].children;
+        int left = children.x == NIL ? -1 : heights[children.x];
+        int right = children.y == NIL ? -1 : heights[children.y];
+        heights[slot] = 1 + max(left, right);
+        balanced = balanced && abs(left - right) <= 1;
+    }
+    return ivec2(heights[root], int(balanced));
+}
+
+void traverse(int tree, int order) {
+    visited_count = 0;
+    int root = trees[tree].root;
+    if (root == NIL)
+        return;
+    int pending[CAPACITY];
+    pending[0] = root;
+    int count = 1;
+    if (order == LEVELORDER) {
+        for (int i = 0; i < count; ++i) {
+            Node node = trees[tree].nodes[pending[i]];
+            visited[visited_count++] = node.key;
+            if (node.children.x != NIL) pending[count++] = node.children.x;
+            if (node.children.y != NIL) pending[count++] = node.children.y;
+        }
+        return;
+    }
+    int phase[CAPACITY];
+    phase[0] = 0;
+    while (count > 0) {
+        int top = count - 1;
+        Node node = trees[tree].nodes[pending[top]];
+        int stage = phase[top]++;
+        if (stage == (order == INORDER ? 1 : (order == PREORDER ? 0 : 2)))
+            visited[visited_count++] = node.key;
+        if (stage == 2) {
+            --count;
+        } else if (node.children[stage] != NIL) {
+            pending[count] = node.children[stage];
+            phase[count++] = 0;
+        }
+    }
+}
+
+void hash_value(int value) {
+    digest = (digest ^ uint(value)) * 1099511628211UL;
+}
+
+void end_snapshot() {
+    hash_value(-1);
+    ++snapshots;
+}
+
+void snapshot(int tree, int order) {
+    traverse(tree, order);
+    for (int i = 0; i < visited_count; ++i)
+        hash_value(visited[i]);
+    end_snapshot();
+}
+
+void main() {
+    clear_tree(0);
+    const int initial[] = int[](50, 30, 70, 20, 40, 60, 80);
+    for (int i = 0; i < initial.length(); ++i) insert(0, initial[i]);
+    for (int order = INORDER; order <= LEVELORDER; ++order) snapshot(0, order);
+    ivec2 initial_properties = properties(0);
+    uint size = uint(size_of(0));
+    int minimum = extremum(0, 0), maximum = extremum(0, 1);
+    uint found = uint(contains(0, 40)) | (uint(contains(0, 45)) << 1u) |
+                 (uint(contains(0, 60)) << 2u);
+
+    uint removed = uint(remove_key(0, 20));
+    snapshot(0, INORDER);
+    insert(0, 25);
+    removed |= uint(remove_key(0, 30)) << 1u;
+    snapshot(0, INORDER);
+    removed |= uint(remove_key(0, 50)) << 2u;
+    snapshot(0, INORDER);
+    removed |= uint(remove_key(0, 999)) << 3u;
+    int final_size = size_of(0);
+
+    copy_tree(0, 1);
+    snapshot(0, INORDER);
+    snapshot(1, INORDER);
+    insert(0, 100);
+    snapshot(0, INORDER);
+    snapshot(1, INORDER);
+    clear_tree(0);
+    for (int i = 1; i <= 5; ++i) insert(0, i);
+    snapshot(0, INORDER);
+    move_tree(0, 2);
+    snapshot(2, INORDER);
+    int moved_from_size = size_of(0);
+    copy_tree(1, 0);
+    snapshot(0, INORDER);
+    move_tree(2, 0);
+    snapshot(0, INORDER);
+    ivec2 skewed = properties(0);
+    ivec2 empty = properties(2);
+    clear_tree(0);
+    insert(0, 42);
+    ivec2 single = properties(0);
+    clear_tree(0);
+    const int duplicates[] = int[](5, 3, 7, 3, 5, 7);
+    for (int i = 0; i < duplicates.length(); ++i) insert(0, duplicates[i]);
+    snapshot(0, INORDER);
+    int distinct = size_of(0);
+
+    clear_tree(0);
+    const int fruit[] = int[](MANGO, APPLE, ZEBRA, BANANA, ORANGE, KIWI, GRAPE);
+    for (int i = 0; i < fruit.length(); ++i) insert(0, fruit[i]);
+    snapshot(0, INORDER);
+    snapshot(0, PREORDER);
+    int first_fruit = extremum(0, 0), last_fruit = extremum(0, 1);
+    uint fruit_found = uint(contains(0, BANANA)) | (uint(contains(0, CHERRY)) << 1u);
+    insert(0, WATERMELON);
+    snapshot(0, INORDER);
+    bool fruit_removed = remove_key(0, MANGO);
+    snapshot(0, INORDER);
+    snapshot(0, INORDER); // toVector visits the same sorted keys
+    copy_tree(0, 1);
+    insert(0, PINEAPPLE);
+    insert(1, STRAWBERRY);
+    snapshot(0, INORDER);
+    snapshot(1, INORDER);
+
+    clear_tree(0);
+    const int callback_keys[] = int[](4, 2, 6, 1, 3, 5, 7);
+    for (int i = 0; i < callback_keys.length(); ++i) insert(0, callback_keys[i]);
+    traverse(0, INORDER);
+    int sum = 0;
+    for (int i = 0; i < visited_count; ++i) sum += visited[i];
+    traverse(0, PREORDER);
+    for (int i = 0; i < visited_count; ++i)
+        if ((visited[i] & 1) == 0) hash_value(visited[i]);
+    end_snapshot();
+    snapshot(0, LEVELORDER);
+
+    clear_tree(0);
+    const int assertion_keys[] = int[](50, 25, 75, 10, 30, 60, 90);
+    for (int i = 0; i < assertion_keys.length(); ++i) insert(0, assertion_keys[i]);
+    bool valid = size_of(0) == 7 && properties(0) == ivec2(2, 1);
+    valid = valid && contains(0, 50) && contains(0, 25) && contains(0, 60) &&
+        !contains(0, 100) && extremum(0, 0) == 10 && extremum(0, 1) == 90;
+    traverse(0, INORDER);
+    for (int i = 1; i < visited_count; ++i)
+        valid = valid && visited[i - 1] < visited[i];
+    bool removed_once = remove_key(0, 25);
+    bool removed_twice = remove_key(0, 25);
+    valid = valid && removed_once && !removed_twice && size_of(0) == 6 && !contains(0, 25);
+    copy_tree(0, 1);
+    valid = valid && size_of(0) == size_of(1);
+    insert(0, 1000);
+    valid = valid && size_of(0) != size_of(1);
+    int before_move = size_of(0);
+    move_tree(0, 2);
+    valid = valid && size_of(2) == before_move && size_of(0) == 0;
+    clear_tree(2);
+    valid = valid && size_of(2) == 0 && properties(2) == ivec2(-1, 1)
+        && extremum(2, 0) == NIL && extremum(2, 1) == NIL;
+
+    data.words[0] = uint(capacity_exceeded || !fruit_removed || !valid);
+    data.words[1] = uint(digest);
+    data.words[2] = uint(digest >> 32u);
+    data.words[3] = snapshots;
+    data.words[4] = size;
+    data.words[5] = uint(initial_properties.x);
+    data.words[6] = uint(initial_properties.y);
+    data.words[7] = uint(minimum);
+    data.words[8] = uint(maximum);
+    data.words[9] = found;
+    data.words[10] = removed;
+    data.words[11] = uint(final_size);
+    data.words[12] = uint(moved_from_size);
+    data.words[13] = uint(empty.x);
+    data.words[14] = uint(empty.y);
+    data.words[15] = uint(single.x);
+    data.words[16] = uint(single.y);
+    data.words[17] = uint(skewed.x);
+    data.words[18] = uint(skewed.y);
+    data.words[19] = uint(distinct);
+    data.words[20] = uint(first_fruit);
+    data.words[21] = uint(last_fruit);
+    data.words[22] = fruit_found;
+    data.words[23] = uint(sum);
+}

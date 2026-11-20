@@ -1,0 +1,215 @@
+// Represent the x86-64 node layout byte for byte, including padding and union storage.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Result {
+    uint words[64];
+    uint visits[48];
+    uint bytes[4096];
+} data;
+
+const uint NODES = 48u, NODE_SIZE = 56u, PADDING = 7u, SLOT_SIZE = NODE_SIZE + PADDING;
+const uint SCRATCH = NODES * SLOT_SIZE, SCRATCH_SIZE = NODE_SIZE * 2u + 11u;
+const uint FIRST = SCRATCH + SCRATCH_SIZE, SECOND = FIRST + NODE_SIZE, TEMP = SECOND + NODE_SIZE;
+const uint ID = 0u, GENERATION = 4u, BIAS = 8u, TAG = 10u, LIVE = 11u;
+const uint NEXT = 12u, PREV = 18u, EPOCH = 20u, SPAN = 22u, PAYLOAD = 24u;
+
+uint rotl32(uint value, uint amount) {
+    amount &= 31u;
+    return (value << amount) | (value >> ((32u - amount) & 31u));
+}
+
+uint64_t rotl64(uint64_t value, uint amount) {
+    amount &= 63u;
+    return (value << amount) | (value >> ((64u - amount) & 63u));
+}
+
+uint slot(uint index) {
+    return index * SLOT_SIZE + ((index * 5u + 3u) & PADDING);
+}
+
+void clear_bytes(uint start, uint length) {
+    for (uint i = 0u; i < length; ++i)
+        data.bytes[start + i] = 0u;
+}
+
+void copy_bytes(uint from, uint to, uint length) {
+    for (uint i = 0u; i < length; ++i)
+        data.bytes[to + i] = data.bytes[from + i];
+}
+
+uint64_t read_bytes(uint address, uint count) {
+    uint64_t value = 0UL;
+    for (uint i = 0u; i < count; ++i)
+        value |= uint64_t(data.bytes[address + i]) << (8u * i);
+    return value;
+}
+
+void write_bytes(uint address, uint count, uint64_t value) {
+    for (uint i = 0u; i < count; ++i)
+        data.bytes[address + i] = uint((value >> (8u * i)) & 255UL);
+}
+
+uint get32(uint address) { return uint(read_bytes(address, 4u)); }
+uint get16(uint address) { return uint(read_bytes(address, 2u)); }
+void set32(uint address, uint value) { write_bytes(address, 4u, uint64_t(value)); }
+void set16(uint address, uint value) { write_bytes(address, 2u, uint64_t(value)); }
+
+uint64_t checksum_node(uint node, uint64_t seed) {
+    uint64_t hash = seed ^ 0x9e3779b97f4a7c15UL;
+    for (uint i = 0u; i < NODE_SIZE; ++i) {
+        hash ^= uint64_t(data.bytes[node + i]) + (uint64_t(i) << 17u);
+        hash = rotl64(hash, 11u) * 0x100000001b3UL;
+        hash ^= hash >> 29u;
+    }
+    return hash;
+}
+
+void make_node(uint node, uint index, uint seed) {
+    clear_bytes(node, NODE_SIZE);
+    set32(node + ID, seed ^ (index * 0x45d9f3bu));
+    set32(node + GENERATION, seed + index * 17u);
+    set16(node + BIAS, (seed >> (index & 7u)) ^ (index * 29u));
+    uint tag = (seed + index) % 3u;
+    data.bytes[node + TAG] = tag;
+    data.bytes[node + LIVE] = uint(index % 5u != 0u);
+    set16(node + PREV, (index + NODES - 1u) % NODES);
+    set16(node + EPOCH, seed ^ (seed >> 16u));
+    set16(node + SPAN, 1u + index % 11u);
+    for (uint i = 0u; i < 3u; ++i)
+        set16(node + NEXT + 2u * i, (index * (i + 3u) + seed + i) % NODES);
+
+    uint payload = node + PAYLOAD;
+    if (tag == 0u) {
+        set32(payload, rotl32(seed + index, (index % 13u) + 1u));
+        set32(payload + 4u, seed ^ 0xa5a5c3c3u ^ (index * 97u));
+        set16(payload + 8u, seed + index * 7u);
+        data.bytes[payload + 10u] = (seed >> 5u) & 255u;
+        data.bytes[payload + 11u] = (index * 31u) & 255u;
+    } else if (tag == 1u) {
+        for (uint i = 0u; i < 19u; ++i)
+            data.bytes[payload + i] = (seed + index * 13u + i * 19u) & 255u;
+        set32(payload + 20u, seed ^ rotl32(index + 0x10203u, index & 15u));
+    } else {
+        uint64_t a = (uint64_t(seed) << 32u) | uint64_t(index * 0x01010101u);
+        uint64_t b = rotl64(a ^ 0xd6e8feb86659fd93UL, index + 9u);
+        write_bytes(payload, 8u, a);
+        write_bytes(payload + 8u, 8u, b);
+        set32(payload + 16u, uint(a ^ (b >> 32u)));
+    }
+}
+
+uint64_t alias_mutate(uint left, uint right, uint step) {
+    uint64_t mix = (uint64_t(get32(left + ID)) << 21u) ^ get32(right + GENERATION) ^ step;
+    uint edge = get16(left + NEXT + 2u * (step % 3u));
+    uint tag = data.bytes[left + TAG];
+
+    // Keep these loads and stores in source order when both offsets refer to one node.
+    set32(left + GENERATION, get32(left + GENERATION) + get16(right + BIAS) + step + data.bytes[left + LIVE]);
+    set16(right + BIAS, get16(right + BIAS) + get16(left + SPAN) + (step & 31u));
+    set16(left + NEXT + 2u * ((step + tag) % 3u), (edge + get16(right + BIAS) + step) % NODES);
+    set16(right + PREV, (get16(left + PREV) + edge + step) % NODES);
+
+    uint payload = left + PAYLOAD;
+    if (tag == 0u) {
+        uint low = get32(payload) ^ rotl32(get32(right + ID) + step, (get16(left + BIAS) & 15u) + 1u);
+        set32(payload, low);
+        uint high = get32(payload + 4u) + (low ^ get32(right + GENERATION));
+        set32(payload + 4u, high);
+        mix ^= high;
+    } else if (tag == 1u) {
+        uint carry = (get16(right + BIAS) ^ step) & 255u;
+        for (uint i = 0u; i < 19u; ++i) {
+            uint value = data.bytes[payload + i];
+            data.bytes[payload + i] = (value ^ carry ^ (i * 23u)) & 255u;
+            carry = (carry + value + i) & 255u;
+        }
+        uint stamp = get32(payload + 20u) + carry + get32(right + ID);
+        set32(payload + 20u, stamp);
+        mix ^= stamp;
+    } else {
+        uint64_t a = read_bytes(payload, 8u) + rotl64(data.bytes[right + PAYLOAD + step % 32u], step);
+        write_bytes(payload, 8u, a);
+        uint64_t b = read_bytes(payload + 8u, 8u) ^ rotl64(a + get32(right + GENERATION), step + 17u);
+        write_bytes(payload + 8u, 8u, b);
+        set32(payload + 16u, uint(a ^ (b >> 27u)));
+        mix ^= b;
+    }
+    mix ^= checksum_node(left, 0x3141592653589793UL + step);
+    return mix + checksum_node(right, 0x2718281828459045UL ^ mix);
+}
+
+uint64_t copy_retype_window(uint index, uint step) {
+    copy_bytes(slot(index), FIRST, NODE_SIZE);
+    copy_bytes(slot((index + get16(FIRST + SPAN)) % NODES), SECOND, NODE_SIZE);
+    uint first_tag = data.bytes[FIRST + TAG], second_tag = data.bytes[SECOND + TAG];
+    uint identity = get32(FIRST + ID);
+    clear_bytes(SCRATCH, SCRATCH_SIZE);
+    copy_bytes(FIRST, SCRATCH + 1u, NODE_SIZE);
+    copy_bytes(SECOND, SCRATCH + 7u + NODE_SIZE, NODE_SIZE);
+    for (uint offset = 1u; offset + 4u <= NODE_SIZE; offset += 5u) {
+        uint address = SCRATCH + offset;
+        uint word = get32(address) ^ rotl32(offset + step + identity, offset & 15u);
+        set32(address, word);
+    }
+    copy_bytes(SCRATCH + 1u, FIRST, NODE_SIZE);
+    copy_bytes(SCRATCH + 7u + NODE_SIZE, SECOND, NODE_SIZE);
+    data.bytes[FIRST + TAG] = first_tag;
+    data.bytes[SECOND + TAG] = second_tag;
+    data.bytes[FIRST + LIVE] &= 1u;
+    data.bytes[SECOND + LIVE] &= 1u;
+
+    bool alias = (step & 4u) != 0u;
+    uint64_t acc = alias_mutate(FIRST, alias ? FIRST : SECOND, step);
+    copy_bytes(FIRST, slot(index), NODE_SIZE);
+    if (!alias)
+        copy_bytes(SECOND, slot((index + get16(FIRST + SPAN)) % NODES), NODE_SIZE);
+    return acc;
+}
+
+uint64_t walk_graph(uint start) {
+    uint index = start % NODES;
+    uint64_t result = 0x123456789abcdef0UL ^ start;
+    for (uint step = 0u; step < 192u; ++step) {
+        copy_bytes(slot(index), TEMP, NODE_SIZE);
+        ++data.visits[index];
+        result ^= copy_retype_window(index, step);
+        result = rotl64(result + get32(TEMP + ID) + data.visits[index], (step % 23u) + 3u);
+
+        if (((get32(TEMP + GENERATION) ^ get16(TEMP + BIAS) ^ step) & 3u) == 0u) {
+            uint prev = get16(TEMP + PREV);
+            make_node(TEMP, index, uint(result) ^ step);
+            set32(TEMP + GENERATION, get32(TEMP + GENERATION) + data.visits[index]);
+            copy_bytes(TEMP, slot(prev % NODES), NODE_SIZE);
+            index = get16(TEMP + NEXT + 2u) % NODES;
+        } else {
+            uint edge = uint((result >> (step & 15u)) % 3UL);
+            index = get16(TEMP + NEXT + 2u * edge) % NODES;
+        }
+    }
+    return result;
+}
+
+void main() {
+    uint64_t checksum = 0xfeedfacecafebeefUL;
+    uint live_total = 0u;
+    for (uint i = 0u; i < NODES; ++i) {
+        data.visits[i] = 0u;
+        make_node(slot(i), i, 0x6d2b79f5u + i * 0x9e3779b9u);
+    }
+    for (uint pass = 0u; pass < 19u; ++pass) {
+        checksum ^= walk_graph(pass * 7u + uint(checksum));
+        checksum = rotl64(checksum, pass + 5u) + 0x94d049bb133111ebUL;
+    }
+    for (uint i = 0u; i < NODES; ++i) {
+        uint node = slot(i);
+        live_total += data.bytes[node + LIVE];
+        checksum ^= checksum_node(node, uint64_t(i) * 0x100000001b3UL);
+        checksum += data.visits[i] * 0x45d9f3bu;
+    }
+    data.words[0] = 0u;
+    for (uint i = 0u; i < 8u; ++i)
+        data.words[1u + i] = uint((checksum >> (8u * i)) & 255UL);
+    for (uint i = 0u; i < 4u; ++i)
+        data.words[17u + i] = (live_total >> (8u * i)) & 255u;
+}

@@ -391,37 +391,18 @@ static uint64_t parse_duff(__private ProgramState *program_state, const unsigned
     }
 
     if (len != 0u) {
-        size_t n = (len + 7u) / 8u;
-
-#define DUFF_STEP() do { parse_one(program_state, &parser, text); } while (0)
-        switch (len & 7u) {
-            case 0u:
-                do {
-                    DUFF_STEP();
-                    /* fall through */
-            case 7u:
-                    DUFF_STEP();
-                    /* fall through */
-            case 6u:
-                    DUFF_STEP();
-                    /* fall through */
-            case 5u:
-                    DUFF_STEP();
-                    /* fall through */
-            case 4u:
-                    DUFF_STEP();
-                    /* fall through */
-            case 3u:
-                    DUFF_STEP();
-                    /* fall through */
-            case 2u:
-                    DUFF_STEP();
-                    /* fall through */
-            case 1u:
-                    DUFF_STEP();
-                } while (--n != 0u);
-        }
-#undef DUFF_STEP
+        // Execute the initial partial group, then the full groups. Sharing
+        // the step body keeps the structured SPIR-V small on older compilers.
+        size_t groups = (len + 7u) / 8u;
+        size_t steps = len & 7u;
+        if (steps == 0u)
+            steps = 8u;
+        do {
+#pragma clang loop unroll(disable)
+            for (size_t step = 0; step < steps; ++step)
+                parse_one(program_state, &parser, text);
+            steps = 8u;
+        } while (--groups != 0u);
     }
 
     if (parser.value != 0u || parser.key != 0u || parser.state == ST_VALUE) {

@@ -1,0 +1,122 @@
+// The native compiler instantiates the C++ templates. The shader runs the
+// demonstrations with their emitted constants and explicit data representations.
+#version 450
+#include "fixture.glsl"
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result {
+    uint words[64];
+} data;
+
+uint hash_value(uint current, uint value) {
+    return (current ^ value) * 16777619u;
+}
+
+#define HASH_ARRAY(hash, array) \
+    for (int i = 0; i < array.length(); ++i) hash = hash_value(hash, array[i]); \
+    hash = hash_value(hash, 0xffffffffu)
+
+const uint HELLO[] = uint[](104,101,108,108,111);
+const uint ERASED_TEXT[] = uint[](110,111,119,32,73,39,109,32,97,32,115,116,114,105,110,103,33);
+const uint SELECT[] = uint[](83,69,76,69,67,84,32);
+const uint COLUMN_LIST[] = uint[](110,97,109,101,44,32,97,103,101);
+const uint FROM[] = uint[](32,70,82,79,77,32);
+const uint TABLE_NAME[] = uint[](117,115,101,114,115);
+const uint WHERE[] = uint[](32,87,72,69,82,69,32);
+const uint CONDITION[] = uint[](97,103,101,32,62,32,49,56);
+const uint ORDER_BY[] = uint[](32,79,82,68,69,82,32,66,89,32);
+const uint SORT_COLUMN[] = uint[](110,97,109,101);
+
+#define HASH_TEXT(hash, array) \
+    for (int i = 0; i < array.length(); ++i) hash = hash_value(hash, array[i])
+
+struct Tuple {
+    int integer;
+    double real;
+    uint text;
+};
+const uint INTEGER = 1u, STRING = 2u, REAL = 3u;
+struct Any {
+    uint type;
+    uvec2 payload;
+};
+
+void put_double(int word, double value) {
+    uvec2 bits = unpackDouble2x32(value);
+    data.words[word] = bits.x;
+    data.words[word + 1] = bits.y;
+}
+
+uint compile_time_digest() {
+    uint digest = 2166136261u;
+    HASH_ARRAY(digest, numeric_constants);
+    HASH_ARRAY(digest, primes);
+    HASH_ARRAY(digest, unsorted_keys);
+    HASH_ARRAY(digest, selection_sorted);
+    HASH_ARRAY(digest, bubble_sorted);
+    HASH_ARRAY(digest, factorial_sequence);
+    HASH_ARRAY(digest, fibonacci_sequence);
+    return digest;
+}
+
+void main() {
+    const double v1[] = double[](1, 2, 3, 4), v2[] = double[](5, 6, 7, 8);
+    double dot_product = 0.0lf;
+    for (int i = 0; i < v1.length(); ++i) {
+        double expression = 2.0lf * v1[i] + v2[i] * 3.0lf - v1[i];
+        put_double(2 + 2 * i, expression);
+        dot_product += v1[i] * v2[i];
+    }
+    put_double(10, dot_product);
+
+    uint tuple_text = 2166136261u;
+    HASH_TEXT(tuple_text, HELLO);
+    Tuple tuple = Tuple(42, 3.14lf, tuple_text);
+    data.words[12] = uint(tuple.integer);
+    put_double(13, tuple.real);
+    data.words[15] = tuple.text;
+
+    const double PI = 3.14159265358979lf;
+    double radius = 5.0lf, width = 4.0lf, height = 6.0lf;
+    put_double(16, PI * radius * radius);
+    put_double(18, 2.0lf * PI * radius);
+    put_double(20, width * height);
+    put_double(22, 2.0lf * (width + height));
+
+    int person_count = 0;
+    int alice_age = 30; ++person_count;
+    int bob_age = 25; ++person_count;
+    int clone_age = alice_age; ++person_count;
+    data.words[24] = uint(person_count);
+    data.words[25] = uint(alice_age > bob_age);
+
+    uint total = 0u, product = 1u;
+    for (uint value = 1u; value <= 5u; ++value) {
+        total += value;
+        product *= value;
+    }
+    data.words[26] = total;
+    data.words[27] = product;
+
+    uint erased_text = 2166136261u;
+    HASH_TEXT(erased_text, ERASED_TEXT);
+    Any value = Any(INTEGER, uvec2(42u, 0u));
+    data.words[28] = value.type == INTEGER ? value.payload.x : 0u;
+    value = Any(STRING, uvec2(erased_text, 0u));
+    data.words[29] = value.type == STRING ? value.payload.x : 0u;
+    value = Any(REAL, unpackDouble2x32(3.14159lf));
+    put_double(30, value.type == REAL ? packDouble2x32(value.payload) : 0.0lf);
+
+    // Fluent method calls append the clause and its argument in order.
+    uint query = 2166136261u;
+    HASH_TEXT(query, SELECT);
+    HASH_TEXT(query, COLUMN_LIST);
+    HASH_TEXT(query, FROM);
+    HASH_TEXT(query, TABLE_NAME);
+    HASH_TEXT(query, WHERE);
+    HASH_TEXT(query, CONDITION);
+    HASH_TEXT(query, ORDER_BY);
+    HASH_TEXT(query, SORT_COLUMN);
+    data.words[32] = query;
+    data.words[0] = uint(clone_age != alice_age);
+    data.words[1] = compile_time_digest();
+}

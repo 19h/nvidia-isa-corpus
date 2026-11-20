@@ -4,15 +4,15 @@ Starting PCC tool
 Build information:
 Driver Version  595.99.02
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmpp8aoi13z/
+[INFO] Reading JSON files from /tmp/tmpmeb487uj/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] simd_image_filter.json
-[INFO] Parsing JSON: /tmp/tmpp8aoi13z/simd_image_filter.json
-[INFO] Compiling JSON: /tmp/tmpp8aoi13z/simd_image_filter.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmpp8aoi13z/simd_image_filter.spv
-[INFO] Compiled JSON: /tmp/tmpp8aoi13z/simd_image_filter.json successfully.
-[INFO] 
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmpmeb487uj/input.json
+[INFO] Compiling JSON: /tmp/tmpmeb487uj/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpmeb487uj/input.spv
+[INFO] Compiled JSON: /tmp/tmpmeb487uj/input.json successfully.
+[INFO]
 [INFO] Nothing to merge.
-[INFO] CacheData written to /tmp/tmpp8aoi13z/cache.bin
+[INFO] CacheData written to /tmp/tmpmeb487uj/cache.bin

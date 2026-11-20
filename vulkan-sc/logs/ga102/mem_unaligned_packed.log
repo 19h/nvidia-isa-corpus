@@ -4,15 +4,15 @@ Starting PCC tool
 Build information:
 Driver Version  595.99.02
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmphg8eeq5i/
+[INFO] Reading JSON files from /tmp/tmp46emcmhd/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] mem_unaligned_packed.json
-[INFO] Parsing JSON: /tmp/tmphg8eeq5i/mem_unaligned_packed.json
-[INFO] Compiling JSON: /tmp/tmphg8eeq5i/mem_unaligned_packed.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmphg8eeq5i/mem_unaligned_packed.spv
-[INFO] Compiled JSON: /tmp/tmphg8eeq5i/mem_unaligned_packed.json successfully.
-[INFO] 
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmp46emcmhd/input.json
+[INFO] Compiling JSON: /tmp/tmp46emcmhd/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmp46emcmhd/input.spv
+[INFO] Compiled JSON: /tmp/tmp46emcmhd/input.json successfully.
+[INFO]
 [INFO] Nothing to merge.
-[INFO] CacheData written to /tmp/tmphg8eeq5i/cache.bin
+[INFO] CacheData written to /tmp/tmp46emcmhd/cache.bin

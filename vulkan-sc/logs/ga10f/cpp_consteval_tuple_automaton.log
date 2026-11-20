@@ -1,18 +1,20 @@
+PCC override: /tmp/vksc-orin-36.5.2/pcc-qemu
 
 Starting PCC tool
 ----------------------------
 Build information:
-Driver Version  595.99.02
+Driver Version  540.5.0
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmpr82qo63e/
+[INFO] Reading JSON files from /tmp/tmpa_jm49li/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] cpp_consteval_tuple_automaton.json
-[INFO] Parsing JSON: /tmp/tmpr82qo63e/cpp_consteval_tuple_automaton.json
-[INFO] Compiling JSON: /tmp/tmpr82qo63e/cpp_consteval_tuple_automaton.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmpr82qo63e/cpp_consteval_tuple_automaton.spv
-NVVM compilation failed: 3
-[ERROR] Pipeline creation failed
-[ERROR] PCC::run
-Exit status 1.
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmpa_jm49li/input.json
+[INFO] Parsing DescriptorSet: pSetLayouts_0
+[INFO] Compiling JSON: /tmp/tmpa_jm49li/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpa_jm49li/input.spv
+[INFO] Compiled JSON: /tmp/tmpa_jm49li/input.json successfully.
+[INFO]
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpa_jm49li/cache.bin

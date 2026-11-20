@@ -1,18 +1,20 @@
+PCC override: /tmp/vksc-orin-36.5.2/pcc-qemu
 
 Starting PCC tool
 ----------------------------
 Build information:
-Driver Version  595.99.02
+Driver Version  540.5.0
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmpanap6b1b/
+[INFO] Reading JSON files from /tmp/tmps1ufpqqa/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] fp_mandelbrot.json
-[INFO] Parsing JSON: /tmp/tmpanap6b1b/fp_mandelbrot.json
-[INFO] Compiling JSON: /tmp/tmpanap6b1b/fp_mandelbrot.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmpanap6b1b/fp_mandelbrot.spv
-NVVM compilation failed: 3
-[ERROR] Pipeline creation failed
-[ERROR] PCC::run
-Exit status 1.
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmps1ufpqqa/input.json
+[INFO] Parsing DescriptorSet: pSetLayouts_0
+[INFO] Compiling JSON: /tmp/tmps1ufpqqa/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmps1ufpqqa/input.spv
+[INFO] Compiled JSON: /tmp/tmps1ufpqqa/input.json successfully.
+[INFO]
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmps1ufpqqa/cache.bin

@@ -1,0 +1,118 @@
+// One workgroup drains the corpus's task batches with an atomic work queue.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 64) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result {
+    uint words[64];
+} data;
+
+const uint WORKERS = 64u, CHUNKS = 2u * WORKERS;
+const uint SQUARE_LIMIT = 10000000u;
+const uint CALLABLES = 5u, EXCEPTIONS = 2u, VOLUME = 1000u, VOID_TASKS = 10u, PENDING = 20u;
+const uint CALL_START = CHUNKS;
+const uint EXCEPTION_START = CALL_START + CALLABLES;
+const uint VOLUME_START = EXCEPTION_START + EXCEPTIONS;
+const uint VOID_START = VOLUME_START + VOLUME;
+const uint PENDING_START = VOID_START + VOID_TASKS;
+const uint TASKS = PENDING_START + PENDING;
+const int INVALID_ARGUMENT = 1, POOL_STOPPED = 2;
+const uint OPEN = 0u, DRAINING = 1u, STOPPED = 2u;
+shared uint cursor;
+shared uint pool_state;
+shared uint completed;
+shared uint volume_completed;
+shared uint pending_completed;
+shared int counter;
+shared uint64_t square_results[CHUNKS];
+shared int callable_results[CALLABLES];
+shared int exception_results[EXCEPTIONS];
+shared uint volume_results[VOLUME];
+
+int callable(uint index) {
+    // Operation tag and bound arguments for each submitted callable.
+    const ivec3 calls[] = ivec3[](ivec3(0, 10, 20), ivec3(0, 100, 200), ivec3(1, 7, 5),
+        ivec3(2, 8, 0), ivec3(1, 42, 2));
+    ivec3 call = calls[index];
+    switch (call.x) {
+    case 0: return call.y + call.z;
+    case 1: return call.y * call.z;
+    default: return call.y * call.y;
+    }
+}
+
+void execute_task(uint task) {
+    if (task < CALL_START) {
+        uint start = task * (SQUARE_LIMIT / CHUNKS);
+        uint end = task == CHUNKS - 1u ? SQUARE_LIMIT : start + SQUARE_LIMIT / CHUNKS;
+        uint64_t sum = 0UL;
+        for (uint i = start; i < end; ++i)
+            sum += uint64_t(i) * i;
+        square_results[task] = sum;
+    } else if (task < EXCEPTION_START) {
+        callable_results[task - CALL_START] = callable(task - CALL_START);
+    } else if (task < VOLUME_START) {
+        uint index = task - EXCEPTION_START;
+        int argument = index == 0u ? 10 : -5;
+        exception_results[index] = argument < 0 ? -INVALID_ARGUMENT : argument * 2;
+    } else if (task < VOID_START) {
+        uint index = task - VOLUME_START;
+        uint total = 0u;
+        for (uint j = 0u; j < 1000u; ++j)
+            total += (index + j) % 17u;
+        volume_results[index] = total;
+        atomicAdd(volume_completed, 1u);
+    } else if (task < PENDING_START) {
+        atomicAdd(counter, int(task - VOID_START));
+    } else {
+        atomicAdd(pending_completed, 1u);
+    }
+}
+
+int submission_status() {
+    return pool_state == OPEN ? 0 : POOL_STOPPED;
+}
+
+void main() {
+    uint worker = gl_LocalInvocationIndex;
+    if (worker == 0u) {
+        cursor = 0u;
+        pool_state = DRAINING;
+        completed = 0u;
+        volume_completed = 0u;
+        pending_completed = 0u;
+        counter = 0;
+    }
+    barrier();
+    while (true) {
+        uint task = atomicAdd(cursor, 1u);
+        if (task >= TASKS)
+            break;
+        execute_task(task);
+        atomicAdd(completed, 1u);
+    }
+    barrier();
+    if (worker != 0u)
+        return;
+
+    uint64_t square_sum = 0UL;
+    for (uint i = 0u; i < CHUNKS; ++i)
+        square_sum += square_results[i];
+    uint volume_sum = 0u;
+    for (uint i = 0u; i < VOLUME; ++i)
+        volume_sum += volume_results[i];
+
+    // The completion barrier drains pending tasks before the pool stops.
+    pool_state = completed == TASKS ? STOPPED : pool_state;
+    data.words[0] = uint(pool_state != STOPPED);
+    data.words[1] = uint(square_sum);
+    data.words[2] = uint(square_sum >> 32u);
+    for (uint i = 0u; i < CALLABLES; ++i)
+        data.words[3 + i] = uint(callable_results[i]);
+    data.words[8] = uint(exception_results[0]);
+    data.words[9] = uint(-exception_results[1]);
+    data.words[10] = volume_sum;
+    data.words[11] = volume_completed;
+    data.words[12] = uint(counter);
+    data.words[13] = pending_completed;
+    data.words[14] = uint(submission_status());
+}

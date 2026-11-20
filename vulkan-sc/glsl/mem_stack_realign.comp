@@ -1,0 +1,37 @@
+// Use bounded scratch regions for the original fixed, variable, and aligned buffers.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Result {
+    uint words[64];
+    uint fixed_bytes[64];
+    uint variable_words[64];
+    uint aligned_bytes[209];
+} data;
+
+uint64_t stack_mix(uint seed, uint n) {
+    for (uint i = 0u; i < 64u; ++i)
+        data.fixed_bytes[i] = (seed + i * 3u) & 255u;
+    uint length = (n & 63u) + 1u;
+    for (uint i = 0u; i < length; ++i)
+        data.variable_words[i] = seed ^ (i * 0x9e37u);
+    uint dynamic_size = length * 3u + 17u;
+    for (uint i = 0u; i < dynamic_size; ++i)
+        data.aligned_bytes[i] = data.fixed_bytes[i & 63u] ^ (data.variable_words[i % length] & 255u);
+
+    uint64_t sum = 0UL;
+    for (uint i = 0u; i < length; ++i)
+        sum += data.variable_words[i];
+    for (uint i = 0u; i < dynamic_size; i += 5u)
+        sum += data.aligned_bytes[i];
+    return sum ^ (uint64_t(data.aligned_bytes[0]) << 56u);
+}
+
+void main() {
+    uint64_t result = 0UL;
+    for (uint i = 1u; i < 2000u; ++i)
+        result += stack_mix(i * 7u + 3u, i);
+    data.words[0] = 0u;
+    for (uint i = 0u; i < 8u; ++i)
+        data.words[1u + i] = uint((result >> (8u * i)) & 255UL);
+}

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpd8x8qelc/
+[INFO] Enabled device extensions:
+[INFO] Found the following files:
+[INFO] 04_bst.json
+[INFO] Parsing JSON: /tmp/tmpd8x8qelc/04_bst.json
+[INFO] Compiling JSON: /tmp/tmpd8x8qelc/04_bst.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpd8x8qelc/04_bst.spv
+[INFO] Compiled JSON: /tmp/tmpd8x8qelc/04_bst.json successfully.
+[INFO]
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpd8x8qelc/cache.bin

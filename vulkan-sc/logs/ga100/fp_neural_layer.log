@@ -4,15 +4,15 @@ Starting PCC tool
 Build information:
 Driver Version  595.99.02
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmppvdwle65/
+[INFO] Reading JSON files from /tmp/tmpp0z4r0e3/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] fp_neural_layer.json
-[INFO] Parsing JSON: /tmp/tmppvdwle65/fp_neural_layer.json
-[INFO] Compiling JSON: /tmp/tmppvdwle65/fp_neural_layer.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmppvdwle65/fp_neural_layer.spv
-[INFO] Compiled JSON: /tmp/tmppvdwle65/fp_neural_layer.json successfully.
-[INFO] 
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmpp0z4r0e3/input.json
+[INFO] Compiling JSON: /tmp/tmpp0z4r0e3/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpp0z4r0e3/input.spv
+[INFO] Compiled JSON: /tmp/tmpp0z4r0e3/input.json successfully.
+[INFO]
 [INFO] Nothing to merge.
-[INFO] CacheData written to /tmp/tmppvdwle65/cache.bin
+[INFO] CacheData written to /tmp/tmpp0z4r0e3/cache.bin

@@ -1,0 +1,630 @@
+// Bounded JSON tokenizer, tree, and serializer for the corpus demonstrations.
+#version 450
+#include "fixture.glsl"
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Result {
+    uint words[64];
+    uint strings[8192];
+    uint encoded[8192];
+} data;
+
+const int ARRAY = 1, OBJECT = 2, NUMBER = 3, STRING = 4, TRUE = 5, FALSE = 6, NULL_VALUE = 7;
+const int NIL = -1, CAPACITY = 256, BUFFER_SIZE = 8192;
+const ivec2 NO_TEXT = ivec2(0);
+struct Node {
+    int kind;
+    int first, next, parent;
+    ivec2 key, text;
+    double number;
+};
+Node nodes[CAPACITY];
+int node_count, string_count;
+int cursor, input_end, encoded_count;
+bool encoded_input, error;
+uint digest;
+int serialized_count;
+
+uint fixture_byte(int offset) {
+    return (fixture[offset / 4] >> (8 * (offset & 3))) & 255u;
+}
+
+uint input_byte(int offset) {
+    if (offset >= input_end)
+        return 0u;
+    return encoded_input ? data.encoded[offset] : fixture_byte(offset);
+}
+
+uint peek() { return input_byte(cursor); }
+
+void space() {
+    while (peek() == 32u || (peek() >= 9u && peek() <= 13u))
+        ++cursor;
+}
+
+bool consume(uint character) {
+    if (peek() != character)
+        return false;
+    ++cursor;
+    return true;
+}
+
+void save_byte(uint byte) {
+    if (string_count < BUFFER_SIZE)
+        data.strings[string_count++] = byte;
+    else
+        error = true;
+}
+
+ivec2 save_fixture(ivec2 span) {
+    int start = string_count;
+    for (int i = 0; i < span.y; ++i)
+        save_byte(fixture_byte(span.x + i));
+    return ivec2(start, string_count - start);
+}
+
+int compare_text(ivec2 a, ivec2 b) {
+    for (int i = 0; i < min(a.y, b.y); ++i) {
+        int difference = int(data.strings[a.x + i]) - int(data.strings[b.x + i]);
+        if (difference != 0)
+            return difference;
+    }
+    return a.y - b.y;
+}
+
+bool container(int kind) { return kind == ARRAY || kind == OBJECT; }
+
+int new_node(int kind) {
+    if (node_count == CAPACITY) {
+        error = true;
+        return NIL;
+    }
+    int node = node_count++;
+    nodes[node] = Node(kind, NIL, NIL, NIL, NO_TEXT, NO_TEXT, 0.0lf);
+    return node;
+}
+
+void attach_node(int parent, int node, ivec2 key) {
+    if (node == NIL || parent == NIL) {
+        error = true;
+        return;
+    }
+    int previous = NIL;
+    int current = nodes[parent].first;
+    if (nodes[parent].kind == OBJECT) {
+        while (current != NIL && compare_text(nodes[current].key, key) < 0) {
+            previous = current;
+            current = nodes[current].next;
+        }
+        if (current != NIL && compare_text(nodes[current].key, key) == 0)
+            current = nodes[current].next;
+    } else {
+        while (current != NIL) {
+            previous = current;
+            current = nodes[current].next;
+        }
+    }
+    nodes[node].key = key;
+    nodes[node].parent = parent;
+    nodes[node].next = current;
+    if (previous == NIL)
+        nodes[parent].first = node;
+    else
+        nodes[previous].next = node;
+}
+
+int find_key(int parent, ivec2 fixture_key) {
+    if (parent == NIL)
+        return NIL;
+    int mark = string_count;
+    ivec2 key = save_fixture(fixture_key);
+    int child = nodes[parent].first;
+    while (child != NIL && compare_text(nodes[child].key, key) != 0)
+        child = nodes[child].next;
+    string_count = mark;
+    return child;
+}
+
+void erase_key(int parent, ivec2 fixture_key) {
+    int to_remove = find_key(parent, fixture_key);
+    if (to_remove == NIL)
+        return;
+    int child = nodes[parent].first;
+    if (child == to_remove) {
+        nodes[parent].first = nodes[child].next;
+        return;
+    }
+    while (nodes[child].next != to_remove)
+        child = nodes[child].next;
+    nodes[child].next = nodes[to_remove].next;
+}
+
+int hex_quad() {
+    int codepoint = 0;
+    for (int i = 0; i < 4; ++i) {
+        uint c = peek();
+        int value;
+        if (c >= 48u && c <= 57u) value = int(c - 48u);
+        else if ((c | 32u) >= 97u && (c | 32u) <= 102u) value = int((c | 32u) - 87u);
+        else return -1;
+        ++cursor;
+        codepoint = (codepoint << 4) | value;
+    }
+    return codepoint;
+}
+
+void save_utf8(uint c) {
+    if (c < 128u) {
+        save_byte(c);
+        return;
+    }
+    if (c < 2048u) {
+        save_byte(192u | (c >> 6u));
+    } else {
+        if (c < 65536u) {
+            save_byte(224u | (c >> 12u));
+        } else {
+            save_byte(240u | (c >> 18u));
+            save_byte(128u | ((c >> 12u) & 63u));
+        }
+        save_byte(128u | ((c >> 6u) & 63u));
+    }
+    save_byte(128u | (c & 63u));
+}
+
+ivec2 read_string() {
+    int start = string_count;
+    if (!consume(34u)) {
+        error = true;
+        return NO_TEXT;
+    }
+    while (cursor < input_end && !error && peek() != 34u) {
+        uint c = input_byte(cursor++);
+        if (c < 32u) {
+            error = true;
+            break;
+        }
+        if (c != 92u) {
+            save_byte(c);
+            continue;
+        }
+        uint escape = input_byte(cursor++);
+        switch (escape) {
+        case 34u: case 47u: case 92u: save_byte(escape); break;
+        case 98u: save_byte(8u); break;
+        case 102u: save_byte(12u); break;
+        case 110u: save_byte(10u); break;
+        case 114u: save_byte(13u); break;
+        case 116u: save_byte(9u); break;
+        case 117u: {
+            int high = hex_quad();
+            if (high >= 0xd800 && high <= 0xdbff &&
+                peek() == 92u && input_byte(cursor + 1) == 117u) {
+                cursor += 2;
+                int low = hex_quad();
+                if (low >= 0xdc00 && low <= 0xdfff)
+                    high = 0x10000 + ((high - 0xd800) << 10) + (low - 0xdc00);
+                else if (low < 0)
+                    high = -1;
+            }
+            if (high < 0) error = true;
+            else save_utf8(uint(high));
+            break;
+        }
+        default: error = true; break;
+        }
+    }
+    if (!consume(34u))
+        error = true;
+    return ivec2(start, string_count - start);
+}
+
+bool digit(uint c) { return c >= 48u && c <= 57u; }
+
+double read_number(out ivec2 lexeme) {
+    int start = cursor;
+    bool negative = consume(45u);
+    double value = 0.0lf;
+    int exponent = 0;
+    if (!digit(peek())) error = true;
+    else if (!consume(48u)) {
+        while (digit(peek())) {
+            value = value * 10.0lf + double(peek() - 48u);
+            ++cursor;
+        }
+    }
+    if (consume(46u)) {
+        if (!digit(peek())) error = true;
+        while (digit(peek())) {
+            value = value * 10.0lf + double(peek() - 48u);
+            --exponent;
+            ++cursor;
+        }
+    }
+    if (consume(101u) || consume(69u)) {
+        bool smaller = consume(45u);
+        if (!smaller) consume(43u);
+        if (!digit(peek())) error = true;
+        int scale = 0;
+        while (digit(peek())) {
+            scale = min(4096, scale * 10 + int(peek() - 48u));
+            ++cursor;
+        }
+        exponent += smaller ? -scale : scale;
+    }
+    int from = string_count;
+    for (int i = start; i < cursor; ++i)
+        save_byte(input_byte(i));
+    lexeme = ivec2(from, string_count - from);
+    if (abs(exponent) > 308) {
+        error = true;
+        return 0.0lf;
+    }
+    for (int i = 0; i < abs(exponent); ++i) {
+        if (exponent < 0) value /= 10.0lf;
+        else value *= 10.0lf;
+    }
+    if (isinf(value))
+        error = true;
+    return negative ? -value : value;
+}
+
+bool keyword(uint packed, int size) {
+    for (int i = 0; i < size; ++i)
+        if (!consume((packed >> (8 * i)) & 255u))
+            return false;
+    return true;
+}
+
+int read_value() {
+    uint token = peek();
+    int kind;
+    if (token == 123u || token == 91u) kind = token == 123u ? OBJECT : ARRAY;
+    else if (token == 34u) kind = STRING;
+    else if (token == 45u || digit(token)) kind = NUMBER;
+    else if (token == 116u && keyword(0x65757274u, 4)) kind = TRUE;
+    else if (token == 102u && keyword(0x736c6166u, 4) && consume(101u)) kind = FALSE;
+    else if (token == 110u && keyword(0x6c6c756eu, 4)) kind = NULL_VALUE;
+    else {
+        error = true;
+        return NIL;
+    }
+
+    int node = new_node(kind);
+    if (node == NIL)
+        return NIL;
+    if (container(kind)) ++cursor;
+    else if (kind == STRING) nodes[node].text = read_string();
+    else if (kind == NUMBER) {
+        ivec2 lexeme;
+        nodes[node].number = read_number(lexeme);
+        nodes[node].text = lexeme;
+    }
+    return node;
+}
+
+int parse_json(ivec2 span, bool from_output) {
+    node_count = 0;
+    string_count = 0;
+    error = false;
+    encoded_input = from_output;
+    cursor = span.x;
+    input_end = span.x + span.y;
+    space();
+    int root = read_value();
+    if (error)
+        return NIL;
+    int parent = container(nodes[root].kind) ? root : NIL;
+    bool first = true;
+    while (parent != NIL && !error) {
+        space();
+        bool object = nodes[parent].kind == OBJECT;
+        uint closer = object ? 125u : 93u;
+        if (consume(closer)) {
+            parent = nodes[parent].parent;
+            first = false;
+            continue;
+        }
+        if (!first && !consume(44u))
+            return NIL;
+        space();
+        ivec2 key = NO_TEXT;
+        if (object) {
+            key = read_string();
+            space();
+            if (error || !consume(58u)) return NIL;
+            space();
+        }
+        int child = read_value();
+        if (error) return NIL;
+        attach_node(parent, child, key);
+        first = container(nodes[child].kind);
+        if (first)
+            parent = child;
+    }
+    space();
+    return !error && cursor == input_end ? root : NIL;
+}
+
+void emit_byte(uint byte) {
+    if (encoded_count < BUFFER_SIZE)
+        data.encoded[encoded_count++] = byte;
+    else
+        error = true;
+}
+
+void emit_string(ivec2 span) {
+    emit_byte(34u);
+    for (int i = 0; i < span.y; ++i) {
+        uint byte = data.strings[span.x + i];
+        if (byte == 34u || byte == 92u)
+            emit_byte(92u);
+        if (byte < 32u) {
+            emit_byte(92u);
+            if (byte == 8u) emit_byte(98u);
+            else if (byte == 9u) emit_byte(116u);
+            else if (byte == 10u) emit_byte(110u);
+            else if (byte == 12u) emit_byte(102u);
+            else if (byte == 13u) emit_byte(114u);
+            else {
+                emit_byte(117u);
+                emit_byte(48u);
+                emit_byte(48u);
+                emit_byte(48u + byte / 16u);
+                uint hex = byte & 15u;
+                emit_byte(hex < 10u ? hex + 48u : hex + 87u);
+            }
+        } else {
+            emit_byte(byte);
+        }
+    }
+    emit_byte(34u);
+}
+
+void emit_word(uint packed) {
+    for (uint i = 0u; i < 4u; ++i)
+        emit_byte((packed >> (8u * i)) & 255u);
+}
+
+void hash_value(uint value) {
+    digest = (digest ^ value) * 16777619u;
+}
+
+void hash_string(ivec2 span) {
+    hash_value(uint(span.y));
+    for (int i = 0; i < span.y; ++i)
+        hash_value(data.strings[span.x + i]);
+}
+
+void write_node(int index, bool semantic) {
+    Node node = nodes[index];
+    if (semantic) {
+        ++serialized_count;
+        hash_value(uint(node.kind));
+        if (node.kind == NUMBER) hash_value(floatBitsToUint(float(node.number)));
+        if (node.kind == STRING) hash_string(node.text);
+        return;
+    }
+    switch (node.kind) {
+    case ARRAY: emit_byte(91u); break;
+    case OBJECT: emit_byte(123u); break;
+    case NUMBER:
+        for (int i = 0; i < node.text.y; ++i)
+            emit_byte(data.strings[node.text.x + i]);
+        break;
+    case STRING: emit_string(node.text); break;
+    case TRUE: emit_word(0x65757274u); break;
+    case FALSE: emit_word(0x736c6166u); emit_byte(101u); break;
+    case NULL_VALUE: emit_word(0x6c6c756eu); break;
+    }
+}
+
+void indent_line(int depth, bool pretty) {
+    if (pretty) {
+        emit_byte(10u);
+        for (int i = 0; i < 2 * depth; ++i)
+            emit_byte(32u);
+    }
+}
+
+void serialize(int root, bool pretty, bool semantic) {
+    digest = 2166136261u;
+    encoded_count = 0;
+    serialized_count = 0;
+    int current = root;
+    int depth = 0;
+    write_node(current, semantic);
+    bool descend = true;
+    while (current != NIL) {
+        int child = nodes[current].first;
+        int kind = nodes[current].kind;
+        if (descend && child != NIL) {
+            ++depth;
+            current = child;
+            indent_line(depth, pretty);
+        } else {
+            if (container(kind)) {
+                if (semantic) hash_value(0xffffffffu);
+                else {
+                    if (child != NIL) indent_line(depth, pretty);
+                    emit_byte(kind == ARRAY ? 93u : 125u);
+                }
+            }
+            int sibling = nodes[current].next;
+            if (sibling == NIL) {
+                current = nodes[current].parent;
+                --depth;
+                descend = false;
+                continue;
+            }
+            current = sibling;
+            if (!semantic) emit_byte(44u);
+            indent_line(depth, pretty);
+        }
+        if (nodes[nodes[current].parent].kind == OBJECT) {
+            if (semantic) hash_string(nodes[current].key);
+            else {
+                emit_string(nodes[current].key);
+                emit_byte(58u);
+                if (pretty) emit_byte(32u);
+            }
+        }
+        write_node(current, semantic);
+        descend = true;
+    }
+}
+
+int add(int parent, ivec2 key, int kind) {
+    int child = new_node(kind);
+    attach_node(parent, child, save_fixture(key));
+    return child;
+}
+
+void add_string(int parent, ivec2 key, ivec2 text) {
+    int child = add(parent, key, STRING);
+    if (child != NIL)
+        nodes[child].text = save_fixture(text);
+}
+
+void add_integer(int parent, ivec2 key, uint value) {
+    int child = add(parent, key, NUMBER);
+    if (child == NIL)
+        return;
+    nodes[child].number = double(value);
+    uint digits[10];
+    int count = 0;
+    do {
+        digits[count++] = 48u + value % 10u;
+        value /= 10u;
+    } while (value != 0u);
+    int start = string_count;
+    while (count > 0)
+        save_byte(digits[--count]);
+    nodes[child].text = ivec2(start, string_count - start);
+}
+
+void modify_document(int root) {
+    add_string(root, NEW_FIELD, ADDED_TEXT);
+    add_integer(root, TIMESTAMP, 1234567890u);
+    add_integer(find_key(root, NUMBERS), ADDED, 999u);
+    add_integer(root, VERSION, 3u);
+    add(root, ENABLED, FALSE);
+    int strings = find_key(find_key(root, ARRAYS), STRINGS);
+    add_string(strings, NO_TEXT, DATE);
+    add_string(strings, NO_TEXT, ELDERBERRY);
+    int new_array = add(root, NEW_ARRAY, ARRAY);
+    for (uint value = 10u; value <= 50u; value += 10u)
+        add_integer(new_array, NO_TEXT, value);
+    int new_object = add(root, NEW_OBJECT, OBJECT);
+    add_string(new_object, KEY1, VALUE1);
+    add_integer(new_object, KEY2, 42u);
+    int inner_array = add(new_object, KEY3, ARRAY);
+    add(inner_array, NO_TEXT, TRUE);
+    add(inner_array, NO_TEXT, FALSE);
+    add(inner_array, NO_TEXT, NULL_VALUE);
+    erase_key(root, METADATA);
+}
+
+int make_config() {
+    int root = new_node(OBJECT);
+    add_string(root, APPLICATION, APP);
+    int settings = add(root, SETTINGS, OBJECT);
+    add_string(settings, THEME, DARK);
+    add_integer(settings, FONT_SIZE, 14u);
+    add(settings, AUTO_SAVE, TRUE);
+    int files = add(settings, FILES, ARRAY);
+    add_string(files, NO_TEXT, FILE1);
+    add_string(files, NO_TEXT, FILE2);
+    int users = add(root, USERS, ARRAY);
+    int alice = add(users, NO_TEXT, OBJECT), bob = add(users, NO_TEXT, OBJECT);
+    add_string(alice, NAME, ALICE);
+    add_string(alice, ROLE, ADMIN);
+    add_string(bob, NAME, BOB);
+    add_string(bob, ROLE, USER);
+    return root;
+}
+
+int make_mixed() {
+    int root = new_node(ARRAY);
+    add_integer(root, NO_TEXT, 42u);
+    add_string(root, NO_TEXT, HELLO);
+    add(root, NO_TEXT, TRUE);
+    add(root, NO_TEXT, NULL_VALUE);
+    int object = add(root, NO_TEXT, OBJECT);
+    add_integer(object, X, 1u);
+    return root;
+}
+
+int make_settings() {
+    int root = new_node(OBJECT);
+    add_integer(root, TIMEOUT, 30u);
+    add(root, VERBOSE, TRUE);
+    return root;
+}
+
+uint int_or(int parent, ivec2 key, uint fallback) {
+    int child = find_key(parent, key);
+    if (child == NIL || nodes[child].kind != NUMBER)
+        return fallback;
+    return uint(nodes[child].number);
+}
+
+bool bool_or(int parent, ivec2 key, bool fallback) {
+    int child = find_key(parent, key);
+    if (child == NIL)
+        return fallback;
+    return nodes[child].kind == TRUE || (nodes[child].kind != FALSE && fallback);
+}
+
+void main() {
+    data.words[0] = 1u;
+    int root = parse_json(COMPLEX, false);
+    if (root == NIL) return;
+    serialize(root, false, true);
+    data.words[1] = digest;
+    modify_document(root);
+    if (error) return;
+    serialize(root, false, true);
+    uint modified = digest;
+    data.words[2] = modified;
+    data.words[3] = uint(serialized_count);
+
+    for (uint mode = 0u; mode < 2u; ++mode) {
+        serialize(root, mode == 1u, false);
+        if (error) return;
+        int length = encoded_count;
+        data.words[4 + mode] = uint(length);
+        root = parse_json(ivec2(0, length), true);
+        if (root == NIL) return;
+        serialize(root, false, true);
+        if (digest != modified) return;
+    }
+
+    node_count = 0;
+    string_count = 0;
+    root = make_config();
+    if (error) return;
+    serialize(root, false, true);
+    data.words[6] = digest;
+    root = make_mixed();
+    if (error) return;
+    serialize(root, false, true);
+    data.words[7] = digest;
+
+    uint rejected = 0u;
+    for (int i = 0; i < malformed.length(); ++i)
+        if (parse_json(malformed[i], false) == NIL)
+            rejected |= 1u << i;
+    data.words[8] = rejected;
+
+    root = parse_json(UNICODE, false);
+    if (root == NIL) return;
+    serialize(root, false, true);
+    data.words[9] = digest;
+    root = make_settings();
+    if (error) return;
+    data.words[10] = int_or(root, TIMEOUT, 60u);
+    data.words[11] = int_or(root, RETRIES, 3u);
+    data.words[12] = uint(bool_or(root, VERBOSE, false));
+    data.words[13] = uint(bool_or(root, DEBUG_KEY, false));
+    data.words[0] = 0u;
+}

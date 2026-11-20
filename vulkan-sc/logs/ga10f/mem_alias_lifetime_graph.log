@@ -1,18 +1,20 @@
+PCC override: /tmp/vksc-orin-36.5.2/pcc-qemu
 
 Starting PCC tool
 ----------------------------
 Build information:
-Driver Version  595.99.02
+Driver Version  540.5.0
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmp0fwdlu69/
+[INFO] Reading JSON files from /tmp/tmpz3kg2m8n/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] mem_alias_lifetime_graph.json
-[INFO] Parsing JSON: /tmp/tmp0fwdlu69/mem_alias_lifetime_graph.json
-[INFO] Compiling JSON: /tmp/tmp0fwdlu69/mem_alias_lifetime_graph.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmp0fwdlu69/mem_alias_lifetime_graph.spv
-NVVM compilation failed: 3
-[ERROR] Pipeline creation failed
-[ERROR] PCC::run
-Exit status 1.
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmpz3kg2m8n/input.json
+[INFO] Parsing DescriptorSet: pSetLayouts_0
+[INFO] Compiling JSON: /tmp/tmpz3kg2m8n/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpz3kg2m8n/input.spv
+[INFO] Compiled JSON: /tmp/tmpz3kg2m8n/input.json successfully.
+[INFO]
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpz3kg2m8n/cache.bin

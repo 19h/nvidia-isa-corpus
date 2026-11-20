@@ -1,18 +1,20 @@
+PCC override: /tmp/vksc-orin-36.5.2/pcc-qemu
 
 Starting PCC tool
 ----------------------------
 Build information:
-Driver Version  595.99.02
+Driver Version  540.5.0
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmpmr6b6i_q/
+[INFO] Reading JSON files from /tmp/tmpsfu4iuck/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] simd_portable_bitplane.json
-[INFO] Parsing JSON: /tmp/tmpmr6b6i_q/simd_portable_bitplane.json
-[INFO] Compiling JSON: /tmp/tmpmr6b6i_q/simd_portable_bitplane.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmpmr6b6i_q/simd_portable_bitplane.spv
-NVVM compilation failed: 3
-[ERROR] Pipeline creation failed
-[ERROR] PCC::run
-Exit status 1.
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmpsfu4iuck/input.json
+[INFO] Parsing DescriptorSet: pSetLayouts_0
+[INFO] Compiling JSON: /tmp/tmpsfu4iuck/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpsfu4iuck/input.spv
+[INFO] Compiled JSON: /tmp/tmpsfu4iuck/input.json successfully.
+[INFO]
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpsfu4iuck/cache.bin

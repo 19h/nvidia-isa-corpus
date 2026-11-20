@@ -4,15 +4,15 @@ Starting PCC tool
 Build information:
 Driver Version  595.99.02
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmpm6tgrpad/
+[INFO] Reading JSON files from /tmp/tmp9h8xi9jh/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] fp_physics_sim.json
-[INFO] Parsing JSON: /tmp/tmpm6tgrpad/fp_physics_sim.json
-[INFO] Compiling JSON: /tmp/tmpm6tgrpad/fp_physics_sim.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmpm6tgrpad/fp_physics_sim.spv
-[INFO] Compiled JSON: /tmp/tmpm6tgrpad/fp_physics_sim.json successfully.
-[INFO] 
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmp9h8xi9jh/input.json
+[INFO] Compiling JSON: /tmp/tmp9h8xi9jh/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmp9h8xi9jh/input.spv
+[INFO] Compiled JSON: /tmp/tmp9h8xi9jh/input.json successfully.
+[INFO]
 [INFO] Nothing to merge.
-[INFO] CacheData written to /tmp/tmpm6tgrpad/cache.bin
+[INFO] CacheData written to /tmp/tmp9h8xi9jh/cache.bin

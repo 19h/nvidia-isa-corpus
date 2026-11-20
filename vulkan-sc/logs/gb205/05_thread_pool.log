@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpdzzsiv_u/
+[INFO] Enabled device extensions:
+[INFO] Found the following files:
+[INFO] 05_thread_pool.json
+[INFO] Parsing JSON: /tmp/tmpdzzsiv_u/05_thread_pool.json
+[INFO] Compiling JSON: /tmp/tmpdzzsiv_u/05_thread_pool.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpdzzsiv_u/05_thread_pool.spv
+[INFO] Compiled JSON: /tmp/tmpdzzsiv_u/05_thread_pool.json successfully.
+[INFO]
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpdzzsiv_u/cache.bin

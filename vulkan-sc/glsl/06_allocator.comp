@@ -1,0 +1,240 @@
+// First-fit allocator with the x86-64 corpus layout and byte-addressed payloads.
+#version 450
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Result {
+    uint words[64];
+    uint heap[262144];
+} data;
+
+const uint HEAP_SIZE = 1048576u;
+const uint HEADER = 32u;
+const uint END = 0xffffffffu;
+const uint SIZE = 0u, FREE = 1u, NEXT = 2u, PREV = 3u;
+uint allocations, frees, in_use, peak, merges, splits;
+
+uint field(uint block, uint member) { return data.heap[block / 4u + member]; }
+void set_field(uint block, uint member, uint value) { data.heap[block / 4u + member] = value; }
+
+void header(uint block, uint size, uint next, uint prev) {
+    set_field(block, SIZE, size);
+    set_field(block, FREE, 1u);
+    set_field(block, NEXT, next);
+    set_field(block, PREV, prev);
+}
+
+void split_block(uint block, uint size) {
+    uint available = field(block, SIZE);
+    if (available < size + HEADER + 16u)
+        return;
+    uint next = field(block, NEXT);
+    uint remainder = block + HEADER + size;
+    header(remainder, available - size - HEADER, next, block);
+    if (next != END)
+        set_field(next, PREV, remainder);
+    set_field(block, NEXT, remainder);
+    set_field(block, SIZE, size);
+    ++splits;
+}
+
+void merge_next(uint block, uint next) {
+    set_field(block, SIZE, field(block, SIZE) + HEADER + field(next, SIZE));
+    uint successor = field(next, NEXT);
+    set_field(block, NEXT, successor);
+    if (successor != END)
+        set_field(successor, PREV, block);
+    ++merges;
+}
+
+void coalesce(uint block) {
+    uint next = field(block, NEXT);
+    if (next != END && field(next, FREE) != 0u)
+        merge_next(block, next);
+    uint prev = field(block, PREV);
+    if (prev != END && field(prev, FREE) != 0u)
+        merge_next(prev, block);
+}
+
+uint allocate(uint size) {
+    if (size == 0u || size > HEAP_SIZE - HEADER)
+        return 0u;
+    uint aligned = (size + 7u) & ~7u;
+    for (uint block = 0u; block != END; block = field(block, NEXT)) {
+        if (field(block, FREE) == 0u || field(block, SIZE) < aligned)
+            continue;
+        split_block(block, aligned);
+        set_field(block, FREE, 0u);
+        ++allocations;
+        in_use += field(block, SIZE);
+        peak = max(peak, in_use);
+        return block + HEADER;
+    }
+    return 0u;
+}
+
+void release(uint ptr) {
+    if (ptr < HEADER || ptr >= HEAP_SIZE)
+        return;
+    uint block = ptr - HEADER;
+    if (field(block, FREE) != 0u)
+        return;
+    ++frees;
+    in_use -= field(block, SIZE);
+    set_field(block, FREE, 1u);
+    coalesce(block);
+}
+
+uint get_byte(uint address) {
+    return (data.heap[address / 4u] >> (8u * (address & 3u))) & 255u;
+}
+
+void set_byte(uint address, uint value) {
+    uint shift = 8u * (address & 3u);
+    uint index = address / 4u;
+    data.heap[index] = (data.heap[index] & ~(255u << shift)) | (value << shift);
+}
+
+uint allocate_zeroed(uint count, uint size) {
+    if (count != 0u && size > 0xffffffffu / count)
+        return 0u;
+    uint ptr = allocate(count * size);
+    if (ptr != 0u)
+        for (uint i = 0u; i < count * size; ++i)
+            set_byte(ptr + i, 0u);
+    return ptr;
+}
+
+uint resize_block(uint ptr, uint size) {
+    if (ptr == 0u)
+        return allocate(size);
+    if (size == 0u) {
+        release(ptr);
+        return 0u;
+    }
+    if (size > HEAP_SIZE - HEADER)
+        return 0u;
+    uint block = ptr - HEADER;
+    uint old_size = field(block, SIZE);
+    uint aligned = (size + 7u) & ~7u;
+    if (old_size >= aligned) {
+        if (old_size >= aligned + HEADER + 16u) {
+            split_block(block, aligned);
+            in_use = in_use - old_size + field(block, SIZE);
+            coalesce(field(block, NEXT));
+        }
+        return ptr;
+    }
+    uint next = field(block, NEXT);
+    if (next != END && field(next, FREE) != 0u && old_size + HEADER + field(next, SIZE) >= aligned) {
+        merge_next(block, next);
+        split_block(block, aligned);
+        in_use = in_use - old_size + field(block, SIZE);
+        return ptr;
+    }
+    uint destination = allocate(size);
+    if (destination != 0u) {
+        for (uint i = 0u; i < old_size; ++i)
+            set_byte(destination + i, get_byte(ptr + i));
+        release(ptr);
+    }
+    return destination;
+}
+
+bool matches_fill(uint ptr, uint length, uint value) {
+    if (ptr == 0u)
+        return false;
+    for (uint i = 0u; i < length; ++i)
+        if (get_byte(ptr + i) != value)
+            return false;
+    return true;
+}
+
+void main() {
+    allocations = 0u;
+    frees = 0u;
+    in_use = 0u;
+    peak = 0u;
+    merges = 0u;
+    splits = 0u;
+    header(0u, HEAP_SIZE - HEADER, END, END);
+    uint p1 = allocate(100u);
+    uint p2 = allocate(200u);
+    uint p3 = allocate(300u);
+    if (p1 == 0u || p2 == 0u || p3 == 0u) {
+        data.words[0] = 1u;
+        return;
+    }
+    for (uint i = 0u; i < 100u; ++i) set_byte(p1 + i, 65u);
+    for (uint i = 0u; i < 200u; ++i) set_byte(p2 + i, 66u);
+    for (uint i = 0u; i < 300u; ++i) set_byte(p3 + i, 67u);
+    bool valid = matches_fill(p1, 100u, 65u) && matches_fill(p2, 200u, 66u)
+        && matches_fill(p3, 300u, 67u);
+    release(p2);
+    release(p1);
+    release(p3);
+
+    uint blocks[100];
+    for (uint i = 0u; i < 10u; ++i)
+        blocks[i] = allocate(1000u);
+    for (uint i = 0u; i < 10u; i += 2u)
+        release(blocks[i]);
+    uint fragmented = allocate(3000u);
+    for (uint i = 1u; i < 10u; i += 2u)
+        release(blocks[i]);
+    uint big = allocate(3000u);
+    release(big);
+    uint zeroed = allocate_zeroed(10u, 4u);
+    valid = matches_fill(zeroed, 40u, 0u) && valid;
+    release(zeroed);
+
+    const uint text[] = uint[](72,101,108,108,111,44,32,87,111,114,108,100,33,
+        32,84,104,105,115,32,105,115,32,97,100,100,105,116,105,111,110,97,108,
+        32,116,101,120,116,32,97,102,116,101,114,32,114,101,97,108,108,111,99,46,0);
+    uint str = allocate(100u);
+    if (str == 0u) {
+        data.words[0] = 2u;
+        return;
+    }
+    for (uint i = 0u; i < 13u; ++i) set_byte(str + i, text[i]);
+    set_byte(str + 13u, 0u);
+    str = resize_block(str, 200u);
+    if (str == 0u) {
+        data.words[0] = 2u;
+        return;
+    }
+    valid = get_byte(str + 13u) == 0u && valid;
+    for (uint i = 0u; i < 13u; ++i) valid = get_byte(str + i) == text[i] && valid;
+    for (uint i = 13u; i < text.length(); ++i) set_byte(str + i, text[i]);
+    str = resize_block(str, 50u);
+    if (str == 0u) {
+        data.words[0] = 2u;
+        return;
+    }
+    set_byte(str + 49u, 0u);
+    for (uint i = 0u; i < 49u; ++i) valid = get_byte(str + i) == text[i] && valid;
+    release(str);
+
+    valid = allocate(0u) == 0u && valid;
+    release(0u);
+    uint from_null = resize_block(0u, 100u);
+    valid = from_null != 0u && valid;
+    release(from_null);
+    uint to_free = allocate(100u);
+    valid = to_free != 0u && resize_block(to_free, 0u) == 0u && valid;
+    for (uint i = 0u; i < 100u; ++i)
+        blocks[i] = allocate(16u + i % 49u);
+    for (uint i = 0u; i < 100u; ++i)
+        release(blocks[(i * 37u) % 100u]);
+
+    uint block_count = 0u;
+    for (uint block = 0u; block != END; block = field(block, NEXT))
+        ++block_count;
+    data.words[0] = valid ? 0u : 3u;
+    data.words[1] = allocations;
+    data.words[2] = frees;
+    data.words[3] = peak;
+    data.words[4] = merges;
+    data.words[5] = splits;
+    data.words[6] = in_use;
+    data.words[7] = block_count;
+    data.words[8] = uint(fragmented != 0u) | (uint(big != 0u) << 1u);
+}

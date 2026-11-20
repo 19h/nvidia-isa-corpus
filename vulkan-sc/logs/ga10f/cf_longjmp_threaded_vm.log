@@ -1,18 +1,20 @@
+PCC override: /tmp/vksc-orin-36.5.2/pcc-qemu
 
 Starting PCC tool
 ----------------------------
 Build information:
-Driver Version  595.99.02
+Driver Version  540.5.0
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmph11ux_kd/
+[INFO] Reading JSON files from /tmp/tmptp57co2p/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] cf_longjmp_threaded_vm.json
-[INFO] Parsing JSON: /tmp/tmph11ux_kd/cf_longjmp_threaded_vm.json
-[INFO] Compiling JSON: /tmp/tmph11ux_kd/cf_longjmp_threaded_vm.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmph11ux_kd/cf_longjmp_threaded_vm.spv
-NVVM compilation failed: 3
-[ERROR] Pipeline creation failed
-[ERROR] PCC::run
-Exit status 1.
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmptp57co2p/input.json
+[INFO] Parsing DescriptorSet: pSetLayouts_0
+[INFO] Compiling JSON: /tmp/tmptp57co2p/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmptp57co2p/input.spv
+[INFO] Compiled JSON: /tmp/tmptp57co2p/input.json successfully.
+[INFO]
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmptp57co2p/cache.bin

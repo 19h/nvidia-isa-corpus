@@ -1,0 +1,20 @@
+PCC override: /tmp/vksc-nvidia-620/pcc-local
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  620.73.04
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpj9ts460e/
+[INFO] Enabled device extensions:
+[INFO] No PhysicalDeviceFeatures in JSON; enabling no extra features
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmpj9ts460e/input.json
+[INFO] Compiling JSON: /tmp/tmpj9ts460e/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpj9ts460e/input.spv
+[INFO] Compiled JSON: /tmp/tmpj9ts460e/input.json successfully.
+[INFO]
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpj9ts460e/cache.bin

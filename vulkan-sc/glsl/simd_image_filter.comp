@@ -1,0 +1,67 @@
+// Run the scalar, SSE2, or NEON image footprint with one invocation per row.
+#version 450
+layout(local_size_x = 128) in;
+layout(set = 0, binding = 0, std430) coherent buffer Result {
+    uint words[64];
+    uint images[2][16384];
+} data;
+
+const uint SIZE = 128u, ROUNDS = 1000u;
+const uint SCALAR = 0u, SSE2 = 1u, NEON = 2u;
+shared uint row_xor[SIZE];
+
+bool writes_pixel(uint x, uint mode) {
+    if (mode == SSE2)
+        return x <= 104u && ((x - 1u) & 15u) < 8u;
+    if (mode == NEON)
+        return x <= 120u;
+    return true;
+}
+
+void main() {
+    uint y = gl_LocalInvocationIndex;
+    uint mode = data.words[63];
+    if (mode > NEON) {
+        if (y == 0u) data.words[0] = 1u;
+        return;
+    }
+    uint row = y * SIZE;
+    for (uint x = 0u; x < SIZE; ++x) {
+        data.images[0][row + x] = x + y;
+        if (x == 0u || x == SIZE - 1u || y == 0u || y == SIZE - 1u)
+            data.images[1][row + x] = x + y;
+    }
+    memoryBarrierBuffer();
+    barrier();
+    for (uint iteration = 0u; iteration < ROUNDS; ++iteration) {
+        uint source = iteration & 1u;
+        if (y != 0u && y != SIZE - 1u) {
+            for (uint x = 1u; x < SIZE - 1u; ++x) {
+                uint filtered = 0u;
+                if (writes_pixel(x, mode)) {
+                    uint sum = 0u;
+                    for (int dy = -1; dy <= 1; ++dy)
+                        for (int dx = -1; dx <= 1; ++dx)
+                            sum += data.images[source][int(row + x) + dy * int(SIZE) + dx];
+                    filtered = mode == SCALAR ? sum / 9u : (sum * 7282u) >> 16u;
+                }
+                data.images[source ^ 1u][row + x] = filtered;
+            }
+        }
+        memoryBarrierBuffer();
+        barrier();
+    }
+
+    uint checksum = 0u;
+    if (y != 0u && y != SIZE - 1u)
+        for (uint x = 1u; x < SIZE - 1u; ++x)
+            checksum ^= data.images[ROUNDS & 1u][row + x];
+    row_xor[y] = checksum;
+    barrier();
+    if (y == 0u) {
+        for (uint i = 1u; i < SIZE - 1u; ++i)
+            checksum ^= row_xor[i];
+        data.words[0] = 0u;
+        data.words[1] = checksum;
+    }
+}

@@ -4,15 +4,15 @@ Starting PCC tool
 Build information:
 Driver Version  595.99.02
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmpv6b5k0e2/
+[INFO] Reading JSON files from /tmp/tmps8o5a6nl/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] cf_duff_device_parser.json
-[INFO] Parsing JSON: /tmp/tmpv6b5k0e2/cf_duff_device_parser.json
-[INFO] Compiling JSON: /tmp/tmpv6b5k0e2/cf_duff_device_parser.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmpv6b5k0e2/cf_duff_device_parser.spv
-[INFO] Compiled JSON: /tmp/tmpv6b5k0e2/cf_duff_device_parser.json successfully.
-[INFO] 
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmps8o5a6nl/input.json
+[INFO] Compiling JSON: /tmp/tmps8o5a6nl/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmps8o5a6nl/input.spv
+[INFO] Compiled JSON: /tmp/tmps8o5a6nl/input.json successfully.
+[INFO]
 [INFO] Nothing to merge.
-[INFO] CacheData written to /tmp/tmpv6b5k0e2/cache.bin
+[INFO] CacheData written to /tmp/tmps8o5a6nl/cache.bin

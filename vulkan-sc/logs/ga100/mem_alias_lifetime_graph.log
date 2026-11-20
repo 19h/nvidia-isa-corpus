@@ -4,15 +4,15 @@ Starting PCC tool
 Build information:
 Driver Version  595.99.02
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmpbtcm69ak/
+[INFO] Reading JSON files from /tmp/tmpqo5gkgb8/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] mem_alias_lifetime_graph.json
-[INFO] Parsing JSON: /tmp/tmpbtcm69ak/mem_alias_lifetime_graph.json
-[INFO] Compiling JSON: /tmp/tmpbtcm69ak/mem_alias_lifetime_graph.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmpbtcm69ak/mem_alias_lifetime_graph.spv
-[INFO] Compiled JSON: /tmp/tmpbtcm69ak/mem_alias_lifetime_graph.json successfully.
-[INFO] 
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmpqo5gkgb8/input.json
+[INFO] Compiling JSON: /tmp/tmpqo5gkgb8/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpqo5gkgb8/input.spv
+[INFO] Compiled JSON: /tmp/tmpqo5gkgb8/input.json successfully.
+[INFO]
 [INFO] Nothing to merge.
-[INFO] CacheData written to /tmp/tmpbtcm69ak/cache.bin
+[INFO] CacheData written to /tmp/tmpqo5gkgb8/cache.bin

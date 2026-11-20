@@ -4,15 +4,15 @@ Starting PCC tool
 Build information:
 Driver Version  595.99.02
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmpxipdyf5l/
+[INFO] Reading JSON files from /tmp/tmpvnw48dxf/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] mem_stack_realign.json
-[INFO] Parsing JSON: /tmp/tmpxipdyf5l/mem_stack_realign.json
-[INFO] Compiling JSON: /tmp/tmpxipdyf5l/mem_stack_realign.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmpxipdyf5l/mem_stack_realign.spv
-[INFO] Compiled JSON: /tmp/tmpxipdyf5l/mem_stack_realign.json successfully.
-[INFO] 
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmpvnw48dxf/input.json
+[INFO] Compiling JSON: /tmp/tmpvnw48dxf/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpvnw48dxf/input.spv
+[INFO] Compiled JSON: /tmp/tmpvnw48dxf/input.json successfully.
+[INFO]
 [INFO] Nothing to merge.
-[INFO] CacheData written to /tmp/tmpxipdyf5l/cache.bin
+[INFO] CacheData written to /tmp/tmpvnw48dxf/cache.bin

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpe3jwf5ma/
+[INFO] Enabled device extensions:
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmpe3jwf5ma/input.json
+[INFO] Compiling JSON: /tmp/tmpe3jwf5ma/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpe3jwf5ma/input.spv
+[INFO] Compiled JSON: /tmp/tmpe3jwf5ma/input.json successfully.
+[INFO]
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpe3jwf5ma/cache.bin

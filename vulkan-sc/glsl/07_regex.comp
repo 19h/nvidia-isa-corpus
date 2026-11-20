@@ -1,0 +1,198 @@
+// Compile the corpus regex syntax and evaluate greedy matches without recursion.
+#version 450
+#include "fixture.glsl"
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Result {
+    uint words[64];
+} data;
+
+const int MAX_NODES = 256;
+const int MAX_PATTERN = 1024;
+const int LITERAL = 0, ANY = 1, CHAR_CLASS = 2, START = 3, END = 4;
+const int NONE = 0, STAR = 1, PLUS = 2, QUESTION = 3;
+struct Node {
+    int type;
+    int quantifier;
+    int literal;
+    bool negated;
+    uint bitmap[8];
+};
+Node nodes[MAX_NODES];
+int node_count;
+int subject;
+
+// Each cell stores the endpoint chosen by the greedy search for a suffix.
+int endpoints[MAX_PATTERN + 1];
+
+int fixture_byte(int offset) {
+    return int((fixture[offset / 4] >> (8 * (offset & 3))) & 255u);
+}
+
+int escaped(int position) {
+    int c = fixture_byte(position);
+    if (c == 0) return -1;
+    if (c == 110) return 10; // n
+    if (c == 116) return 9;  // t
+    if (c == 114) return 13; // r
+    if (c == 48) return 0;   // 0
+    return c;
+}
+
+void add_character(int node, int character) {
+    nodes[node].bitmap[character / 32] |= 1u << (character & 31);
+}
+
+bool parse_class(int node, inout int position) {
+    nodes[node].type = CHAR_CLASS;
+    nodes[node].negated = fixture_byte(position) == 94; // ^
+    if (nodes[node].negated)
+        ++position;
+    if (fixture_byte(position) == 93) { // ]
+        add_character(node, 93);
+        ++position;
+    }
+    int last = -1;
+    for (int c = fixture_byte(position); c != 0 && c != 93; c = fixture_byte(position)) {
+        ++position;
+        if (c == 92) { // backslash
+            c = escaped(position++);
+            if (c < 0) return false;
+        } else if (c == 45 && last >= 0 && fixture_byte(position) != 0 &&
+                   fixture_byte(position) != 93) { // range
+            int upper = fixture_byte(position++);
+            if (upper == 92)
+                upper = escaped(position++);
+            if (upper < last) return false;
+            for (int i = last; i <= upper; ++i)
+                add_character(node, i);
+            last = -1;
+            continue;
+        }
+        add_character(node, c);
+        last = c;
+    }
+    if (fixture_byte(position) != 93)
+        return false;
+    ++position;
+    return true;
+}
+
+bool compile_pattern(int start) {
+    node_count = 0;
+    int position = start;
+    while (fixture_byte(position) != 0 && position - start < MAX_PATTERN)
+        ++position;
+    if (position - start >= MAX_PATTERN)
+        return false;
+    position = start;
+    for (int c = fixture_byte(position); c != 0; c = fixture_byte(position)) {
+        ++position;
+        if (node_count >= MAX_NODES - 1)
+            return false;
+        if (c == 42 || c == 43 || c == 63) { // * + ?
+            int prev = node_count - 1;
+            if (prev < 0 || nodes[prev].quantifier != NONE || nodes[prev].type >= START)
+                return false;
+            nodes[prev].quantifier = c == 42 ? STAR : (c == 43 ? PLUS : QUESTION);
+            continue;
+        }
+        int node = node_count++;
+        nodes[node].quantifier = NONE;
+        if (c == 91) { // [
+            for (int i = 0; i < 8; ++i)
+                nodes[node].bitmap[i] = 0u;
+            if (!parse_class(node, position))
+                return false;
+        } else if (c == 46) {
+            nodes[node].type = ANY;
+        } else if (c == 94 || c == 36) {
+            nodes[node].type = c == 94 ? START : END;
+        } else {
+            if (c == 92)
+                c = escaped(position++);
+            if (c < 0) return false;
+            nodes[node].type = LITERAL;
+            nodes[node].literal = c;
+        }
+    }
+    return true;
+}
+
+bool accepts(int node, int character) {
+    if (nodes[node].type == LITERAL)
+        return nodes[node].literal == character;
+    if (nodes[node].type == ANY)
+        return character != 0;
+    bool member = ((nodes[node].bitmap[character / 32] >> (character & 31)) & 1u) != 0u;
+    return member != nodes[node].negated;
+}
+
+void match_suffixes(int length) {
+    for (int pos = 0; pos <= length; ++pos)
+        endpoints[pos] = pos;
+    for (int node = node_count - 1; node >= 0; --node) {
+        int type = nodes[node].type;
+        int quantifier = nodes[node].quantifier;
+        // Read only cells at or above pos, from the previous suffix.
+        for (int pos = 0; pos <= length; ++pos) {
+            if (type == START || type == END) {
+                if (pos != (type == START ? 0 : length))
+                    endpoints[pos] = -1;
+                continue;
+            }
+            int min_count = quantifier == NONE || quantifier == PLUS ? 1 : 0;
+            int limit = quantifier == NONE || quantifier == QUESTION ? 1 : length - pos;
+            int count = 0;
+            while (count < limit && pos + count < length &&
+                   accepts(node, fixture_byte(subject + pos + count)))
+                ++count;
+            int endpoint = -1;
+            for (; count >= min_count; --count) {
+                endpoint = endpoints[pos + count];
+                if (endpoint >= 0)
+                    break;
+            }
+            endpoints[pos] = endpoint;
+        }
+    }
+}
+
+bool run_case(int index) {
+    ivec4 test = cases[index];
+    bool valid = compile_pattern(test.x);
+    if (test.z == 3)
+        return !valid;
+    if (!valid)
+        return false;
+    subject = test.y;
+    int length = 0;
+    while (fixture_byte(subject + length) != 0 && length < MAX_PATTERN)
+        ++length;
+    if (length == MAX_PATTERN)
+        return false;
+    match_suffixes(length);
+    if (test.z == 1)
+        return int(endpoints[0] == length) == test.w;
+    for (int start = 0; start <= length; ++start) {
+        if (endpoints[start] < 0)
+            continue;
+        if (test.z == 0)
+            return test.w == 1;
+        return start == test.w && endpoints[start] - start == lengths[index];
+    }
+    return test.w == (test.z == 0 ? 0 : -1);
+}
+
+void main() {
+    data.words[0] = 0u;
+    data.words[1] = uint(cases.length());
+    data.words[2] = 0u;
+    for (int i = 0; i < cases.length(); ++i) {
+        if ((i & 31) == 0)
+            data.words[3 + i / 32] = 0u;
+        if (run_case(i)) {
+            ++data.words[2];
+            data.words[3 + i / 32] |= 1u << (i & 31);
+        }
+    }
+}

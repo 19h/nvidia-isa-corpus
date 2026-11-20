@@ -1,18 +1,20 @@
+PCC override: /tmp/vksc-orin-36.5.2/pcc-qemu
 
 Starting PCC tool
 ----------------------------
 Build information:
-Driver Version  595.99.02
+Driver Version  540.5.0
 ----------------------------
-[INFO] Reading JSON files from /tmp/tmpd4baqg__/
+[INFO] Reading JSON files from /tmp/tmpkhrisu7o/
 [INFO] Enabled device extensions:
-[INFO] Found the following files: 
-[INFO] call_variadic.json
-[INFO] Parsing JSON: /tmp/tmpd4baqg__/call_variadic.json
-[INFO] Compiling JSON: /tmp/tmpd4baqg__/call_variadic.json
-[INFO] Loading shaders: 
-[INFO] /tmp/tmpd4baqg__/call_variadic.spv
-NVVM compilation failed: 3
-[ERROR] Pipeline creation failed
-[ERROR] PCC::run
-Exit status 1.
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmpkhrisu7o/input.json
+[INFO] Parsing DescriptorSet: pSetLayouts_0
+[INFO] Compiling JSON: /tmp/tmpkhrisu7o/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpkhrisu7o/input.spv
+[INFO] Compiled JSON: /tmp/tmpkhrisu7o/input.json successfully.
+[INFO]
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpkhrisu7o/cache.bin

@@ -1,0 +1,97 @@
+// Each invocation updates one body. Barriers separate force and position updates.
+#version 450
+layout(local_size_x = 128) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result {
+    uint words[64];
+} data;
+
+const uint BODIES = 128u, STEPS = 100u;
+const double DT = 0.01lf;
+shared dvec3 positions[BODIES];
+shared dvec3 velocities[BODIES];
+shared double masses[BODIES];
+shared double energies[BODIES];
+shared double samples[10];
+
+double sample_position(inout uint seed) {
+    seed = seed * 1103515245u + 12345u;
+    return double(seed >> 16u) / 65536.0lf;
+}
+
+void init_bodies() {
+    uint seed = 42u;
+    for (uint i = 0u; i < BODIES; ++i) {
+        for (uint axis = 0u; axis < 3u; ++axis)
+            positions[i][axis] = sample_position(seed) - 0.5lf;
+        for (uint axis = 0u; axis < 3u; ++axis)
+            velocities[i][axis] = 0.01lf * (sample_position(seed) - 0.5lf);
+        masses[i] = 1.0lf + 0.5lf * double(seed >> 16u) / 65536.0lf;
+    }
+}
+
+double reciprocal_distance(double squared) {
+    precise double root = squared * 0.5lf;
+    for (int i = 0; i < 10; ++i)
+        root = 0.5lf * (root + squared / root);
+    precise double guess = 1.0lf / root;
+    double half_squared = 0.5lf * squared;
+    for (int i = 0; i < 2; ++i)
+        guess = guess * (1.5lf - half_squared * guess * guess);
+    return guess;
+}
+
+dvec3 acceleration(uint body) {
+    precise dvec3 result = dvec3(0.0lf);
+    for (uint other = 0u; other < BODIES; ++other) {
+        if (other == body)
+            continue;
+        precise dvec3 delta = positions[max(body, other)] - positions[min(body, other)];
+        precise double squared = delta.x * delta.x + delta.y * delta.y + delta.z * delta.z + 0.01lf;
+        precise double distance = reciprocal_distance(squared);
+        precise double cube = distance * distance * distance;
+        precise double scale = (0.001lf * cube) * masses[other];
+        if (other < body)
+            result -= scale * delta;
+        else
+            result += scale * delta;
+    }
+    return result;
+}
+
+void main() {
+    uint body = gl_LocalInvocationIndex;
+    if (body == 0u)
+        init_bodies();
+    barrier();
+    for (uint step = 0u; step < STEPS; ++step) {
+        precise dvec3 force = acceleration(body);
+        barrier();
+        precise dvec3 velocity = velocities[body] + force * DT;
+        precise dvec3 position = positions[body] + velocity * DT;
+        positions[body] = position;
+        velocities[body] = velocity;
+        if (step % 10u == 0u) {
+            precise double speed_squared = velocity.x * velocity.x + velocity.y * velocity.y + velocity.z * velocity.z;
+            energies[body] = 0.5lf * masses[body] * speed_squared;
+        }
+        barrier();
+        if (body == 0u && step % 10u == 0u) {
+            precise double total = 0.0lf;
+            for (uint i = 0u; i < BODIES; ++i)
+                total += energies[i];
+            samples[step / 10u] = total;
+        }
+    }
+    if (body != 0u)
+        return;
+
+    // Every native run starts from the same seed and yields the same samples.
+    precise double energy = 0.0lf;
+    for (uint run = 0u; run < 10u; ++run)
+        for (uint i = 0u; i < 10u; ++i)
+            energy += samples[i];
+    uvec2 bits = unpackDouble2x32(energy);
+    data.words[0] = 0u;
+    for (uint i = 0u; i < 8u; ++i)
+        data.words[1u + i] = (bits[i / 4u] >> (8u * (i & 3u))) & 255u;
+}

@@ -1,0 +1,20 @@
+PCC override: /tmp/vksc-orin-36.5.2/pcc-qemu
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  540.5.0
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpkojnkuml/
+[INFO] Enabled device extensions:
+[INFO] Found the following files:
+[INFO] input.json
+[INFO] Parsing JSON: /tmp/tmpkojnkuml/input.json
+[INFO] Parsing DescriptorSet: pSetLayouts_0
+[INFO] Compiling JSON: /tmp/tmpkojnkuml/input.json
+[INFO] Loading shaders:
+[INFO] /tmp/tmpkojnkuml/input.spv
+[INFO] Compiled JSON: /tmp/tmpkojnkuml/input.json successfully.
+[INFO]
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpkojnkuml/cache.bin

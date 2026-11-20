@@ -10,10 +10,17 @@ from pathlib import Path
 import re
 import struct
 import subprocess
+import sys
 import tempfile
 
 ROOT = Path(__file__).resolve().parent
 WORKSPACE = ROOT.parent
+FIXTURES = {
+    "07_regex": ("regex.py", "07_regex.c"),
+    "08_json_parser": ("json_inputs.py", "08_json_parser.cpp"),
+    "09_bytecode_vm": ("bytecode.c", "09_bytecode_vm.c"),
+    "10_template_madness": ("templates.cpp", "10_template_madness.cpp"),
+}
 
 
 def pipeline_json(shader, entry):
@@ -54,24 +61,46 @@ def compile_shader(source, args):
     log_file = ROOT / "logs" / f"{name}.log"
     pipeline = ROOT / "pipelines" / f"{name}.json"
     expected = json.dumps(pipeline_json(name, entry), indent=2) + "\n"
+    fixture = FIXTURES.get(name)
+    generator = source.parent.parent / "fixtures" / fixture[0] if fixture else None
+    original = WORKSPACE / "programs" / fixture[1] if fixture else None
+    modified = max(path.stat().st_mtime_ns for path in (source, generator, original) if path)
     if (args.reuse and output.is_file() and pipeline.is_file() and pipeline.read_text() == expected
-            and output.stat().st_mtime_ns >= source.stat().st_mtime_ns):
+            and output.stat().st_mtime_ns >= modified):
         with tempfile.TemporaryFile() as log:
             if run([args.spirv_val, "--target-env", "vulkan1.2", output], log, 10):
                 return name, True
     if (args.reuse and not output.exists() and not pipeline.exists() and log_file.is_file()
-            and log_file.stat().st_size and log_file.stat().st_mtime_ns >= source.stat().st_mtime_ns):
+            and log_file.stat().st_size and log_file.stat().st_mtime_ns >= modified):
         return name, False
     with tempfile.TemporaryDirectory() as temp, log_file.open("wb") as log:
         raw, stripped = (Path(temp) / f"{stem}.spv" for stem in ("raw", "stripped"))
+        ready = True
+        if generator:
+            if generator.suffix == ".py":
+                generate = [sys.executable, generator, original]
+            else:
+                executable = Path(temp) / "fixture"
+                compiler = ([args.cxx, "-std=c++20"] if generator.suffix == ".cpp" else [args.cc])
+                ready = run([*compiler, "-O2", generator, "-o", executable], log, 30)
+                generate = [executable]
+            if ready:
+                with (Path(temp) / "fixture.glsl").open("wb") as include:
+                    try:
+                        ready = subprocess.run(generate, stdout=include, stderr=log, timeout=30).returncode == 0
+                    except subprocess.TimeoutExpired:
+                        log.write(b"Fixture generator timed out.\n")
+                        ready = False
+                if not ready:
+                    log.write(b"Fixture generation failed.\n")
         if source.suffix == ".comp":
-            command = [args.glslc, "--target-env=vulkan1.2", "-o", raw, source]
+            command = [args.glslc, "--target-env=vulkan1.2", f"-I{temp}", "-o", raw, source]
         else:
             command = [args.clspv, "-cl-std=CL2.0", "-w", "-O1", "-inline-entry-points",
                        "-spv-version=1.5", "-int8", "-o", raw, source]
         commands = [command, [args.spirv_opt, "--strip-nonsemantic", raw, "-o", stripped],
                     [args.spirv_val, "--target-env", "vulkan1.2", stripped]]
-        if not all(run(command, log, 45) for command in commands):
+        if not ready or not all(run(command, log, 45) for command in commands):
             output.unlink(missing_ok=True)
             pipeline.unlink(missing_ok=True)
             return name, False
@@ -97,20 +126,36 @@ def compile_cache(name, chip, args):
     diagnostic = ROOT / "logs" / chip / f"{name}.log"
     cache.parent.mkdir(exist_ok=True)
     diagnostic.parent.mkdir(exist_ok=True)
-    identifier = bytes(json.loads(pipeline.read_text())["PipelineUUID"])
-    if args.reuse and cache.is_file() and cache.stat().st_mtime_ns >= max(
+    description = json.loads(pipeline.read_text())
+    identifier = bytes(description["PipelineUUID"])
+    override = getattr(args, "pcc_overrides", {}).get(chip)
+    compiler = override or args.pcc
+    marker = b"PCC override: "
+    compiler_matches = not override
+    if diagnostic.is_file():
+        with diagnostic.open("rb") as log:
+            first_line = log.readline()
+        compiler_matches = (first_line == f"PCC override: {override}\n".encode()
+                            if override else not first_line.startswith(marker))
+    if args.reuse and (not override or compiler_matches) and cache.is_file() and cache.stat().st_mtime_ns >= max(
             shader.stat().st_mtime_ns, pipeline.stat().st_mtime_ns):
         if valid_cache(cache.read_bytes(), identifier):
             return name, chip, True
-    if (args.reuse and not cache.exists() and diagnostic.is_file() and diagnostic.stat().st_size
+    if (args.reuse and compiler_matches and not cache.exists() and diagnostic.is_file() and diagnostic.stat().st_size
             and diagnostic.stat().st_mtime_ns >= max(shader.stat().st_mtime_ns, pipeline.stat().st_mtime_ns)):
         return name, chip, False
     with tempfile.TemporaryDirectory() as folder, diagnostic.open("wb") as log:
+        if override:
+            log.write(f"PCC override: {override}\n".encode())
+            log.flush()
         scratch = Path(folder)
-        (scratch / shader.name).symlink_to(shader)
-        (scratch / pipeline.name).symlink_to(pipeline)
+        # PCC treats input filenames containing "json" as pipeline descriptions.
+        (scratch / "input.spv").symlink_to(shader)
+        description["ComputePipelineState"]["ShaderFileNames"][0]["filename"] = "input.spv"
+        (scratch / "input.json").write_text(json.dumps(description))
         result = scratch / "cache.bin"
-        passed = run([args.pcc, "-path", scratch, "-prefix", name, "-chip", chip, "-j", "1", "-out", result], log, 40)
+        passed = run([compiler, "-path", scratch, "-prefix", "input", "-chip", chip, "-j", "1", "-out", result],
+                     log, 180 if override else 40)
         if passed and result.is_file():
             data = result.read_bytes()
             if valid_cache(data, identifier):
@@ -127,7 +172,9 @@ def unported_reason(source):
         return "POSIX kernel interfaces require a host process."
     if name.startswith("asm_") or name == "min_nop_sled":
         return "The workload exercises CPU instructions or a CPU calling context."
-    if name in {"03_linked_list", "06_allocator", "mem_flexible_arena_rewriter"}:
+    if name == "int_woma_keygen":
+        return "Generates activation credentials for third-party software."
+    if name in {"03_linked_list", "mem_flexible_arena_rewriter"}:
         return "Requires a GPU-specific bounded arena and pointer representation."
     if name in {"cf_setjmp", "cf_longjmp_threaded_vm", "cf_computed_goto"}:
         return "Requires an explicit shader stack or state machine for host control transfers."
@@ -151,19 +198,30 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--clspv", default="clspv")
     parser.add_argument("--glslc", default="glslc")
+    parser.add_argument("--cc", default="cc", help="host C compiler for bytecode fixtures")
+    parser.add_argument("--cxx", default="c++", help="host C++ compiler for template fixtures")
     parser.add_argument("--spirv-opt", default="spirv-opt")
     parser.add_argument("--spirv-val", default="spirv-val")
     parser.add_argument("--pcc", default="nvidia-pcc")
+    parser.add_argument("--pcc-for-chip", metavar="CHIP=EXECUTABLE", action="append", default=[],
+                        help="use a different PCC executable for a particular chip")
     parser.add_argument("--chip", nargs="+", default=["ad102"], help="PCC chip names or all")
     parser.add_argument("--jobs", type=int, default=10)
     parser.add_argument("--reuse", action="store_true", help="reuse current build results and validate successful outputs")
     args = parser.parse_args()
+    args.pcc_overrides = {}
+    for override in args.pcc_for_chip:
+        chip, separator, compiler = override.partition("=")
+        if not chip or not separator or not compiler:
+            parser.error("--pcc-for-chip requires CHIP=EXECUTABLE")
+        args.pcc_overrides[chip] = compiler
     chips = args.chip
     if chips == ["all"]:
         supported = subprocess.check_output([args.pcc, "-chips"], text=True)
         chips = re.findall(r"(?m)^\[INFO\]\s+([a-z]+\d+[a-z]?)(?: .*)?$", supported)
         if not chips:
             parser.error("could not discover NVIDIA PCC chip names")
+        chips.extend(chip for chip in args.pcc_overrides if chip not in chips)
 
     for kind in ("logs", "spirv", "pipelines", "cache"):
         (ROOT / kind).mkdir(exist_ok=True)

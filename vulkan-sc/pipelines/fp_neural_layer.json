@@ -42,7 +42,7 @@
         "flags": "0",
         "stage": "VK_SHADER_STAGE_COMPUTE_BIT",
         "module": "",
-        "pName": "program_entry",
+        "pName": "main",
         "pSpecializationInfo": "NULL"
       },
       "layout": "",

@@ -1,0 +1,287 @@
+// Run assembled bytecode with the corpus operand stack and call frames.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+#include "fixture.glsl"
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Result {
+    uint words[64];
+} data;
+
+const uint STACK_OVERFLOW = 1u, STACK_UNDERFLOW = 2u, FRAME_OVERFLOW = 3u;
+const uint INVALID_OPCODE = 5u, DIVISION_BY_ZERO = 6u, OUT_OF_BOUNDS = 7u;
+const uint INVALID_ADDRESS = 8u, INVALID_DEMO = 9u;
+
+struct Frame {
+    uint return_address;
+    int locals[LOCALS_SIZE];
+};
+Frame frames[CALL_STACK_SIZE];
+int stack[STACK_SIZE];
+int globals[GLOBALS_SIZE];
+int sp, fp;
+uint pc, base, code_size, error, input_index;
+bool running;
+uint64_t output_hash;
+uint output_length;
+
+void fail(uint code) {
+    error = code;
+    running = false;
+}
+
+void push(int value) {
+    if (sp == STACK_SIZE) {
+        fail(STACK_OVERFLOW);
+        return;
+    }
+    stack[sp++] = value;
+}
+
+bool peek(int offset, out int value) {
+    if (sp <= offset) {
+        fail(STACK_UNDERFLOW);
+        return false;
+    }
+    value = stack[sp - 1 - offset];
+    return true;
+}
+
+bool pop(out int value) {
+    if (!peek(0, value))
+        return false;
+    --sp;
+    return true;
+}
+
+bool pop_pair(out int a, out int b) {
+    if (!pop(b))
+        return false;
+    return pop(a);
+}
+
+uint code_byte(uint address) {
+    uint index = base + address;
+    return (bytecode[index / 4u] >> (8u * (index & 3u))) & 255u;
+}
+
+uint operand_byte() {
+    if (pc >= code_size) {
+        fail(INVALID_ADDRESS);
+        return 0u;
+    }
+    return code_byte(pc++);
+}
+
+uint operand_word() {
+    if (pc + 4u > code_size) {
+        fail(INVALID_ADDRESS);
+        return 0u;
+    }
+    uint value = code_byte(pc) | (code_byte(pc + 1u) << 8u)
+        | (code_byte(pc + 2u) << 16u) | (code_byte(pc + 3u) << 24u);
+    pc += 4u;
+    return value;
+}
+
+void emit_byte(uint value) {
+    output_hash = (output_hash ^ uint64_t(value & 255u)) * 1099511628211UL;
+    ++output_length;
+}
+
+void emit_integer(int value) {
+    uint magnitude = uint(value);
+    if (value < 0) {
+        emit_byte(45u);
+        magnitude = 0u - magnitude;
+    }
+    uint digits[10];
+    int count = 0;
+    do {
+        digits[count++] = 48u + magnitude % 10u;
+        magnitude /= 10u;
+    } while (magnitude != 0u);
+    while (count > 0)
+        emit_byte(digits[--count]);
+}
+
+void dump_stack() {
+    emit_byte(32u); emit_byte(32u); emit_byte(83u); emit_byte(116u); emit_byte(97u);
+    emit_byte(99u); emit_byte(107u); emit_byte(32u); emit_byte(91u);
+    emit_integer(sp);
+    emit_byte(93u); emit_byte(58u); emit_byte(32u);
+    if (sp == 0) {
+        emit_byte(40u); emit_byte(101u); emit_byte(109u); emit_byte(112u);
+        emit_byte(116u); emit_byte(121u); emit_byte(41u);
+    }
+    for (int i = 0; i < min(sp, 10); ++i) {
+        emit_integer(stack[i]);
+        emit_byte(32u);
+    }
+    if (sp > 10) {
+        emit_byte(46u); emit_byte(46u); emit_byte(46u); emit_byte(32u);
+    }
+    emit_byte(10u);
+}
+
+void binary(uint opcode) {
+    int a, b;
+    if (!pop_pair(a, b))
+        return;
+    switch (opcode) {
+    case OP_ADD: push(a + b); break;
+    case OP_SUB: push(a - b); break;
+    case OP_MUL: push(a * b); break;
+    case OP_DIV:
+    case OP_MOD:
+        if (b == 0)
+            fail(DIVISION_BY_ZERO);
+        else if (opcode == OP_DIV)
+            push(a / b);
+        else
+            push(a - (a / b) * b);
+        break;
+    case OP_EQ: push(int(a == b)); break;
+    case OP_NE: push(int(a != b)); break;
+    case OP_LT: push(int(a < b)); break;
+    case OP_LE: push(int(a <= b)); break;
+    case OP_GT: push(int(a > b)); break;
+    case OP_GE: push(int(a >= b)); break;
+    case OP_AND: push(int(a != 0 && b != 0)); break;
+    case OP_OR: push(int(a != 0 || b != 0)); break;
+    case OP_BAND: push(a & b); break;
+    case OP_BOR: push(a | b); break;
+    case OP_XOR: push(a ^ b); break;
+    case OP_SHL: push(a << (b & 31)); break;
+    case OP_SHR: push(int(uint(a) >> (b & 31))); break;
+    }
+}
+
+void step(uint opcode) {
+    int a, b;
+    uint address, index;
+    switch (opcode) {
+    case OP_NOP: break;
+    case OP_PUSH: push(int(operand_word())); break;
+    case OP_POP: pop(a); break;
+    case OP_DUP:
+    case OP_OVER:
+        if (peek(int(opcode == OP_OVER), a))
+            push(a);
+        break;
+    case OP_SWAP:
+        if (pop_pair(a, b)) {
+            push(b);
+            push(a);
+        }
+        break;
+    case OP_ADD: case OP_SUB: case OP_MUL: case OP_DIV: case OP_MOD:
+    case OP_EQ: case OP_NE: case OP_LT: case OP_LE: case OP_GT: case OP_GE:
+    case OP_AND: case OP_OR: case OP_BAND: case OP_BOR: case OP_XOR: case OP_SHL: case OP_SHR:
+        binary(opcode);
+        break;
+    case OP_NEG: if (pop(a)) push(-a); break;
+    case OP_INC: if (pop(a)) push(a + 1); break;
+    case OP_DEC: if (pop(a)) push(a - 1); break;
+    case OP_NOT: if (pop(a)) push(int(a == 0)); break;
+    case OP_BNOT: if (pop(a)) push(~a); break;
+    case OP_JMP:
+        address = operand_word();
+        pc = address;
+        break;
+    case OP_JZ: case OP_JNZ:
+        address = operand_word();
+        if (pop(a) && ((a == 0) == (opcode == OP_JZ)))
+            pc = address;
+        break;
+    case OP_CALL:
+        address = operand_word();
+        if (fp >= CALL_STACK_SIZE - 1) {
+            fail(FRAME_OVERFLOW);
+            break;
+        }
+        ++fp;
+        frames[fp].return_address = pc;
+        for (int i = 0; i < LOCALS_SIZE; ++i)
+            frames[fp].locals[i] = 0;
+        pc = address;
+        break;
+    case OP_RET:
+        if (fp < 0)
+            running = false;
+        else
+            pc = frames[fp--].return_address;
+        break;
+    case OP_LOAD_LOCAL: case OP_STORE_LOCAL:
+        index = operand_byte();
+        if (index >= LOCALS_SIZE) {
+            fail(OUT_OF_BOUNDS);
+        } else if (opcode == OP_LOAD_LOCAL) {
+            push(fp >= 0 ? frames[fp].locals[index] : globals[index]);
+        } else if (pop(a)) {
+            if (fp >= 0) frames[fp].locals[index] = a;
+            else globals[index] = a;
+        }
+        break;
+    case OP_LOAD_GLOBAL: case OP_STORE_GLOBAL:
+        index = operand_word();
+        if (index >= GLOBALS_SIZE)
+            fail(OUT_OF_BOUNDS);
+        else if (opcode == OP_LOAD_GLOBAL)
+            push(globals[index]);
+        else if (pop(a))
+            globals[index] = a;
+        break;
+    case OP_PRINT:
+        if (pop(a)) {
+            emit_integer(a);
+            emit_byte(10u);
+        }
+        break;
+    case OP_PRINT_CHAR:
+        if (pop(a)) emit_byte(uint(a));
+        break;
+    case OP_PRINT_STR:
+        while (pc < code_size && code_byte(pc) != 0u)
+            emit_byte(code_byte(pc++));
+        ++pc;
+        break;
+    case OP_READ:
+        push(input_index >= 58u ? int(data.words[input_index--]) : 0);
+        break;
+    case OP_HALT: running = false; break;
+    case OP_DEBUG: dump_stack(); break;
+    default: fail(INVALID_OPCODE); break;
+    }
+}
+
+void main() {
+    uint selected = data.words[63];
+    if (selected >= demos.length()) {
+        data.words[0] = INVALID_DEMO;
+        return;
+    }
+    base = demos[selected].x;
+    code_size = demos[selected].y;
+    sp = 0;
+    fp = -1;
+    pc = 0u;
+    error = 0u;
+    input_index = 62u;
+    output_hash = 14695981039346656037UL;
+    output_length = 0u;
+    running = true;
+    for (int i = 0; i < GLOBALS_SIZE; ++i)
+        globals[i] = 0;
+
+    uint instructions = 0u;
+    while (running && pc < code_size) {
+        step(operand_byte());
+        ++instructions;
+    }
+    data.words[0] = error;
+    data.words[1] = instructions;
+    data.words[2] = uint(sp);
+    data.words[3] = output_length;
+    data.words[4] = uint(output_hash);
+    data.words[5] = uint(output_hash >> 32u);
+}

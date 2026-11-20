@@ -1,4 +1,0 @@
-Err: SrcTy = %struct.EdgePayload = type { i32, i32, i16, i8, i8 } - DstTy = i32 - Ty = %struct.EdgePayload = type { i32, i32, i16, i8, i8 } - CstVal = 808
-Err: SrcTy = %struct.EdgePayload = type { i32, i32, i16, i8, i8 } - DstTy = i8 - Ty = %struct.EdgePayload = type { i32, i32, i16, i8, i8 } - CstVal = 184
-Err: SrcTy = %struct.EdgePayload = type { i32, i32, i16, i8, i8 } - DstTy = i8 - Ty = %struct.EdgePayload = type { i32, i32, i16, i8, i8 } - CstVal = 192
-Err: SrcTy = %struct.BlobPayload = type { [19 x i8], i32 } - DstTy = i32 - Ty = %struct.BlobPayload = type { [19 x i8], i32 } - CstVal = 1248
