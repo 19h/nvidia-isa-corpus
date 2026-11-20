@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp9n4rxjou/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] fp_denormal_rounding_lab.json
+[INFO] Parsing JSON: /tmp/tmp9n4rxjou/fp_denormal_rounding_lab.json
+[INFO] Compiling JSON: /tmp/tmp9n4rxjou/fp_denormal_rounding_lab.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp9n4rxjou/fp_denormal_rounding_lab.spv
+[INFO] Compiled JSON: /tmp/tmp9n4rxjou/fp_denormal_rounding_lab.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmp9n4rxjou/cache.bin

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpofak88f1/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] mem_flexible_arena_rewriter.json
+[INFO] Parsing JSON: /tmp/tmpofak88f1/mem_flexible_arena_rewriter.json
+[INFO] Compiling JSON: /tmp/tmpofak88f1/mem_flexible_arena_rewriter.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpofak88f1/mem_flexible_arena_rewriter.spv
+[INFO] Compiled JSON: /tmp/tmpofak88f1/mem_flexible_arena_rewriter.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpofak88f1/cache.bin

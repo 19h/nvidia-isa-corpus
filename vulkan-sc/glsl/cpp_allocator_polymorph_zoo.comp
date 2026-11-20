@@ -1,0 +1,260 @@
+// Bounded actor and vector storage with explicit allocation and lifetime events.
+// Default accounting sizes are those of the x86-64 C++ reference.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+
+struct Actor {
+    uint kind;
+    uint seed;
+    uint factor;
+    uint count;
+    uint capacity;
+    uint cells[64];
+    uint64_t state;
+};
+layout(set = 0, binding = 0, std430) buffer Data {
+    uint words[64];
+    Actor actors[24];
+} io;
+
+const uint COUNTER = 0, BUFFER = 1, BRANCH = 2;
+const uint default_sizes[4] = uint[4](56,64,48,16);
+uint size_bytes[4];
+uint actor_count = 0;
+uint churn_count = 0;
+uint64_t churn[32];
+uint live_blocks = 0;
+uint live_tickets = 0;
+uint allocated = 0;
+uint64_t trace = 0x3141592653589793UL;
+
+uint64_t rotl64(uint64_t x, uint n) {
+    n &= 63u;
+    return n == 0 ? x : (x << n) | (x >> (64u-n));
+}
+
+uint64_t mix64(uint64_t value) {
+    value ^= value >> 30;
+    value *= 0xbf58476d1ce4e5b9UL;
+    value ^= value >> 27;
+    value *= 0x94d049bb133111ebUL;
+    return value ^ (value >> 31);
+}
+
+void allocate_block(uint bytes, uint alignment) {
+    ++live_blocks;
+    allocated += bytes;
+    trace = mix64(trace + bytes*17UL + alignment*131UL + live_blocks);
+}
+
+void release_block(uint bytes, uint alignment) {
+    trace = mix64(trace ^ (bytes*29UL + alignment*193UL + live_blocks));
+    allocated -= bytes;
+    --live_blocks;
+}
+
+void start_ticket(uint64_t tag) {
+    ++live_tickets;
+    trace = mix64(trace + tag + live_tickets*41UL);
+}
+
+void end_ticket(uint64_t tag) {
+    trace = mix64(trace ^ (tag + live_tickets*67UL));
+    --live_tickets;
+}
+
+void append_actor(uint seed) {
+    uint i = actor_count++;
+    uint kind = seed % 3u;
+    io.actors[i].kind = kind;
+    io.actors[i].seed = seed;
+    allocate_block(size_bytes[kind], 8);
+    switch (kind) {
+        case COUNTER:
+            start_ticket(0x1000UL + seed);
+            io.actors[i].factor = seed*97u + 11u;
+            for (uint j = 0; j < 6; ++j)
+                io.actors[i].cells[j] = seed*31u + j*j + 3u;
+            break;
+        case BUFFER:
+            start_ticket(0x2000UL + seed);
+            allocate_block(40, 4);
+            io.actors[i].capacity = 10;
+            io.actors[i].count = 6u + seed%5u;
+            io.actors[i].factor = seed*53u + 5u;
+            for (uint j = 0; j < io.actors[i].count; ++j)
+                io.actors[i].cells[j] = seed*17u + j*23u;
+            break;
+        default:
+            start_ticket(0x3000UL + seed);
+            start_ticket(0x4000UL + seed*3u);
+            io.actors[i].state = mix64(seed*65537u + 19u);
+            break;
+    }
+}
+
+void destroy_actor(uint i) {
+    uint kind = io.actors[i].kind;
+    uint seed = io.actors[i].seed;
+    switch (kind) {
+        case COUNTER:
+            end_ticket(0x1000UL + seed);
+            break;
+        case BUFFER:
+            release_block(io.actors[i].capacity*4u, 4);
+            end_ticket(0x2000UL + seed);
+            break;
+        default:
+            end_ticket(0x4000UL + seed*3u);
+            end_ticket(0x3000UL + seed);
+            break;
+    }
+    release_block(size_bytes[kind], 8);
+}
+
+void erase_actor(uint index) {
+    destroy_actor(index);
+    --actor_count;
+    for (uint i = index; i < actor_count; ++i)
+        io.actors[i] = io.actors[i+1u];
+}
+
+uint64_t step_actor(uint i, uint64_t input_value, uint tick) {
+    uint factor = io.actors[i].factor;
+    switch (io.actors[i].kind) {
+        case COUNTER: {
+            uint64_t out_value = input_value + factor + tick*19u;
+            for (uint j = 0; j < 6; ++j) {
+                uint cell = uint(mix64(io.actors[i].cells[j] + out_value + j));
+                io.actors[i].cells[j] = cell;
+                out_value ^= rotl64(cell + uint64_t(j)*101UL, (tick+j) & 31u);
+            }
+            return mix64(out_value);
+        }
+        case BUFFER: {
+            uint count = io.actors[i].count;
+            uint capacity = io.actors[i].capacity;
+            if (((input_value + tick) & 1UL) != 0) {
+                if (count == capacity) {
+                    allocate_block(capacity*8u, 4);
+                    release_block(capacity*4u, 4);
+                    io.actors[i].capacity = capacity*2u;
+                }
+                io.actors[i].cells[count] = uint(mix64(input_value + factor + count));
+                ++count;
+            } else if (count > 4) {
+                uint erased = uint((input_value + tick) % count);
+                --count;
+                for (uint j = erased; j < count; ++j)
+                    io.actors[i].cells[j] = io.actors[i].cells[j+1u];
+            }
+            io.actors[i].count = count;
+            if (tick % 3u == 0 && count > 1) {
+                uint rotated[64];
+                for (uint j = 0; j < count; ++j)
+                    rotated[j] = io.actors[i].cells[(j+count/2u)%count];
+                for (uint j = 0; j < count; ++j)
+                    io.actors[i].cells[j] = rotated[j];
+            }
+            uint64_t out_value = input_value ^ factor;
+            for (uint j = 0; j < count; ++j)
+                out_value = mix64(out_value + io.actors[i].cells[j] + uint64_t(count)*13UL);
+            return out_value;
+        }
+        default: {
+            uint64_t state = io.actors[i].state;
+            uint64_t out_value = state ^ input_value ^ (tick*313u);
+            for (uint lane = 0; lane < 5; ++lane) {
+                if (((out_value >> lane) & 1UL) != 0)
+                    out_value = mix64(out_value + lane*0x45d9f3bu);
+                else
+                    out_value = rotl64(out_value ^ state, lane+tick);
+            }
+            io.actors[i].state = mix64(out_value + input_value + tick);
+            return io.actors[i].state ^ out_value;
+        }
+    }
+}
+
+void perturb(uint i, uint64_t value) {
+    switch (io.actors[i].kind) {
+        case COUNTER:
+            io.actors[i].factor ^= uint((value >> 5) ^ (value & 0xffffUL));
+            io.actors[i].cells[uint(value%6UL)] += uint(value|1UL);
+            break;
+        case BUFFER:
+            io.actors[i].factor = uint(mix64(value + io.actors[i].factor));
+            if (io.actors[i].count > 14) io.actors[i].count = 9;
+            break;
+        default:
+            io.actors[i].state ^= rotl64(value + 0x9e3779b97f4a7c15UL, uint(value & 31UL));
+            break;
+    }
+}
+
+uint weight(uint i) {
+    switch (io.actors[i].kind) {
+        case COUNTER: return (io.actors[i].factor ^ io.actors[i].cells[2] ^ io.actors[i].cells[5]) & 127u;
+        case BUFFER: return (io.actors[i].factor + io.actors[i].count*11u) & 255u;
+        default: return uint(io.actors[i].state ^ (io.actors[i].state >> 17)) & 191u;
+    }
+}
+
+void rotate_actors(uint offset) {
+    for (uint j = 0; j < offset; ++j) {
+        Actor first = io.actors[0];
+        for (uint i = 0; i + 1u < actor_count; ++i)
+            io.actors[i] = io.actors[i+1u];
+        io.actors[actor_count-1u] = first;
+    }
+}
+
+void main() {
+    for (uint i = 0; i < 4; ++i)
+        size_bytes[i] = io.words[63-i] == 0 ? default_sizes[i] : io.words[63-i];
+    uint64_t checksum = 0x6a09e667f3bcc909UL;
+    allocate_block(24u*size_bytes[3], 8);
+    allocate_block(32u*8u, 8);
+
+    for (uint seed = 3; seed < 18; ++seed)
+        append_actor(seed);
+    for (uint round = 0; round < 38; ++round) {
+        for (uint i = 0; i < actor_count; ++i) {
+            uint64_t input_value = checksum ^ uint64_t((round+1u)*(i+17u));
+            uint64_t value = step_actor(i, input_value, round);
+            checksum = mix64(checksum + value + weight(i)*31u);
+            if ((value + i + round) % 5UL == 0)
+                perturb(i, checksum ^ value);
+
+            churn[churn_count++] = value ^ checksum;
+            if (churn_count > 26) {
+                uint erased = uint((value+i) % churn_count);
+                --churn_count;
+                for (uint j = erased; j < churn_count; ++j)
+                    churn[j] = churn[j+1u];
+            }
+        }
+        if (round%6u == 2 && actor_count < 22)
+            append_actor(round+40u);
+        if (round%7u == 4 && actor_count > 9) {
+            erase_actor(uint(checksum % actor_count));
+            append_actor(round+70u);
+        }
+        if ((round & 3u) == 1 && actor_count > 2)
+            rotate_actors(round % actor_count);
+        for (uint j = 0; j < churn_count; ++j)
+            checksum ^= rotl64(churn[j] + trace, uint(churn[j] & 15UL));
+    }
+
+    release_block(32u*8u, 8);
+    for (uint i = 0; i < actor_count; ++i)
+        destroy_actor(i);
+    release_block(24u*size_bytes[3], 8);
+    checksum = mix64(checksum ^ trace ^ allocated);
+    io.words[0] = uint(live_blocks != 0 || live_tickets != 0 || allocated != 0);
+    for (uint i = 0; i < 8; ++i)
+        io.words[1+i] = uint((checksum >> (8u*i)) & 255UL);
+    io.words[17] = live_blocks;
+    io.words[33] = live_tickets;
+}

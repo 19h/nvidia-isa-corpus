@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpg5oqjm5f/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cpp_rtti.json
+[INFO] Parsing JSON: /tmp/tmpg5oqjm5f/cpp_rtti.json
+[INFO] Compiling JSON: /tmp/tmpg5oqjm5f/cpp_rtti.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpg5oqjm5f/cpp_rtti.spv
+[INFO] Compiled JSON: /tmp/tmpg5oqjm5f/cpp_rtti.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpg5oqjm5f/cache.bin

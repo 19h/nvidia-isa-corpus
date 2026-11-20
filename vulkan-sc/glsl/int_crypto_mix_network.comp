@@ -1,0 +1,274 @@
+// SPDX-License-Identifier: MIT
+/*
+ * int_crypto_mix_network.c
+ *
+ * Deterministic integer mixing network with generated tables, rotates,
+ * checksums, branches, memcpy type movement, and call-heavy round functions.
+ */
+
+
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result { uint words[]; } output_data;
+
+#define TABLE_SIZE 256u
+#define BLOCK_COUNT 24u
+#define STATE_WORDS 8u
+#define ROUNDS 96u
+
+struct MixBlock {
+    uint lane[STATE_WORDS];
+    uint bytes[32];
+    uint64_t tag;
+};
+
+struct NetworkTables {
+    uint round_key[ROUNDS];
+    uint sbox[TABLE_SIZE];
+    uint perm[TABLE_SIZE];
+    uint64_t tweak[16];
+};
+
+NetworkTables tables;
+MixBlock blocks[BLOCK_COUNT];
+
+uint byte_value(uint n) { return n & 255u; }
+
+uint rotl32(uint x, uint n) {
+    n &= 31u;
+    return n == 0u ? x : ((x << n) | (x >> (32u - n)));
+}
+
+uint rotr32(uint x, uint n) {
+    n &= 31u;
+    return n == 0u ? x : ((x >> n) | (x << (32u - n)));
+}
+
+uint64_t rotl64(uint64_t x, uint n) {
+    n &= 63u;
+    return n == 0u ? x : ((x << n) | (x >> (64u - n)));
+}
+
+uint splitmix32(uint x) {
+    x += 0x9e3779b9u;
+    x = (x ^ (x >> 16)) * 0x85ebca6bu;
+    x = (x ^ (x >> 13)) * 0xc2b2ae35u;
+    return x ^ (x >> 16);
+}
+
+void init_tables() {
+    uint x = 0x243f6a88u;
+
+    for (uint i = 0; i < TABLE_SIZE; i++) {
+        x = splitmix32(x + i * 0x45d9f3bu);
+        tables.sbox[i] = rotl32(x ^ (i * 0x01010101u), (i % 29u) + 1u);
+        tables.perm[i] = byte_value((i * 73u + (x >> 24) + (x >> 11)) & 255u);
+    }
+
+    for (uint i = 0; i < ROUNDS; i++) {
+        x = splitmix32(x ^ i ^ tables.sbox[(i * 17u) & 255u]);
+        tables.round_key[i] = x ^ rotl32(tables.sbox[(x >> 24) & 255u], i);
+    }
+
+    for (uint i = 0; i < 16u; i++) {
+        uint64_t hi = splitmix32(x + i * 0x1020304u);
+        uint64_t lo = splitmix32(uint(hi) ^ tables.round_key[(i * 5u) % ROUNDS]);
+        tables.tweak[i] = (hi << 32) | lo;
+    }
+}
+
+uint table_mix(uint x, uint key, uint round) {
+    uint a = byte_value(x);
+    uint b = byte_value(x >> 8);
+    uint c = byte_value(x >> 16);
+    uint d = byte_value(x >> 24);
+    uint y = tables.sbox[a] ^ rotl32(tables.sbox[b], 7);
+
+    y += rotr32(tables.sbox[c], 11) ^ key;
+    y ^= rotl32(tables.sbox[tables.perm[d]], (round % 17u) + 3u);
+    y += uint(tables.perm[(a + c + round) & 255u]) * 0x01010101u;
+    return y ^ rotl32(x + key, (d & 15u) + 1u);
+}
+
+uint branch_scramble(uint x, uint y, uint key, uint round) {
+    uint r = table_mix(x ^ y, key, round);
+
+    if ((r & 0x80000000u) != 0u) {
+        r = rotl32(r + y, 9) ^ (x * 0x7feb352du);
+    } else if ((r & 0x00010000u) != 0u) {
+        r = rotr32(r ^ x, 5) + (y * 0x846ca68bu);
+    } else {
+        r ^= rotl32(x + y + key, (round & 15u) + 1u);
+        r += 0x6a09e667u ^ round;
+    }
+
+    return r ^ (r >> 16);
+}
+
+void bytes_to_lanes(inout MixBlock block) {
+    for (uint i = 0; i < STATE_WORDS; i++) {
+        block.lane[i] ^= (block.bytes[4u*i] | (block.bytes[4u*i+1u] << 8)
+                           | (block.bytes[4u*i+2u] << 16) | (block.bytes[4u*i+3u] << 24));
+        block.lane[i] = rotl32(block.lane[i], (i * 3u + 5u) & 31u);
+    }
+}
+
+void lanes_to_bytes(inout MixBlock block, uint salt) {
+    for (uint i = 0; i < STATE_WORDS; i++) {
+        uint v = block.lane[(i + salt) % STATE_WORDS] ^ tables.round_key[(salt + i) % ROUNDS];
+        for (uint j = 0; j < 4; ++j)
+            block.bytes[i * 4u + j] = (v >> (8u*j)) & 255u;
+    }
+}
+
+uint64_t block_checksum(MixBlock block, uint64_t seed) {
+    uint64_t h = seed ^ block.tag;
+
+    for (uint i = 0; i < STATE_WORDS; i++) {
+        h ^= uint64_t(block.lane[i]) << ((i & 1u) != 0 ? 17u : 3u);
+        h = rotl64(h, (i * 9u + 7u) & 63u) * 0x100000001b3UL;
+    }
+
+    for (uint i = 0; i < 32u; i++) {
+        h += block.bytes[i] ^ byte_value(i);
+        h ^= h >> 23;
+        h = rotl64(h, 13);
+    }
+
+    return h;
+}
+
+MixBlock make_block(uint idx) {
+    MixBlock block;
+
+    for (uint i = 0; i < STATE_WORDS; i++) {
+        block.lane[i] = splitmix32(0x13198a2eu + idx * 97u + i * 131u);
+    }
+
+    for (uint i = 0; i < 32u; i++) {
+        uint v = splitmix32(idx * 0x9e37u + i * 0x45d9u);
+        block.bytes[i] = byte_value(v ^ (v >> 11) ^ (idx * 19u));
+    }
+
+    block.tag = (uint64_t(block.lane[0]) << 32) | block.lane[STATE_WORDS - 1u];
+    block.tag ^= tables.tweak[idx & 15u];
+    return block;
+}
+
+void network_round(inout MixBlock block, uint round) {
+    uint carry = tables.round_key[round];
+    uint old[STATE_WORDS];
+
+    old = block.lane;
+
+    for (uint i = 0; i < STATE_WORDS; i++) {
+        uint left = old[i];
+        uint right = old[(i + 1u) % STATE_WORDS];
+        uint far = old[(i + 5u) % STATE_WORDS];
+        uint mixed = branch_scramble(left + carry, right ^ far, tables.round_key[(round + i) % ROUNDS], round + i);
+
+        block.lane[i] = old[(i + 3u) % STATE_WORDS] ^ mixed ^ rotl32(carry, i + 1u);
+        carry += mixed ^ tables.sbox[(block.lane[i] >> 24) & 255u];
+    }
+
+    if ((carry & 3u) == 0u) {
+        lanes_to_bytes(block, round & 7u);
+    } else if ((carry & 3u) == 1u) {
+        bytes_to_lanes(block);
+    } else {
+        uint pos = (carry >> 5) & 31u;
+        block.bytes[pos] ^= byte_value(carry + round);
+        block.bytes[(pos + 11u) & 31u] = byte_value(block.bytes[(pos + 11u) & 31u] + (carry >> 16));
+    }
+
+    block.tag ^= (uint64_t(carry) << 32) | block.lane[round % STATE_WORDS];
+    block.tag = rotl64(block.tag + tables.tweak[round & 15u], (round % 31u) + 1u);
+}
+
+// The canonical image is eight little-endian words, 32 bytes and an
+// eight-byte tag. Convert explicitly so shader storage layout is irrelevant.
+void encode_block(MixBlock block, inout uint image[149], uint offset) {
+    for (uint i = 0; i < 32; ++i) {
+        image[offset+i] = (block.lane[i/4] >> (8u*(i%4))) & 255u;
+        image[offset+32u+i] = block.bytes[i];
+    }
+    for (uint i = 0; i < 8; ++i)
+        image[offset+64u+i] = uint((block.tag >> (8u*i)) & 255UL);
+}
+
+MixBlock decode_block(uint image[149], uint offset) {
+    MixBlock block;
+    for (uint i = 0; i < 8; ++i)
+        block.lane[i] = 0;
+    block.tag = 0;
+    for (uint i = 0; i < 32; ++i) {
+        block.lane[i/4] |= image[offset+i] << (8u*(i%4));
+        block.bytes[i] = image[offset+32u+i];
+    }
+    for (uint i = 0; i < 8; ++i)
+        block.tag |= uint64_t(image[offset+64u+i]) << (8u*i);
+    return block;
+}
+
+uint64_t process_pair(uint a, uint b, uint outer) {
+    uint image[149];
+    encode_block(blocks[a], image, 2);
+    encode_block(blocks[b], image, 77);
+
+    for (uint i = 0; i < 9; ++i) {
+        uint offset = 2u + (i*13u + outer) % 68u;
+        uint v = 0;
+        for (uint j = 0; j < 4; ++j)
+            v |= image[offset+j] << (8u*j);
+        v ^= table_mix(v + outer, tables.round_key[(outer+i) % ROUNDS], outer+i);
+        for (uint j = 0; j < 4; ++j)
+            image[offset+j] = (v >> (8u*j)) & 255u;
+    }
+    blocks[a] = decode_block(image, 2);
+    blocks[b] = decode_block(image, 77);
+
+    for (uint r = 0; r < ROUNDS; r++) {
+        network_round(blocks[a], r);
+        if ((r & 7u) == 3u) {
+            network_round(blocks[b], (r + outer) % ROUNDS);
+            blocks[a].lane[(r + outer) % STATE_WORDS] ^= blocks[b].lane[(r + 3u) % STATE_WORDS];
+        }
+    }
+
+    uint64_t acc = block_checksum(blocks[a], 0xcbf29ce484222325UL ^ outer);
+    acc ^= block_checksum(blocks[b], acc + 0x9e3779b97f4a7c15UL);
+    return acc;
+}
+
+void main() {
+    uint64_t checksum = 0x6a09e667f3bcc908UL;
+    uint summary = 0x510e527fu;
+
+    init_tables();
+
+    for (uint i = 0; i < BLOCK_COUNT; i++) {
+        blocks[i] = make_block(i);
+    }
+
+    for (uint outer = 0; outer < 37u; outer++) {
+        uint a = (outer * 7u + summary) % BLOCK_COUNT;
+        uint b = (outer * 11u + uint(checksum >> 32)) % BLOCK_COUNT;
+
+        checksum ^= process_pair(a, b, outer);
+        checksum = rotl64(checksum + tables.tweak[outer & 15u], (outer % 19u) + 5u);
+        summary ^= uint(checksum) ^ blocks[a].lane[outer % STATE_WORDS];
+        summary = rotl32(summary + tables.round_key[outer % ROUNDS], (outer & 15u) + 1u);
+    }
+
+    for (uint i = 0; i < BLOCK_COUNT; i++) {
+        checksum ^= block_checksum(blocks[i], uint64_t(i) * 0x94d049bb133111ebUL);
+        summary += blocks[i].lane[i % STATE_WORDS] ^ uint(blocks[i].tag);
+    }
+
+    output_data.words[0] = 0;
+    for (uint i = 0; i < 8; ++i)
+        output_data.words[1+i] = uint((checksum >> (8u*i)) & 255UL);
+    for (uint i = 0; i < 4; ++i)
+        output_data.words[17+i] = (summary >> (8u*i)) & 255u;
+}

@@ -1,0 +1,122 @@
+// The shader derives the original graph metadata and dispatches tagged payloads.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result { uint words[]; } output_data;
+
+const uint INF = 0x3fffu;
+const uvec3 edges[15] = uvec3[15](
+    uvec3(0,1,3), uvec3(0,2,8), uvec3(1,3,2), uvec3(1,4,7), uvec3(2,4,1),
+    uvec3(2,5,6), uvec3(3,6,4), uvec3(4,3,5), uvec3(4,6,2), uvec3(4,7,9),
+    uvec3(5,7,3), uvec3(6,8,6), uvec3(7,6,1), uvec3(7,8,4), uvec3(2,8,15)
+);
+const uint LITERAL = 0, COMBINE = 1, GATE = 2, DELAY = 3;
+const uvec4 payloads[9] = uvec4[9](
+    uvec4(LITERAL,17,0,0), uvec4(COMBINE,0,2,41), uvec4(GATE,0,0x31,0),
+    uvec4(DELAY,1,3,0), uvec4(COMBINE,2,3,97), uvec4(LITERAL,29,0,0),
+    uvec4(GATE,4,0x57,0), uvec4(DELAY,5,5,0), uvec4(COMBINE,6,7,193)
+);
+uint distances[9][9];
+uint64_t values[9];
+uint64_t checksum;
+uint depth = 0;
+
+uint64_t mix64(uint64_t x) {
+    x ^= x >> 32;
+    x *= 0xd6e8feb86659fd93UL;
+    x ^= x >> 32;
+    x *= 0xd6e8feb86659fd93UL;
+    return x ^ (x >> 32);
+}
+
+uint64_t rotl64(uint64_t x, uint n) {
+    n &= 63u;
+    return n == 0 ? x : (x << n) | (x >> (64u-n));
+}
+
+uint64_t initialize_graph() {
+    for (uint i = 0; i < 9; ++i) {
+        values[i] = 0;
+        for (uint j = 0; j < 9; ++j)
+            distances[i][j] = i == j ? 0 : INF;
+    }
+    for (uint i = 0; i < 15; ++i) {
+        uvec3 edge = edges[i];
+        distances[edge.x][edge.y] = edge.z;
+    }
+    for (uint k = 0; k < 9; ++k)
+        for (uint i = 0; i < 9; ++i)
+            for (uint j = 0; j < 9; ++j)
+                distances[i][j] = min(distances[i][j], (distances[i][k] + distances[k][j]) & 65535u);
+    uint64_t seed = 0x7f4a7c159e3779b9UL;
+    for (uint i = 0; i < 81; ++i)
+        seed = mix64(seed + uint64_t(distances[i/9][i%9]) * (i+11u));
+    return seed;
+}
+
+void enter_scope(uint64_t tag) {
+    checksum = mix64(checksum + tag + ++depth);
+}
+
+void leave_scope(uint64_t tag) {
+    checksum = mix64(checksum ^ (tag + uint64_t(depth)*23UL));
+    --depth;
+}
+
+uint64_t evaluate_payload(uint node, uint round, uint64_t incoming) {
+    uvec4 p = payloads[node];
+    switch (p.x) {
+        case LITERAL: return mix64(p.y + incoming + round*13UL);
+        case COMBINE: return mix64((values[p.y]*3UL) ^ rotl64(values[p.z] + p.w, p.y + p.z));
+        case GATE:
+            return ((values[p.y] + incoming + p.z + round) & p.z) != 0UL
+                 ? mix64(values[p.y] + incoming) : mix64(incoming ^ p.z);
+        default: {
+            uint d = distances[p.y][node];
+            uint64_t base = values[p.y] + p.z*17u;
+            return d == INF ? mix64(base ^ incoming) : mix64(base + d + incoming);
+        }
+    }
+}
+
+uint64_t apply_rules(uint node, uint64_t value, uint64_t salt) {
+    value = mix64(value + salt + uint64_t(node)*0x45d9f3bUL);
+    uint d = distances[node][8];
+    uint64_t folded = d == INF ? value ^ salt : value + d*131u;
+    return rotl64(folded, (node + d) & 15u);
+}
+
+void main() {
+    checksum = initialize_graph();
+    enter_scope(0x10000UL);
+    for (uint round = 0; round < 7; ++round) {
+        uint64_t round_tag = 0x20000UL + round;
+        enter_scope(round_tag);
+        for (uint node = 0; node < 9; ++node) {
+            uint64_t node_tag = 0x30000UL + node + round*17UL;
+            enter_scope(node_tag);
+            uint64_t incoming = 0;
+            for (uint i = 0; i < 15; ++i) {
+                uvec3 edge = edges[i];
+                if (edge.y == node)
+                    incoming ^= rotl64(values[edge.x] + edge.z + round, edge.z);
+            }
+            uint64_t raw = evaluate_payload(node, round, incoming);
+            values[node] = apply_rules(node, raw, checksum ^ (round << 8));
+            checksum ^= mix64(values[node] + incoming + node*101u + round);
+            leave_scope(node_tag);
+        }
+        leave_scope(round_tag);
+    }
+    uint64_t summary = 0x243f6a8885a308d3UL;
+    for (uint node = 0; node < 9; ++node) {
+        uint d = distances[node][8];
+        uint64_t value = d == INF ? values[node] : values[node] + d*1009u;
+        summary = mix64(summary + value + node*313u);
+    }
+    uint64_t result = checksum ^ summary ^ depth;
+    leave_scope(0x10000UL);
+    output_data.words[0] = uint(depth != 0);
+    for (uint i = 0; i < 8; ++i)
+        output_data.words[1+i] = uint((result >> (8u*i)) & 255UL);
+}

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmph7r9ormz/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cpp_allocator_polymorph_zoo.json
+[INFO] Parsing JSON: /tmp/tmph7r9ormz/cpp_allocator_polymorph_zoo.json
+[INFO] Compiling JSON: /tmp/tmph7r9ormz/cpp_allocator_polymorph_zoo.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmph7r9ormz/cpp_allocator_polymorph_zoo.spv
+[INFO] Compiled JSON: /tmp/tmph7r9ormz/cpp_allocator_polymorph_zoo.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmph7r9ormz/cache.bin

@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpar92ba70/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_variadic.json
+[INFO] Parsing JSON: /tmp/tmpar92ba70/call_variadic.json
+[INFO] Compiling JSON: /tmp/tmpar92ba70/call_variadic.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpar92ba70/call_variadic.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

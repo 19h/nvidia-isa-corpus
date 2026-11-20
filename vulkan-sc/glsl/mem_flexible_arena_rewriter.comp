@@ -1,0 +1,219 @@
+// Double-buffered bounded arena with the C workload's 24-byte record header.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Data {
+    uint words[64];
+    uint bytes[2][8192];
+} io;
+
+const uint NO_OFFSET = 0xffffffffu;
+const uint HEADER = 24;
+const uint COUNT = 56;
+uint current_bank = 0;
+uint used = 0;
+
+uint rotl32(uint x, uint n) {
+    n &= 31u;
+    return n == 0 ? x : (x << n) | (x >> (32u-n));
+}
+
+uint64_t rotl64(uint64_t x, uint n) {
+    n &= 63u;
+    return n == 0 ? x : (x << n) | (x >> (64u-n));
+}
+
+uint mix32(uint x) {
+    x += 0x9e3779b9u;
+    x = (x ^ (x >> 16)) * 0x85ebca6bu;
+    x = (x ^ (x >> 13)) * 0xc2b2ae35u;
+    return x ^ (x >> 16);
+}
+
+uint64_t load_le(uint bank, uint at, uint width) {
+    uint64_t value = 0;
+    for (uint i = 0; i < width; ++i)
+        value |= uint64_t(io.bytes[bank][at+i]) << (8u*i);
+    return value;
+}
+
+void store_le(uint bank, uint at, uint width, uint64_t value) {
+    for (uint i = 0; i < width; ++i)
+        io.bytes[bank][at+i] = uint((value >> (8u*i)) & 255UL);
+}
+
+struct Record {
+    uint id;
+    uint next_offset;
+    uint aux;
+    uint payload_size;
+    uint kind;
+    uint live;
+    uint64_t stamp;
+};
+
+Record read_record(uint bank, uint at) {
+    return Record(uint(load_le(bank, at, 4)), uint(load_le(bank, at+4u, 4)),
+                  uint(load_le(bank, at+8u, 4)), uint(load_le(bank, at+12u, 2)),
+                  io.bytes[bank][at+14u], io.bytes[bank][at+15u], load_le(bank, at+16u, 8));
+}
+
+void write_record(uint bank, uint at, Record r) {
+    store_le(bank, at, 4, r.id);
+    store_le(bank, at+4u, 4, r.next_offset);
+    store_le(bank, at+8u, 4, r.aux);
+    store_le(bank, at+12u, 2, r.payload_size);
+    io.bytes[bank][at+14u] = r.kind;
+    io.bytes[bank][at+15u] = r.live;
+    store_le(bank, at+16u, 8, r.stamp);
+}
+
+uint span(uint len) { return (HEADER + len + 7u) & ~7u; }
+
+uint64_t checksum_bytes(uint bank, uint at, uint length, uint64_t seed) {
+    uint64_t h = seed ^ 0xcbf29ce484222325UL;
+    for (uint i = 0; i < length; ++i) {
+        h ^= uint64_t(io.bytes[bank][at+i]) + (uint64_t(i) << 13);
+        h *= 0x100000001b3UL;
+        h = rotl64(h, 7) ^ (h >> 25);
+    }
+    return h;
+}
+
+uint append_record(uint id, uint len, uint kind, uint seed) {
+    uint at = used;
+    if (at + span(len) > 8192) return NO_OFFSET;
+    write_record(current_bank, at, Record(id, NO_OFFSET, mix32(seed + id), len, kind, 1,
+                 (uint64_t(mix32(id ^ seed)) << 32) | mix32(seed + len + kind)));
+    for (uint i = 0; i < len; ++i) {
+        uint v = mix32(seed + id*17u + i*29u + kind);
+        io.bytes[current_bank][at+HEADER+i] = (v ^ (v >> 9) ^ (i*7u)) & 255u;
+    }
+    used += span(len);
+    for (uint i = at + HEADER + len; i < used; ++i)
+        io.bytes[current_bank][i] = 0;
+    return at;
+}
+
+uint64_t rewrite_record(uint bank, uint at, inout Record r, uint pass, uint token) {
+    uint64_t acc = r.stamp ^ (uint64_t(r.id) << 17) ^ token;
+    uint stride = 3u + (r.kind % 5u);
+    uint payload = at + HEADER;
+    for (uint i = 0; i + 4u <= r.payload_size; i += stride) {
+        uint v = uint(load_le(bank, payload+i, 4));
+        if (((v ^ r.aux ^ pass ^ token) & 1u) != 0)
+            v = rotl32(v + r.id + pass, (r.kind + i) & 31u);
+        else
+            v ^= mix32(r.aux + i + pass);
+        store_le(bank, payload+i, 4, v);
+        acc = rotl64((acc ^ v) + i + r.kind, 11);
+    }
+    for (uint i = 0; i < r.payload_size; ++i) {
+        io.bytes[bank][payload+i] ^= ((r.aux >> ((i & 3u) * 8u)) ^ pass) & 255u;
+        acc += io.bytes[bank][payload+i] + uint64_t(i);
+    }
+    r.aux = mix32(r.aux + uint(acc) + pass);
+    r.stamp = rotl64(r.stamp ^ acc ^ token, (pass % 37u) + 1u);
+    if (((r.aux + pass + r.kind) % 19u) == 0) r.live = 0;
+    write_record(bank, at, r);
+    return acc;
+}
+
+uint64_t compact_arena(uint pass) {
+    uint next_bank = 1u - current_bank;
+    uint old_offsets[COUNT], new_offsets[COUNT];
+    uint count = 0;
+    uint next_used = 0;
+    uint64_t acc = 0x510e527fade682d1UL ^ pass;
+    for (uint scan = 0; scan < used;) {
+        Record src = read_record(current_bank, scan);
+        uint width = span(src.payload_size);
+        if (src.live == 0) {
+            acc ^= checksum_bytes(current_bank, scan, width, src.stamp + pass);
+        } else if (next_used + width <= 8192 && count < COUNT) {
+            for (uint i = 0; i < width; ++i)
+                io.bytes[next_bank][next_used+i] = io.bytes[current_bank][scan+i];
+            old_offsets[count] = scan;
+            new_offsets[count++] = next_used;
+            next_used += width;
+        }
+        scan += width;
+    }
+    for (uint i = 0; i < count; ++i) {
+        Record r = read_record(next_bank, new_offsets[i]);
+        uint old_next = r.next_offset;
+        r.next_offset = new_offsets[(i + pass + r.kind) % count];
+        for (uint j = 0; j < count; ++j)
+            if (old_offsets[j] == old_next) {
+                r.next_offset = new_offsets[j];
+                break;
+            }
+        r.stamp ^= (uint64_t(old_offsets[i]) << 32) | new_offsets[i];
+        acc ^= rewrite_record(next_bank, new_offsets[i], r, pass + i, i);
+    }
+    used = next_used;
+    current_bank = next_bank;
+    return acc ^ (uint64_t(count) << 48);
+}
+
+uint64_t run_pass(uint pass) {
+    uint offsets[COUNT];
+    uint count = 0;
+    uint64_t acc = 0x1f83d9abfb41bd6bUL ^ pass;
+    for (uint scan = 0; scan < used && count < COUNT;) {
+        Record r = read_record(current_bank, scan);
+        offsets[count++] = scan;
+        acc ^= rewrite_record(current_bank, scan, r, pass, count);
+        scan += span(r.payload_size);
+    }
+    for (uint i = 0; i < count; ++i) {
+        uint at = offsets[i];
+        Record r = read_record(current_bank, at);
+        if (r.next_offset != NO_OFFSET) {
+            Record next = read_record(current_bank, r.next_offset);
+            uint v = next.payload_size >= 4 ? uint(load_le(current_bank, r.next_offset + HEADER, 4)) : next.aux;
+            r.aux ^= rotl32(v + pass + i, r.kind + 1u);
+            r.stamp += (uint64_t(next.id) << (i & 7u)) ^ r.aux;
+        }
+        if (((r.id ^ r.aux ^ pass) & 7u) == 3u)
+            r.next_offset = offsets[(i*7u + pass + r.kind) % count];
+        write_record(current_bank, at, r);
+        acc += checksum_bytes(current_bank, at, span(r.payload_size), r.stamp ^ i);
+    }
+    if ((pass % 5u) == 4u)
+        acc ^= compact_arena(pass);
+    return acc;
+}
+
+void main() {
+    uint offsets[COUNT];
+    uint64_t checksum = 0x6a09e667f3bcc908UL;
+    for (uint i = 0; i < COUNT; ++i) {
+        offsets[i] = append_record(0x1000u + i*37u, 9u + ((i*17u+5u) % 43u),
+                                   i % 6u, 0x243f6a88u + i*0x9e37u);
+        if (offsets[i] == NO_OFFSET) { io.words[0] = 1; return; }
+    }
+    for (uint i = 0; i < COUNT; ++i) {
+        uint kind = io.bytes[current_bank][offsets[i]+14u];
+        store_le(current_bank, offsets[i]+4u, 4, offsets[(i*11u + kind + 3u) % COUNT]);
+    }
+    for (uint pass = 0; pass < 31; ++pass) {
+        checksum ^= run_pass(pass);
+        checksum = rotl64(checksum + pass*0x94d049bb133111ebUL, (pass % 29u) + 3u);
+    }
+
+    uint live_total = 0;
+    for (uint scan = 0; scan < used;) {
+        Record r = read_record(current_bank, scan);
+        live_total += r.live;
+        checksum ^= checksum_bytes(current_bank, scan, span(r.payload_size), r.stamp + scan);
+        scan += span(r.payload_size);
+    }
+    io.words[0] = 0;
+    for (uint i = 0; i < 8; ++i)
+        io.words[1+i] = uint((checksum >> (8u*i)) & 255UL);
+    for (uint i = 0; i < 4; ++i) {
+        io.words[17+i] = (live_total >> (8u*i)) & 255u;
+        io.words[33+i] = (used >> (8u*i)) & 255u;
+    }
+}

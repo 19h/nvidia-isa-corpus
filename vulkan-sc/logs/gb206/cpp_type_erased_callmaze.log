@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpce65ccvu/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cpp_type_erased_callmaze.json
+[INFO] Parsing JSON: /tmp/tmpce65ccvu/cpp_type_erased_callmaze.json
+[INFO] Compiling JSON: /tmp/tmpce65ccvu/cpp_type_erased_callmaze.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpce65ccvu/cpp_type_erased_callmaze.spv
+[INFO] Compiled JSON: /tmp/tmpce65ccvu/cpp_type_erased_callmaze.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpce65ccvu/cache.bin

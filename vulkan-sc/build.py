@@ -180,7 +180,7 @@ def main():
         if source.stem not in shaders:
             rows.append((source.name, "not ported", unported_reason(source)))
         elif shaders[source.stem]:
-            rows.append((source.name, "ok", ""))
+            rows.append((source.name, "ok", f"spirv/{source.stem}.spv"))
         else:
             rows.append((source.name, "failed", f"logs/{source.stem}.log"))
     write_table(ROOT / "shader-status.tsv", ["program", "spirv_status", "details"], rows)

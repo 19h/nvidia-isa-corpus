@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmp5p_k4wdw/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cf_longjmp_threaded_vm.json
+[INFO] Parsing JSON: /tmp/tmp5p_k4wdw/cf_longjmp_threaded_vm.json
+[INFO] Compiling JSON: /tmp/tmp5p_k4wdw/cf_longjmp_threaded_vm.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmp5p_k4wdw/cf_longjmp_threaded_vm.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

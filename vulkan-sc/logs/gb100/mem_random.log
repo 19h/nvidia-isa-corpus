@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpoz1h40cd/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] mem_random.json
+[INFO] Parsing JSON: /tmp/tmpoz1h40cd/mem_random.json
+[INFO] Compiling JSON: /tmp/tmpoz1h40cd/mem_random.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpoz1h40cd/mem_random.spv
+[INFO] Compiled JSON: /tmp/tmpoz1h40cd/mem_random.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpoz1h40cd/cache.bin

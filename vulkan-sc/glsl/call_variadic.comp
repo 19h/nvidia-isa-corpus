@@ -1,0 +1,76 @@
+// The shader carries the original argument sequences in typed arrays and
+// tagged slots. A cursor represents each independent va_list traversal.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result { uint words[]; } output_data;
+
+struct Argument {
+    uint tag;
+    int64_t integer_value;
+    double double_value;
+};
+
+struct Pair { int a; int b; };
+
+int sum_ints(int args[8], int count, inout int cursor) {
+    int sum = 0;
+    for (int i = 0; i < count; ++i)
+        sum += args[cursor++];
+    return sum;
+}
+
+double sum_doubles(double args[4]) {
+    precise double sum = 0.0LF;
+    for (int i = 0; i < 4; ++i)
+        sum += args[i];
+    return sum;
+}
+
+int64_t sum_mixed(Argument args[4]) {
+    int64_t sum = 0;
+    for (int i = 0; i < 4; ++i) {
+        Argument value = args[i];
+        switch (value.tag) {
+            case 0u: sum += int(value.integer_value); break;
+            case 1u: sum += int64_t(value.double_value); break;
+            case 2u: sum += value.integer_value; break;
+        }
+    }
+    return sum;
+}
+
+Pair min_max(int values[5]) {
+    Pair result = Pair(values[0], values[0]);
+    for (int i = 1; i < 5; ++i) {
+        result.a = min(result.a, values[i]);
+        result.b = max(result.b, values[i]);
+    }
+    return result;
+}
+
+void main() {
+    int64_t total = 0;
+    for (int i = 0; i < 50000; ++i) {
+        int args[8] = int[8](i, i+1, i+2, i+3, i+4, i+5, i+6, i+7);
+        int cursor = 0;
+        total += sum_ints(args, 4, cursor);
+        cursor = 0;
+        total += sum_ints(args, 8, cursor);
+        double d = double(i);
+        total += int64_t(sum_doubles(double[4](d, d+0.1LF, d+0.2LF, d+0.3LF)));
+        total += sum_mixed(Argument[4](Argument(0, i, 0), Argument(0, i+1, 0),
+                                     Argument(1, 0, d), Argument(2, int64_t(i)*1000, 0)));
+        cursor = 0;
+        total += sum_ints(args, 6, cursor);
+        cursor = 0;
+        int copied_cursor = cursor;
+        total += sum_ints(args, 4, cursor);
+        total += sum_ints(args, 4, copied_cursor);
+        Pair endpoints = min_max(int[5](i, i+10, i-5, i+3, i+7));
+        total += endpoints.a + endpoints.b;
+    }
+    output_data.words[0] = 0;
+    for (uint i = 0; i < 8; ++i)
+        output_data.words[1+i] = uint((uint64_t(total) >> (i*8)) & 255UL);
+}

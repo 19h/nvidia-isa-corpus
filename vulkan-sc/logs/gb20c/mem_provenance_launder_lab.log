@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmptxd576zz/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] mem_provenance_launder_lab.json
+[INFO] Parsing JSON: /tmp/tmptxd576zz/mem_provenance_launder_lab.json
+[INFO] Compiling JSON: /tmp/tmptxd576zz/mem_provenance_launder_lab.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmptxd576zz/mem_provenance_launder_lab.spv
+[INFO] Compiled JSON: /tmp/tmptxd576zz/mem_provenance_launder_lab.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmptxd576zz/cache.bin

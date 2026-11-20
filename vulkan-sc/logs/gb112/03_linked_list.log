@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpi58g5kyc/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] 03_linked_list.json
+[INFO] Parsing JSON: /tmp/tmpi58g5kyc/03_linked_list.json
+[INFO] Compiling JSON: /tmp/tmpi58g5kyc/03_linked_list.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpi58g5kyc/03_linked_list.spv
+[INFO] Compiled JSON: /tmp/tmpi58g5kyc/03_linked_list.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpi58g5kyc/cache.bin

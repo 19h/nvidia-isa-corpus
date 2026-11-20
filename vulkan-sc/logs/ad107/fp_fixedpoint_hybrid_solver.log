@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpgmg9f0qz/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] fp_fixedpoint_hybrid_solver.json
+[INFO] Parsing JSON: /tmp/tmpgmg9f0qz/fp_fixedpoint_hybrid_solver.json
+[INFO] Compiling JSON: /tmp/tmpgmg9f0qz/fp_fixedpoint_hybrid_solver.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpgmg9f0qz/fp_fixedpoint_hybrid_solver.spv
+[INFO] Compiled JSON: /tmp/tmpgmg9f0qz/fp_fixedpoint_hybrid_solver.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpgmg9f0qz/cache.bin

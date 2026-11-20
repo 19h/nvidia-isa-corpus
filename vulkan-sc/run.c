@@ -38,9 +38,9 @@ static void *read_cache(const char *path, size_t *size)
 
 int main(int argc, char **argv)
 {
-    if ((argc != 4 && argc != 5) || strlen(argv[2]) != 2 * VK_UUID_SIZE ||
+    if ((argc < 4 || argc > 10) || strlen(argv[2]) != 2 * VK_UUID_SIZE ||
         strspn(argv[2], "0123456789abcdefABCDEF") != 2 * VK_UUID_SIZE) {
-        fprintf(stderr, "Usage: %s cache.bin pipeline-uuid-hex shader-entry [input]\n", argv[0]);
+        fprintf(stderr, "Usage: %s cache.bin pipeline-uuid-hex shader-entry [input ...]\n", argv[0]);
         return EXIT_FAILURE;
     }
     enum { WORDS = 64 };
@@ -130,6 +130,7 @@ int main(int argc, char **argv)
         .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_FEATURES,
         .pNext = &features11,
         .shaderInt8 = supported12.shaderInt8,
+        .shaderBufferInt64Atomics = supported12.shaderBufferInt64Atomics,
         .storageBuffer8BitAccess = supported12.storageBuffer8BitAccess,
     };
     VkPhysicalDeviceFeatures features = {
@@ -182,12 +183,12 @@ int main(int argc, char **argv)
     void *mapped;
     CHECK(vkMapMemory(device, memory, 0, buffer_size, 0, &mapped));
     memset(mapped, 0, buffer_size);
-    if (argc == 5) {
+    for (int arg = 4; arg < argc; ++arg) {
         char *end = NULL;
-        unsigned long input = strtoul(argv[4], &end, 10);
-        if (end == argv[4] || *end || input > UINT32_MAX)
+        unsigned long input = strtoul(argv[arg], &end, 10);
+        if (end == argv[arg] || *end || input > UINT32_MAX)
             fail("Expected a 32-bit unsigned input value");
-        ((uint32_t *)mapped)[WORDS - 1] = (uint32_t)input;
+        ((uint32_t *)mapped)[WORDS - 1 - (arg - 4)] = (uint32_t)input;
     }
 
     VkDescriptorSetLayoutBinding binding = {

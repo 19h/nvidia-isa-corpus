@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpurycwco6/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cf_exception.json
+[INFO] Parsing JSON: /tmp/tmpurycwco6/cf_exception.json
+[INFO] Compiling JSON: /tmp/tmpurycwco6/cf_exception.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpurycwco6/cf_exception.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

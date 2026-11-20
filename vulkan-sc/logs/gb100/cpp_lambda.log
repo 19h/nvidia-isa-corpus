@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmprcn7k8na/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cpp_lambda.json
+[INFO] Parsing JSON: /tmp/tmprcn7k8na/cpp_lambda.json
+[INFO] Compiling JSON: /tmp/tmprcn7k8na/cpp_lambda.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmprcn7k8na/cpp_lambda.spv
+[INFO] Compiled JSON: /tmp/tmprcn7k8na/cpp_lambda.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmprcn7k8na/cache.bin

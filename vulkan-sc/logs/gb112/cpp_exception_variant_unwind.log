@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmplyshgqcx/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cpp_exception_variant_unwind.json
+[INFO] Parsing JSON: /tmp/tmplyshgqcx/cpp_exception_variant_unwind.json
+[INFO] Compiling JSON: /tmp/tmplyshgqcx/cpp_exception_variant_unwind.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmplyshgqcx/cpp_exception_variant_unwind.spv
+[INFO] Compiled JSON: /tmp/tmplyshgqcx/cpp_exception_variant_unwind.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmplyshgqcx/cache.bin

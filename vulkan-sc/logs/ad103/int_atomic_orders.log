@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpk8rln5vu/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] int_atomic_orders.json
+[INFO] Parsing JSON: /tmp/tmpk8rln5vu/int_atomic_orders.json
+[INFO] Compiling JSON: /tmp/tmpk8rln5vu/int_atomic_orders.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpk8rln5vu/int_atomic_orders.spv
+[INFO] Compiled JSON: /tmp/tmpk8rln5vu/int_atomic_orders.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpk8rln5vu/cache.bin

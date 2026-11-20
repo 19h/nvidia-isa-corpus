@@ -1,0 +1,144 @@
+// Generator frames and their lifetime guards are explicit shader state.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result { uint words[]; } output_data;
+
+uint64_t trace = 0x123456789abcdef0UL;
+int live = 0;
+uint64_t checksum = 0;
+
+uint64_t mix64(uint64_t x) {
+    x ^= x >> 33;
+    x *= 0xff51afd7ed558ccdUL;
+    x ^= x >> 33;
+    x *= 0xc4ceb9fe1a85ec53UL;
+    return x ^ (x >> 33);
+}
+
+void enter_guard(uint64_t tag) {
+    ++live;
+    trace = mix64(trace + tag + uint64_t(live) * 17UL);
+}
+
+void leave_guard(uint64_t tag) {
+    trace = mix64(trace ^ (tag + 0x9e3779b97f4a7c15UL + uint64_t(live)));
+    --live;
+}
+
+const int START = 0, EVENT_YIELD = 1, MARKER_YIELD = 2, FINISHED = 3;
+const int VALUE = 0, FORK = 1, MARKER = 2;
+struct Generator { int seed; int rounds; int step; int stage; };
+struct Event { int kind; int count; uint64_t lo; uint64_t hi; };
+
+uint64_t frame_tag(Generator gen) { return 0x1000UL + uint64_t(gen.seed); }
+uint64_t iteration_tag(Generator gen) { return 0x2000UL + uint64_t(gen.seed*31 + gen.step); }
+uint64_t nested_tag(Generator gen) { return 0x3000UL + uint64_t(gen.step + gen.seed); }
+
+bool next_event(inout Generator gen, out Event value) {
+    if (gen.stage == FINISHED) return false;
+    if (gen.stage == START) {
+        enter_guard(frame_tag(gen));
+    } else {
+        if (gen.stage == EVENT_YIELD && (gen.step & 1) == 0) {
+            enter_guard(nested_tag(gen));
+            value = Event(MARKER, live, trace & 0xffffUL, 0);
+            gen.stage = MARKER_YIELD;
+            return true;
+        }
+        if (gen.stage == MARKER_YIELD)
+            leave_guard(nested_tag(gen));
+        leave_guard(iteration_tag(gen));
+        ++gen.step;
+    }
+    if (gen.step >= gen.rounds) {
+        leave_guard(frame_tag(gen));
+        gen.stage = FINISHED;
+        return false;
+    }
+
+    enter_guard(iteration_tag(gen));
+    uint64_t x = uint64_t(gen.seed * 131 + 7 + gen.step * 97 + live * 53);
+    uint64_t v = mix64(x ^ (x << ((gen.step % 5) + 1))) ^ trace;
+    if ((v + uint64_t(gen.step)) % 3UL == 0UL)
+        value = Event(FORK, 0, mix64(v + 11UL), mix64(v + 29UL));
+    else
+        value = Event(VALUE, live + gen.step, v, 0);
+    gen.stage = EVENT_YIELD;
+    return true;
+}
+
+void destroy_generator(inout Generator gen) {
+    if (gen.stage == MARKER_YIELD)
+        leave_guard(nested_tag(gen));
+    if (gen.stage == EVENT_YIELD || gen.stage == MARKER_YIELD) {
+        leave_guard(iteration_tag(gen));
+        leave_guard(frame_tag(gen));
+    }
+    gen.stage = FINISHED;
+}
+
+uint64_t visit_event(Event value) {
+    if (value.kind == VALUE)
+        return mix64(value.lo + uint64_t(value.count * 19));
+    if (value.kind == FORK)
+        return mix64(value.lo ^ (value.hi + 0x9e3779b97f4a7c15UL));
+    checksum ^= mix64(value.lo + uint64_t(value.count * 101));
+    return checksum;
+}
+
+uint64_t consume_events(Generator gen, int max_events) {
+    uint64_t folded = 0x6d2b79f5UL;
+    int consumed = 0;
+    Event value;
+    while (consumed < max_events && next_event(gen, value)) {
+        uint64_t result = visit_event(value);
+        folded = mix64(folded + result + uint64_t(consumed));
+        ++consumed;
+    }
+    destroy_generator(gen);
+    return folded ^ uint64_t(consumed * 4099);
+}
+
+uint64_t fold_with_awaits() {
+    const int seeds[8] = int[8](3,1,4,1,5,9,2,6);
+    enter_guard(0x4000UL);
+    uint64_t total = 0;
+    for (int i = 0; i < 8; ++i) {
+        uint64_t step_tag = 0x5000UL + uint64_t(i);
+        enter_guard(step_tag);
+        uint64_t input_value = trace ^ uint64_t(seeds[i] * 257 + i);
+        if ((input_value & 7UL) != 0UL)
+            trace = mix64(trace + input_value + 0x51ed270bUL);
+        uint64_t awaited = mix64(input_value ^ 0xa5a5a5a5a5a5a5a5UL);
+        total ^= mix64(awaited + uint64_t(live * 13 + seeds[i]));
+        leave_guard(step_tag);
+    }
+    uint64_t result = total ^ trace;
+    leave_guard(0x4000UL);
+    return result;
+}
+
+void main() {
+    for (int seed = 1; seed <= 12; ++seed) {
+        uint64_t folded = consume_events(Generator(seed, 5 + (seed % 4), 0, START), 32);
+        checksum ^= folded;
+        if (seed % 3 == 0) {
+            Generator cancelled = Generator(seed + 40, 9, 0, START);
+            Event value;
+            for (int i = 0; i < 3 && next_event(cancelled, value); ++i) {
+                uint64_t result = visit_event(value);
+                checksum += result;
+            }
+            destroy_generator(cancelled);
+        }
+    }
+    uint64_t awaited_fold = fold_with_awaits();
+    checksum ^= awaited_fold;
+    checksum = mix64(checksum ^ trace ^ uint64_t(live));
+
+    output_data.words[0] = uint(live != 0);
+    output_data.words[17] = uint(live);
+    for (uint i = 0; i < 8; ++i)
+        output_data.words[1+i] = uint((checksum >> (8u*i)) & 255UL);
+}

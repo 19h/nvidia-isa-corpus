@@ -1,0 +1,81 @@
+// Tagged records and explicit dispatch replace the host's C++ vtables.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result { uint words[]; } output_data;
+
+const int CIRCLE = 0, RECTANGLE = 1, SQUARE = 2, TRIANGLE = 3;
+struct Shape { int kind; int width; int height; };
+struct Sprite { int x; int y; int color; int width; int height; };
+struct Cloneable { int kind; int value; };
+
+int64_t area(Shape s) {
+    switch (s.kind) {
+        case CIRCLE: return (314 * s.width * s.width) / 100;
+        case TRIANGLE: return (s.width * s.height) / 2;
+        default: return s.width * s.height;
+    }
+}
+
+int64_t perimeter(Shape s) {
+    switch (s.kind) {
+        case CIRCLE: return (628 * s.width) / 100;
+        case TRIANGLE: return s.width + s.height + s.width;
+        default: return 2 * (s.width + s.height);
+    }
+}
+
+int process_sprite(inout Sprite sprite) {
+    ++sprite.x;
+    ++sprite.y;
+    return sprite.color + sprite.x + sprite.y;
+}
+
+int value(Cloneable object) { return object.kind == 0 ? 1 : object.value; }
+
+Cloneable clone_object(Cloneable object) { return Cloneable(object.kind, object.value); }
+
+int64_t execute_algorithm(int variant, int input_value) {
+    int64_t prepared = variant == 0 ? input_value * 2 : input_value;
+    int64_t processed = variant == 0 ? prepared + 100 : prepared * prepared;
+    return variant == 0 ? processed : processed / 10;
+}
+
+int64_t compute_at_level(int level, int input_value) {
+    int64_t value = input_value;
+    for (int parent = 1; parent <= level; ++parent)
+        value += 10 * parent;
+    return value;
+}
+
+void main() {
+    Shape shapes[12] = Shape[12](
+        Shape(CIRCLE,10,0), Shape(CIRCLE,20,0), Shape(CIRCLE,30,0),
+        Shape(RECTANGLE,5,10), Shape(RECTANGLE,15,20), Shape(RECTANGLE,25,30),
+        Shape(SQUARE,5,5), Shape(SQUARE,10,10), Shape(SQUARE,15,15),
+        Shape(TRIANGLE,6,8), Shape(TRIANGLE,12,16), Shape(TRIANGLE,18,24)
+    );
+    Sprite sprites[4] = Sprite[4](
+        Sprite(0,0,0xff0000,32,32), Sprite(100,100,0x00ff00,64,64),
+        Sprite(200,50,0x0000ff,16,16), Sprite(50,200,0xffff00,48,48)
+    );
+    Cloneable objects[2] = Cloneable[2](Cloneable(0, 0), Cloneable(1, 42));
+    const int age = 5, fur_length = 2, wingspan = 30, bat_sound = 42;
+    int64_t sink = 0;
+    for (int iter = 0; iter < 50000; ++iter) {
+        for (int i = 0; i < 12; ++i)
+            sink += area(shapes[i]) + perimeter(shapes[i]) + area(shapes[(iter+i) % 12]);
+        int idx = iter % 4;
+        sink += process_sprite(sprites[idx]) + sprites[idx].width + sprites[idx].height;
+        sink += bat_sound + age + fur_length + wingspan;
+
+        Cloneable object = objects[iter % 2];
+        if (iter % 1000 == 0) object = clone_object(object);
+        sink += value(object);
+        sink += execute_algorithm(iter % 2, iter % 100);
+        sink += compute_at_level(iter % 5, iter % 50) + iter % 5;
+    }
+    output_data.words[0] = 0;
+    for (uint i = 0; i < 8; ++i)
+        output_data.words[1+i] = uint((uint64_t(sink) >> (8u*i)) & 255UL);
+}

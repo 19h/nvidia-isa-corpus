@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpvfsc15yx/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] mem_provenance_launder_lab.json
+[INFO] Parsing JSON: /tmp/tmpvfsc15yx/mem_provenance_launder_lab.json
+[INFO] Compiling JSON: /tmp/tmpvfsc15yx/mem_provenance_launder_lab.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpvfsc15yx/mem_provenance_launder_lab.spv
+NVVM compilation failed: 3
+[ERROR] Pipeline creation failed
+[ERROR] PCC::run
+Exit status 1.

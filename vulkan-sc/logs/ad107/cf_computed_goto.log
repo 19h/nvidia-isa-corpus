@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmplz_1pyli/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cf_computed_goto.json
+[INFO] Parsing JSON: /tmp/tmplz_1pyli/cf_computed_goto.json
+[INFO] Compiling JSON: /tmp/tmplz_1pyli/cf_computed_goto.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmplz_1pyli/cf_computed_goto.spv
+[INFO] Compiled JSON: /tmp/tmplz_1pyli/cf_computed_goto.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmplz_1pyli/cache.bin

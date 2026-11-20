@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpg79s7z6d/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cf_exception.json
+[INFO] Parsing JSON: /tmp/tmpg79s7z6d/cf_exception.json
+[INFO] Compiling JSON: /tmp/tmpg79s7z6d/cf_exception.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpg79s7z6d/cf_exception.spv
+[INFO] Compiled JSON: /tmp/tmpg79s7z6d/cf_exception.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpg79s7z6d/cache.bin

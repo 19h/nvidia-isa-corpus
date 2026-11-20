@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpu4ft3n0b/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_abi_stress_matrix.json
+[INFO] Parsing JSON: /tmp/tmpu4ft3n0b/call_abi_stress_matrix.json
+[INFO] Compiling JSON: /tmp/tmpu4ft3n0b/call_abi_stress_matrix.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpu4ft3n0b/call_abi_stress_matrix.spv
+[INFO] Compiled JSON: /tmp/tmpu4ft3n0b/call_abi_stress_matrix.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpu4ft3n0b/cache.bin

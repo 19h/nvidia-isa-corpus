@@ -1,0 +1,118 @@
+// Captures become typed records or inout parameters. Callable objects with
+// a runtime choice use a selector and the original captured values.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result { uint words[]; } output_data;
+
+struct Transform { int multiplier; int offset; };
+struct Statistics { int64_t total; int minimum; int maximum; };
+struct Data { int values[4]; int multiplier; };
+struct Callable { uint kind; int factor; };
+
+int transform(Transform capture_state, int x) {
+    return x * capture_state.multiplier + capture_state.offset;
+}
+
+void accumulate(inout int64_t total, inout int count, int x) {
+    total += x;
+    ++count;
+}
+
+void update_stats(inout Statistics state, int x) {
+    state.total += x;
+    state.minimum = min(state.minimum, x);
+    state.maximum = max(state.maximum, x);
+}
+
+int apply_operation(Callable function_object, int a, int b) {
+    switch (function_object.kind) {
+        case 0u: return a + b;
+        case 1u: return a * b;
+        case 2u: return a - b;
+        default: return (a + b) * function_object.factor;
+    }
+}
+
+int64_t fold(int values[10], int64_t initial, uint operation) {
+    int64_t acc = initial;
+    for (int i = 0; i < 10; ++i) {
+        int value = values[i];
+        switch (operation) {
+            case 0u: acc += value; break;
+            case 1u: acc *= value; break;
+            default: acc = max(acc, int64_t(value)); break;
+        }
+    }
+    return acc;
+}
+
+int64_t process_data(Data data) {
+    int64_t sum = 0;
+    for (int i = 0; i < 4; ++i)
+        sum += data.values[i] * data.multiplier;
+    return sum;
+}
+
+int64_t factorial(int n) {
+    int64_t result = 1;
+    for (; n > 1; --n)
+        result *= n;
+    return result;
+}
+
+int64_t evaluate_captures() {
+    Transform captured = Transform(3, 10);
+    Statistics stats = Statistics(0, 1000, -1000);
+    int64_t ref_total = 0;
+    int ref_count = 0;
+    int counter = 0;
+    int generator = 0;
+    int64_t result = (10 + 20) + (100L + 200L) + int64_t(1.5LF + 2.5LF);
+    int64_t mixed_sum = 0;
+    const int factor = 5;
+    for (int i = 0; i < 100; ++i) {
+        result += (i + (i + 1)) + i * 2;
+        result += transform(captured, i);
+        accumulate(ref_total, ref_count, i);
+        int mixed = i * factor;
+        mixed_sum += mixed;
+        result += mixed;
+
+        result += i * i * i + 2 * i * i + 3 * i + 4;
+        update_stats(stats, i - 50);
+        result += ++counter;
+        result += i + i;
+        result += transform(Transform(1, 10), i);
+        result += transform(Transform(1, 20), i);
+        int temporary = i * 2 + i / 2;
+        result += temporary ^ i;
+    }
+    for (int i = 0; i < 20; ++i) {
+        result += generator;
+        generator = generator * 2 + 1;
+    }
+    return result + ref_total + ref_count + mixed_sum + stats.total + stats.minimum + stats.maximum;
+}
+
+void main() {
+    int64_t sink = 0;
+    const int values[10] = int[10](1,2,3,4,5,6,7,8,9,10);
+    for (int iter = 0; iter < 1000; ++iter) {
+        sink += evaluate_captures();
+        for (uint i = 0; i < 4; ++i)
+            sink += apply_operation(Callable(i, 3), 10, 20);
+        sink += fold(values, 0, 0) + fold(values, 1, 1) + fold(values, 0, 2);
+        Data live_data = Data(int[4](1,2,3,4), 5);
+        Data copy_data = live_data;
+        sink += process_data(copy_data);
+        live_data.multiplier = 10;
+        sink += process_data(copy_data) + process_data(live_data);
+        if (iter % 100 == 0)
+            for (int n = 1; n <= 12; ++n)
+                sink += factorial(n);
+    }
+    output_data.words[0] = 0;
+    for (uint i = 0; i < 8; ++i)
+        output_data.words[1+i] = uint((uint64_t(sink) >> (8u*i)) & 255UL);
+}

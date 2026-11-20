@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpal5n127v/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] asm_atomic_ops.json
+[INFO] Parsing JSON: /tmp/tmpal5n127v/asm_atomic_ops.json
+[INFO] Compiling JSON: /tmp/tmpal5n127v/asm_atomic_ops.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpal5n127v/asm_atomic_ops.spv
+[INFO] Compiled JSON: /tmp/tmpal5n127v/asm_atomic_ops.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpal5n127v/cache.bin

@@ -1,0 +1,203 @@
+// A bounded arena holds the original list operations. Links are node indices.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result { uint words[]; } output_data;
+
+const int NIL = -1;
+const int CAPACITY = 16;
+struct Node { int value; int next; };
+Node nodes[CAPACITY];
+int free_head;
+uint64_t checksum = 14695981039346656037UL;
+uint snapshots = 0;
+uint allocations = 0;
+uint releases = 0;
+
+void init_arena() {
+    free_head = 0;
+    for (int i = 0; i < CAPACITY; ++i)
+        nodes[i].next = i + 1 < CAPACITY ? i + 1 : NIL;
+}
+
+int allocate_node(int data, int next_node) {
+    if (free_head == NIL) return NIL;
+    int node = free_head;
+    free_head = nodes[node].next;
+    nodes[node] = Node(data, next_node);
+    ++allocations;
+    return node;
+}
+
+void release_node(int node) {
+    nodes[node].next = free_head;
+    free_head = node;
+    ++releases;
+}
+
+int insert_at(int head, int position, int data) {
+    if (position <= 0 || head == NIL) {
+        int node = allocate_node(data, head);
+        return node == NIL ? head : node;
+    }
+    int previous = head;
+    for (int i = 1; i < position && nodes[previous].next != NIL; ++i)
+        previous = nodes[previous].next;
+    int node = allocate_node(data, nodes[previous].next);
+    if (node != NIL)
+        nodes[previous].next = node;
+    return head;
+}
+
+int erase_after(int head, int previous, int current) {
+    if (current == NIL) return head;
+    int next_node = nodes[current].next;
+    if (previous == NIL)
+        head = next_node;
+    else
+        nodes[previous].next = next_node;
+    release_node(current);
+    return head;
+}
+
+int erase_value(int head, int value) {
+    int previous = NIL;
+    int current = head;
+    while (current != NIL && nodes[current].value != value) {
+        previous = current;
+        current = nodes[current].next;
+    }
+    return erase_after(head, previous, current);
+}
+
+int erase_at(int head, int position) {
+    int previous = NIL;
+    int current = head;
+    for (int i = 0; i < position && current != NIL; ++i) {
+        previous = current;
+        current = nodes[current].next;
+    }
+    return erase_after(head, previous, current);
+}
+
+bool contains(int head, int value) {
+    for (int node = head; node != NIL; node = nodes[node].next)
+        if (nodes[node].value == value) return true;
+    return false;
+}
+
+int count_list(int head) {
+    int count = 0;
+    for (int node = head; node != NIL; node = nodes[node].next)
+        ++count;
+    return count;
+}
+
+int reverse_list(int head) {
+    int previous = NIL;
+    while (head != NIL) {
+        int next_node = nodes[head].next;
+        nodes[head].next = previous;
+        previous = head;
+        head = next_node;
+    }
+    return previous;
+}
+
+int reverse_with_stack(int head) {
+    if (head == NIL) return NIL;
+    int stack[CAPACITY];
+    int depth = 0;
+    for (int node = head; node != NIL; node = nodes[node].next)
+        stack[depth++] = node;
+    int new_head = stack[--depth];
+    while (depth > 0) {
+        nodes[stack[depth]].next = stack[depth - 1];
+        --depth;
+    }
+    nodes[head].next = NIL;
+    return new_head;
+}
+
+void release_list(int head) {
+    while (head != NIL) {
+        int next_node = nodes[head].next;
+        release_node(head);
+        head = next_node;
+    }
+}
+
+void snapshot(int head) {
+    for (int node = head; node != NIL; node = nodes[node].next)
+        checksum = (checksum ^ uint(nodes[node].value)) * 1099511628211UL;
+    checksum = (checksum ^ 0xffffffffUL) * 1099511628211UL;
+    ++snapshots;
+}
+
+void main() {
+    init_arena();
+    int head = NIL;
+    for (int i = 30; i >= 10; i -= 10)
+        head = insert_at(head, 0, i);
+    snapshot(head);
+    head = insert_at(head, CAPACITY, 40);
+    head = insert_at(head, CAPACITY, 50);
+    snapshot(head);
+    head = insert_at(head, 2, 25);
+    snapshot(head);
+    head = insert_at(head, 0, 5);
+    snapshot(head);
+
+    int first_length = count_list(head);
+    uint found = uint(contains(head, 25)) | (uint(contains(head, 50)) << 1) | (uint(contains(head, 100)) << 2);
+
+    snapshot(head);
+    head = erase_value(head, 25);
+    snapshot(head);
+    head = erase_value(head, 5);
+    snapshot(head);
+    head = erase_value(head, 50);
+    snapshot(head);
+    head = erase_value(head, 999);
+    snapshot(head);
+    head = erase_at(head, 1);
+    snapshot(head);
+
+    release_list(head);
+    head = NIL;
+    for (int i = 1; i <= 5; ++i)
+        head = insert_at(head, CAPACITY, i * 10);
+    snapshot(head);
+    head = reverse_list(head);
+    snapshot(head);
+    head = reverse_with_stack(head);
+    snapshot(head);
+    release_list(head);
+    head = NIL;
+    snapshot(head);
+    int empty_length = count_list(head);
+    found |= uint(contains(head, 10)) << 3;
+    head = erase_value(head, 10);
+    head = reverse_list(head);
+    snapshot(head);
+
+    head = insert_at(head, 0, 42);
+    snapshot(head);
+    head = reverse_list(head);
+    snapshot(head);
+    head = erase_value(head, 42);
+    snapshot(head);
+    for (int i = 0; i < 10; ++i)
+        head = insert_at(head, i % 2 == 0 ? 0 : CAPACITY, i);
+    snapshot(head);
+    release_list(head);
+
+    output_data.words[0] = uint(allocations != releases);
+    for (uint i = 0; i < 8; ++i)
+        output_data.words[1+i] = uint((checksum >> (8u*i)) & 255UL);
+    output_data.words[17] = snapshots;
+    output_data.words[18] = found;
+    output_data.words[19] = uint(first_length);
+    output_data.words[20] = uint(empty_length);
+    output_data.words[21] = releases;
+}

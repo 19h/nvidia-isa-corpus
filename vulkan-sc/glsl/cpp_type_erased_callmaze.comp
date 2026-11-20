@@ -1,0 +1,99 @@
+// Represent the erased callable with its selector and captured payload.
+// The source's member and function pointers become finite dispatch cases.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result { uint words[]; } output_data;
+
+const uint SCRAMBLE = 0, GATE = 1, AFFINE = 2, FOLDED = 3, LAMBDA_A = 4, COMPOSED = 5;
+struct SmallOp { uint kind; uint64_t capture_bits; uint64_t tweak; };
+const SmallOp ops[8] = SmallOp[8](
+    SmallOp(SCRAMBLE,0x510e527fade682d1UL,0),
+    SmallOp(GATE,0x9b05688c2b3e6c1fUL,0),
+    SmallOp(AFFINE,0x6a09e667f3bcc909UL,0x1f83d9abfb41bd6bUL),
+    SmallOp(FOLDED,0x6a09e667f3bcc909UL,0x5be0cd19137e2179UL),
+    SmallOp(AFFINE,0xbb67ae8584caa73bUL,0x1111111111111111UL),
+    SmallOp(FOLDED,0xbb67ae8584caa73bUL,0x2222222222222222UL),
+    SmallOp(LAMBDA_A,0x3c6ef372fe94f82bUL,0),
+    SmallOp(COMPOSED,0xa54ff53a5f1d36f1UL,0)
+);
+const uint ROTATE = 0, XOR_FOLD = 1, CALL = 2;
+const uvec3 nodes[9] = uvec3[9](
+    uvec3(CALL,0,0x10), uvec3(ROTATE,2,0x20), uvec3(XOR_FOLD,4,0x30),
+    uvec3(CALL,6,0x40), uvec3(ROTATE,1,0x50), uvec3(CALL,7,0x60),
+    uvec3(XOR_FOLD,3,0x70), uvec3(ROTATE,5,0x80), uvec3(CALL,2,0x90)
+);
+
+uint64_t mix64(uint64_t x) {
+    x ^= x >> 32;
+    x *= 0xd6e8feb86659fd93UL;
+    x ^= x >> 32;
+    x *= 0xd6e8feb86659fd93UL;
+    return x ^ (x >> 32);
+}
+
+uint64_t rotl64(uint64_t x, uint n) {
+    n &= 63u;
+    return n == 0 ? x : (x << n) | (x >> (64u-n));
+}
+
+uint64_t call_op(SmallOp op, uint64_t value, int step) {
+    switch (op.kind) {
+        case SCRAMBLE: {
+            int adjusted_step = step + int(op.capture_bits & 7UL);
+            uint wrapped = uint(adjusted_step) * 0x45d9f3bu;
+            return mix64((value ^ op.capture_bits) + uint64_t(int64_t(int(wrapped))));
+        }
+        case GATE: {
+            int adjusted_step = step + int(op.capture_bits & 7UL);
+            uint64_t mask = 0x9e3779b97f4a7c15UL + uint64_t(adjusted_step * 17);
+            uint64_t v = value ^ op.capture_bits;
+            return ((v + mask) & 1UL) == 0UL ? rotl64(v ^ mask, uint(adjusted_step)) : mix64(v + mask);
+        }
+        case AFFINE:
+            return mix64(value + op.tweak + uint64_t(step*29) + op.capture_bits + uint64_t(step*131));
+        case FOLDED: {
+            uint64_t adjusted = value + op.tweak + uint64_t(step*29);
+            return rotl64(adjusted ^ mix64(op.capture_bits + uint64_t(step)), uint(step + 11));
+        }
+        case LAMBDA_A:
+            return mix64(value + op.capture_bits + uint64_t(step*43));
+        default: {
+            uint64_t v = rotl64(value + 19UL, uint(step + 7)) ^ mix64(value + 7UL);
+            int after = step + 5;
+            return ((v >> (after & 15)) & 1UL) != 0UL
+                ? mix64(v ^ op.capture_bits) : rotl64(v + op.capture_bits, uint(after + 3));
+        }
+    }
+}
+
+uint64_t dispatch_node(uvec3 node, uint64_t value, uint step) {
+    switch (node.x) {
+        case ROTATE: return rotl64(value + node.z, node.y + step);
+        case XOR_FOLD: return mix64((value ^ node.z) + node.y * 1009u + step);
+        default: return call_op(ops[node.y], value + node.z, int(step + node.y));
+    }
+}
+
+void main() {
+    uint64_t lanes[6] = uint64_t[6](
+        0x243f6a8885a308d3UL, 0x13198a2e03707344UL, 0xa4093822299f31d0UL,
+        0x082efa98ec4e6c89UL, 0x452821e638d01377UL, 0xbe5466cf34e90c6cUL
+    );
+    uint64_t checksum = 0xc0ac29b7c97c50ddUL;
+    for (uint round = 0; round < 18; ++round) {
+        for (uint i = 0; i < 9; ++i) {
+            uint lane = (i + round) % 6u;
+            uint64_t prior = lanes[(lane + 5u) % 6u];
+            uint64_t indirect = dispatch_node(nodes[i], lanes[lane] ^ prior ^ checksum, round);
+            uint op = uint((indirect + i + round) & 7UL);
+            lanes[lane] = call_op(ops[op], indirect + lanes[(lane + 2u) % 6u], int(round + i));
+            checksum = mix64(checksum + lanes[lane] + indirect + uint64_t(op * 4099u));
+        }
+    }
+    for (uint i = 0; i < 6; ++i)
+        checksum = mix64(checksum ^ lanes[i]);
+    output_data.words[0] = 0;
+    for (uint i = 0; i < 8; ++i)
+        output_data.words[1+i] = uint((checksum >> (8u*i)) & 255UL);
+}

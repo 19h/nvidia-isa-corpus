@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpna2yynp8/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cf_longjmp_threaded_vm.json
+[INFO] Parsing JSON: /tmp/tmpna2yynp8/cf_longjmp_threaded_vm.json
+[INFO] Compiling JSON: /tmp/tmpna2yynp8/cf_longjmp_threaded_vm.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpna2yynp8/cf_longjmp_threaded_vm.spv
+[INFO] Compiled JSON: /tmp/tmpna2yynp8/cf_longjmp_threaded_vm.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpna2yynp8/cache.bin

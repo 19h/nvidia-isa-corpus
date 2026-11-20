@@ -1,0 +1,168 @@
+// The original barrier workloads use coherent shader storage and Vulkan
+// buffer barriers in a single invocation, with real atomic exchange for the lock.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) coherent buffer Result {
+    uint words[64];
+    int shared_data;
+    int flag;
+    int lock_word;
+    int local_a;
+    int local_b;
+    int arr[16];
+} result;
+
+int64_t test_store_load_ordering() {
+    int64_t sum = 0;
+
+    for (int i = 0; i < 100; i++) {
+        result.shared_data = i;
+        memoryBarrierBuffer();
+        result.flag = 1;
+
+        /* Reader side would be in another thread */
+        memoryBarrierBuffer();
+        if (result.flag != 0) {
+            sum += result.shared_data;
+        }
+        result.flag = 0;
+    }
+
+    return sum;
+}
+
+/* Test acquire-release pattern */
+int64_t test_acquire_release() {
+    int64_t sum = 0;
+
+    for (int i = 0; i < 100; i++) {
+        /* Release store */
+        result.shared_data = i * 2;
+        memoryBarrierBuffer(); /* Release */
+        result.flag = 1;
+
+        /* Acquire load */
+        while (result.flag == 0) {
+            memoryBarrierBuffer();
+        }
+        memoryBarrierBuffer(); /* Acquire */
+        sum += result.shared_data;
+
+        result.flag = 0;
+        memoryBarrierBuffer();
+    }
+
+    return sum;
+}
+
+/* Test multiple barriers in sequence */
+int64_t test_barrier_sequence() {
+    int64_t sum = 0;
+
+    for (int i = 0; i < 100; i++) {
+        result.shared_data = i;
+        memoryBarrierBuffer();
+        memoryBarrierBuffer();
+        memoryBarrierBuffer();
+        result.flag = 1;
+        memoryBarrierBuffer();
+
+        if (result.flag != 0) {
+            memoryBarrierBuffer();
+            sum += result.shared_data;
+        }
+
+        memoryBarrierBuffer();
+        result.flag = 0;
+        memoryBarrierBuffer();
+    }
+
+    return sum;
+}
+
+/* Test barrier with volatile access patterns */
+int64_t test_volatile_barriers() {
+    int64_t sum = 0;
+
+    for (int i = 0; i < 100; i++) {
+        result.local_a = i;
+        memoryBarrierBuffer();
+        result.local_b = i + 1;
+        memoryBarrierBuffer();
+
+        memoryBarrierBuffer();
+        sum += result.local_a;
+        memoryBarrierBuffer();
+        sum += result.local_b;
+    }
+
+    return sum;
+}
+
+/* Simulated spinlock using barriers */
+int64_t test_spinlock_pattern() {
+    int64_t sum = 0;
+
+    for (int i = 0; i < 50; i++) {
+        /* Acquire lock */
+        while ((atomicExchange(result.lock_word, 1) != 0)) {
+            memoryBarrierBuffer();
+        }
+        memoryBarrierBuffer(); /* Acquire barrier */
+
+        /* Critical section */
+        result.shared_data = i;
+        sum += result.shared_data;
+
+        /* Release lock */
+        memoryBarrierBuffer(); /* Release barrier */
+        atomicExchange(result.lock_word, 0);
+    }
+
+    return sum;
+}
+
+/* Test barriers with array operations */
+int64_t test_array_barriers() {
+    int64_t sum = 0;
+
+    for (int round = 0; round < 50; round++) {
+        /* Write with barriers */
+        for (int i = 0; i < 16; i++) {
+            result.arr[i] = round * 16 + i;
+            if (i % 4 == 3) {
+                memoryBarrierBuffer();
+            }
+        }
+
+        memoryBarrierBuffer();
+
+        /* Read with barriers */
+        for (int i = 0; i < 16; i++) {
+            if (i % 4 == 0) {
+                memoryBarrierBuffer();
+            }
+            sum += result.arr[i];
+        }
+    }
+
+    return sum;
+}
+
+void main() {
+    int64_t sum = 0;
+
+    for (int iter = 0; iter < 100; iter++) {
+        sum += test_store_load_ordering();
+        sum += test_acquire_release();
+        sum += test_barrier_sequence();
+        sum += test_volatile_barriers();
+        sum += test_spinlock_pattern();
+        sum += test_array_barriers();
+    }
+
+    result.words[0] = 0;
+    for (uint i = 0; i < 8; ++i)
+        result.words[1+i] = uint((uint64_t(sum) >> (8u*i)) & 255UL);
+}

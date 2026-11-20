@@ -1,0 +1,67 @@
+// Runtime type tags represent the original hierarchy. The host supplies
+// the six implementation-specific type_info hash bytes for the comparisons.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Result { uint words[]; } output_data;
+
+const int BASE = 0, A = 1, B = 2, AA = 3, AB = 4, MULTI = 5;
+struct Object { int type; int value; };
+struct LeftObject { bool has_right; int value; };
+
+bool is_a(Object obj) {
+    return obj.type == A || obj.type == AA || obj.type == AB;
+}
+
+int64_t downcast(Object obj) {
+    switch (obj.type) {
+        case AA: return obj.value * 4 * 5;
+        case AB: return obj.value * 5 * 6;
+        case A: return obj.value * 2 * 3;
+        case B: return obj.value * 3 * 4;
+        default: return obj.value;
+    }
+}
+
+int64_t crosscast(Object obj) {
+    if (obj.type != MULTI) return 0;
+    int via_first = obj.value * 6;
+    int via_second = via_first * 2;
+    return via_first + via_second;
+}
+
+int64_t sidecast(LeftObject obj) {
+    int64_t result = obj.value * 2;
+    if (obj.has_right) {
+        result += obj.value * 3;
+        result += obj.value * 4;
+    }
+    return result;
+}
+
+int64_t type_identity(Object obj) {
+    return obj.type + 1 + (output_data.words[63 - obj.type] & 255u);
+}
+
+void main() {
+    const Object bases[6] = Object[6](Object(BASE,10), Object(A,20), Object(B,30),
+                                      Object(AA,40), Object(AB,50), Object(MULTI,60));
+    const LeftObject lefts[2] = LeftObject[2](LeftObject(false,70), LeftObject(true,90));
+    int64_t sink = 0;
+    for (int i = 0; i < 50000; ++i) {
+        Object base = bases[i % 6];
+        sink += downcast(base);
+        sink += crosscast(base);
+        sink += sidecast(lefts[i % 2]);
+        sink += type_identity(base);
+        sink += is_a(base) ? base.value * 2 * 3 : 1000;
+        sink += int(base.type == bases[(i + 1) % 6].type);
+        sink += is_a(base) ? 10 : 0;
+        if (lefts[1].has_right) sink += 103;
+        int null_tag = -1;
+        sink += int(null_tag == -1);
+    }
+    output_data.words[0] = 0;
+    for (uint i = 0; i < 8; ++i)
+        output_data.words[1+i] = uint((uint64_t(sink) >> (8u*i)) & 255UL);
+}

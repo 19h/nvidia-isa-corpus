@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpl5t2ej9c/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] asm_barriers.json
+[INFO] Parsing JSON: /tmp/tmpl5t2ej9c/asm_barriers.json
+[INFO] Compiling JSON: /tmp/tmpl5t2ej9c/asm_barriers.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpl5t2ej9c/asm_barriers.spv
+[INFO] Compiled JSON: /tmp/tmpl5t2ej9c/asm_barriers.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpl5t2ej9c/cache.bin

@@ -1,0 +1,92 @@
+// Explicit result tags and a cleanup stack represent the C++ throw paths.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result { uint words[]; } output_data;
+
+const int OK = 0, BASE = 1, DERIVED = 2, OTHER = 3, INTEGER = 4;
+struct Outcome { int kind; int code; int extra; };
+
+int simple_try(int value) {
+    Outcome r = value < 0 ? Outcome(BASE, value, 0) : Outcome(OK, value * 2, 0);
+    return r.kind == BASE ? -r.code : r.code;
+}
+
+int nested_try(int value) {
+    Outcome r = value < 0 ? Outcome(BASE, -1, 0) :
+                value == 0 ? Outcome(DERIVED, 0, 100) : Outcome(OK, value, 0);
+    return r.kind == DERIVED ? r.code + r.extra : r.code;
+}
+
+int multiple_catches(int selector, int value) {
+    Outcome r;
+    switch (selector % 4) {
+        case 0: r = Outcome(BASE, value, 0); break;
+        case 1: r = Outcome(DERIVED, value, 10); break;
+        case 2: r = Outcome(OTHER, 0, 0); break;
+        default: r = Outcome(INTEGER, value, 0); break;
+    }
+    switch (r.kind) {
+        case DERIVED: return (r.code + r.extra) * 2;
+        case BASE: return r.code * 3;
+        case OTHER: return 999;
+        case INTEGER: return r.code * 4;
+        default: return -1;
+    }
+}
+
+int64_t unwind(int depth) {
+    int guards[6];
+    int count = 0;
+    int64_t counter = 0;
+    while (depth >= 0) {
+        guards[count] = depth-- * 10;
+        counter += guards[count++];
+    }
+    while (count > 0)
+        counter -= guards[--count];
+    return counter;
+}
+
+int caller_catches(int value) {
+    Outcome thrown = value % 3 == 0 ? Outcome(BASE, value, 0) :
+                     value % 3 == 1 ? Outcome(DERIVED, value, 5) :
+                                      Outcome(INTEGER, value, 0);
+    switch (thrown.kind) {
+        case DERIVED: return thrown.code + thrown.extra;
+        case BASE: return thrown.code;
+        default: return thrown.code * 2;
+    }
+}
+
+int64_t loop_with_exceptions(int count) {
+    int64_t sum = 0;
+    for (int i = 0; i < count; ++i)
+        sum += i % 7 == 0 ? i * 2 : i;
+    return sum;
+}
+
+void main() {
+    int64_t sink = 0;
+    for (int i = 0; i < 50000; ++i) {
+        sink += simple_try(i % 20 - 10);
+        sink += nested_try(i % 10 - 3);
+        int x = i % 20;
+        sink += x < 10 ? x + 1000 : x;
+        sink += multiple_catches(i, i % 100);
+        if (i % 100 == 0) sink += unwind(5);
+        int constructor_argument = i % 20 - 5;
+        sink += constructor_argument < 0 ? constructor_argument : constructor_argument * 2;
+        sink += caller_catches(i % 10);
+
+        int argument = i % 200;
+        sink += argument > 100 ? argument * argument : argument + 100;
+        if (i % 500 == 0) sink += loop_with_exceptions(100);
+        int polymorphic_arg = i % 20 - 5;
+        sink += i % 2 == 0 || polymorphic_arg < 0 ? polymorphic_arg : polymorphic_arg * 2;
+    }
+
+    output_data.words[0] = 0;
+    for (uint i = 0; i < 8; ++i)
+        output_data.words[1+i] = uint((uint64_t(sink) >> (8u*i)) & 255UL);
+}

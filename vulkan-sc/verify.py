@@ -6,6 +6,7 @@ import csv
 import json
 import math
 from pathlib import Path
+import re
 import struct
 import subprocess
 import tempfile
@@ -13,6 +14,18 @@ import tempfile
 ROOT = Path(__file__).resolve().parent
 
 CASES = {
+    "cf_exception": (("sink", 1, "q"),),
+    "cpp_lambda": (("sink", 1, "q"),),
+    "cpp_virtual": (("sink", 1, "q"),),
+    "asm_atomic_ops": (("sink", 1, "q"),),
+    "asm_barriers": (("sink", 1, "q"),),
+    "call_abi_stress_matrix": (("call_abi_sink", 1, "Q"),),
+    "call_variadic": (("sink", 1, "q"),),
+    "cf_computed_goto": (("sink", 1, "q"),),
+    "cf_longjmp_threaded_vm": (("cf_longjmp_threaded_vm_sink", 1, "Q"),),
+    "cf_setjmp": (("sink", 1, "q"),),
+    "int_atomic_orders": (("sink", 1, "Q"),),
+    "mem_random": (("sink", 1, "q"),),
     "call_nested": (("sink", 1, "q"),),
     "call_struct_return": (("sink", 1, "q"),),
     "cf_indirect_call": (("sink", 1, "q"),),
@@ -43,12 +56,45 @@ CASES = {
 }
 
 
+PRINTED_CASES = {
+    "cpp_type_erased_callmaze": (r"cpp_type_erased_callmaze (\d+)", ((1, 8, 10),)),
+    "cpp_allocator_polymorph_zoo": (r"cpp_allocator_polymorph_zoo (\d+) (\d+) (\d+)",
+                                    ((1, 8, 10), (17, 1, 10), (33, 1, 10))),
+    "cpp_constexpr_variant_graph": (r"cpp_constexpr_variant_graph (\d+)", ((1, 8, 10),)),
+    "cpp_exception_variant_unwind": (r"cpp_exception_variant_unwind (\d+)", ((1, 8, 10),)),
+    "cpp_coroutine_lifetime": (r"cpp_coroutine_lifetime (\d+) (\d+)", ((1, 8, 10), (17, 1, 10))),
+    "fp_denormal_rounding_lab": (r"checksum=([0-9a-f]+) branches=(\d+)", ((1, 8, 16), (17, 8, 10))),
+    "fp_fixedpoint_hybrid_solver": (r"checksum=([0-9a-f]+) branches=(\d+)", ((1, 8, 16), (17, 8, 10))),
+    "int_crypto_mix_network": (r": ([0-9a-f]+) ([0-9a-f]+)", ((17, 4, 16), (1, 8, 16))),
+    "mem_provenance_launder_lab": (r": ([0-9a-f]+) ([0-9a-f]+) ([0-9a-f]+)",
+                                   ((17, 4, 16), (33, 4, 16), (1, 8, 16))),
+    "mem_flexible_arena_rewriter": (r": ([0-9a-f]+) ([0-9a-f]+) ([0-9a-f]+)",
+                                    ((17, 4, 16), (33, 4, 16), (1, 8, 16))),
+}
+
+
+def native_stdout(compiler, program):
+    source = ROOT.parent / "programs" / f"{program}.c"
+    command = [compiler]
+    if not source.exists():
+        source = source.with_suffix(".cpp")
+        command = ["c++", "-std=c++20"]
+    with tempfile.TemporaryDirectory() as tmp:
+        executable = Path(tmp) / "reference"
+        subprocess.run([*command, "-O2", "-ffp-contract=off", "-fwrapv", source, "-o", executable],
+                       check=True, timeout=60, capture_output=True)
+        return subprocess.check_output([executable], text=True, timeout=30)
+
+
 def native_result(compiler, program, fields):
     source = ROOT.parent / "programs" / f"{program}.c"
+    is_cpp = not source.exists()
+    if is_cpp:
+        source = source.with_suffix(".cpp")
     outputs = [f"fwrite((const void *)&{sink}, 1, sizeof({sink}), out);" for sink, _, _ in fields]
     with tempfile.TemporaryDirectory() as tmp:
         path = Path(tmp)
-        wrapper = path / "reference.c"
+        wrapper = path / ("reference.cpp" if is_cpp else "reference.c")
         executable = path / "reference"
         wrapper.write_text(
             f'#include <stdio.h>\n#define main corpus_main\n#include "{source}"\n'
@@ -57,7 +103,8 @@ def native_result(compiler, program, fields):
             '    FILE *out = fopen(argv[1], "wb");\n    if (!out) return 1;\n    ' +
             '\n    '.join(outputs) + '\n    return fclose(out);\n}\n'
         )
-        subprocess.run([compiler, "-O2", "-ffp-contract=off", "-fwrapv", wrapper, "-o", executable],
+        command = ["c++", "-std=c++20"] if is_cpp else [compiler]
+        subprocess.run([*command, "-O2", "-ffp-contract=off", "-fwrapv", wrapper, "-o", executable],
                        check=True, timeout=60, capture_output=True)
         output = path / "sink.bin"
         subprocess.run([executable, output], check=True, timeout=30, capture_output=True)
@@ -79,6 +126,48 @@ def check(runner, compiler, chip, program):
         reference = b"Hello, World!\n"
         actual = bytes(words[1:15])
         return words[0] == 0 and actual == reference, actual.hex(), reference.hex()
+    if program == "03_linked_list":
+        printed = native_stdout(compiler, program)
+        snapshots = [line for line in printed.splitlines()
+                     if line.startswith("List:") or line == "List is empty (NULL)"]
+        expected_hash = 14695981039346656037
+        for line in snapshots:
+            values = [int(value) for value in re.findall(r"\[(-?\d+)\]", line)]
+            for value in [*values, 0xffffffff]:
+                expected_hash = ((expected_hash ^ (value & 0xffffffff)) * 1099511628211) & ((1 << 64) - 1)
+        expected_frees = sum(map(int, re.findall(r"Freed (\d+) node", printed))) + 5
+        words = dispatch(runner, chip, program)
+        actual = (int.from_bytes(bytes(words[1:9]), "little"), *words[17:22])
+        reference = (expected_hash, len(snapshots), 3, 7, 0, expected_frees)
+        return words[0] == 0 and actual == reference, str(actual), str(reference)
+    if program in PRINTED_CASES:
+        pattern, fields = PRINTED_CASES[program]
+        match = re.search(pattern, native_stdout(compiler, program))
+        if match is None:
+            raise ValueError(f"could not read native result of {program}")
+        words = dispatch(runner, chip, program)
+        actual = tuple(int.from_bytes(bytes(words[index:index+size]), "little")
+                       for index, size, _ in fields)
+        reference = tuple(int(value, radix) for value, (_, _, radix) in zip(match.groups(), fields))
+        return words[0] == 0 and actual == reference, str(actual), str(reference)
+    if program == "cpp_rtti":
+        source = ROOT.parent / "programs/cpp_rtti.cpp"
+        with tempfile.TemporaryDirectory() as tmp:
+            wrapper = Path(tmp) / "rtti.cpp"
+            executable = Path(tmp) / "reference"
+            types = ("Base", "DerivedA", "DerivedB", "DerivedAA", "DerivedAB", "MultiDerived")
+            values = ", ".join("unsigned(typeid(" + name + ").hash_code() & 255)" for name in types)
+            wrapper.write_text(
+                f'#include <cstdio>\n#define main corpus_main\n#include "{source}"\n#undef main\n'
+                'int main() { if (corpus_main()) return 1; '
+                f'std::printf("%lld %u %u %u %u %u %u\\n", (long long)sink, {values}); }}\n'
+            )
+            subprocess.run(["c++", "-std=c++20", "-O2", wrapper, "-o", executable], check=True,
+                           timeout=60, capture_output=True)
+            reference, *tags = map(int, subprocess.check_output([executable], text=True, timeout=30).split())
+        words = dispatch(runner, chip, program, *tags)
+        actual = int.from_bytes(bytes(words[1:9]), "little", signed=True)
+        return words[0] == 0 and actual == reference, str(actual), str(reference)
     if program == "cpp_consteval_tuple_automaton":
         source = ROOT.parent / "programs" / f"{program}.cpp"
         with tempfile.TemporaryDirectory() as tmp:
@@ -120,7 +209,7 @@ def main():
     parser.add_argument("--chip", default="ad102")
     parser.add_argument("--cc", default="cc")
     args = parser.parse_args()
-    cases = ["01_hello_world", "02_fibonacci", "cpp_consteval_tuple_automaton", *CASES]
+    cases = ["01_hello_world", "02_fibonacci", "03_linked_list", "cpp_consteval_tuple_automaton", "cpp_rtti", *PRINTED_CASES, *CASES]
     rows = []
     for program in cases:
         if not (ROOT / "cache" / args.chip / f"{program}.bin").is_file():

@@ -1,0 +1,93 @@
+// GPU counterparts of the original atomic counter, CAS and indexed stack.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+#extension GL_EXT_shader_atomic_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Result {
+    uint words[64];
+    int narrow;
+    int64_t wide;
+    uint next_node;
+    int64_t head;
+    ivec2 nodes[64];
+} result;
+
+int64_t counter_test() {
+    atomicExchange(result.narrow, 0);
+    int64_t sum = 0;
+    for (int i = 0; i < 1000; ++i)
+        sum += atomicAdd(result.narrow, 1);
+    return sum + atomicAdd(result.narrow, 0);
+}
+
+int64_t exchange_test() {
+    atomicExchange(result.narrow, 0);
+    int64_t sum = 0;
+    for (int i = 0; i < 100; ++i)
+        sum += atomicExchange(result.narrow, i);
+    return sum + atomicAdd(result.narrow, 0);
+}
+
+int64_t cas_test() {
+    atomicExchange(result.narrow, 0);
+    int64_t sum = 0;
+    for (int i = 0; i < 100; ++i)
+        sum += int(atomicCompSwap(result.narrow, i, i+1) == i);
+    return sum + atomicAdd(result.narrow, 0);
+}
+
+int64_t wide_test() {
+    atomicExchange(result.wide, 0L);
+    int64_t sum = 0;
+    for (int i = 0; i < 500; ++i)
+        sum += atomicAdd(result.wide, 1L);
+    if (atomicCompSwap(result.wide, 500L, 1000L) == 500L)
+        sum += 100;
+    return sum + atomicAdd(result.wide, 0L);
+}
+
+void push_node(int value) {
+    uint node = atomicAdd(result.next_node, 1u) % 64u;
+    int64_t previous;
+    do {
+        previous = atomicAdd(result.head, 0L);
+        result.nodes[node] = ivec2(int(previous), value);
+        memoryBarrierBuffer();
+    } while (atomicCompSwap(result.head, previous, int64_t(node)) != previous);
+}
+
+bool pop_node(out int value) {
+    int64_t previous;
+    do {
+        previous = atomicAdd(result.head, 0L);
+        if (previous < 0) return false;
+        memoryBarrierBuffer();
+    } while (atomicCompSwap(result.head, previous, int64_t(result.nodes[int(previous)].x)) != previous);
+    value = result.nodes[int(previous)].y;
+    return true;
+}
+
+int64_t stack_test() {
+    atomicExchange(result.head, -1L);
+    for (int i = 0; i < 32; ++i)
+        push_node(i);
+    int64_t sum = 0;
+    int value;
+    while (pop_node(value))
+        sum += value;
+    return sum;
+}
+
+void main() {
+    int64_t sink = 0;
+    for (int i = 0; i < 100; ++i) {
+        sink += counter_test();
+        sink += exchange_test();
+        sink += cas_test();
+        sink += wide_test();
+        sink += stack_test();
+    }
+    result.words[0] = 0;
+    for (uint i = 0; i < 8; ++i)
+        result.words[1+i] = uint((uint64_t(sink) >> (8u*i)) & 255UL);
+}

@@ -1,0 +1,46 @@
+// Single-invocation port. Subword atomics use distinct fields in one word.
+// The source's seq_cst steps use a buffer barrier and a Vulkan atomic operation.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+#extension GL_EXT_shader_atomic_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) buffer Result {
+    uint words[64];
+    uint narrow;
+    uint middle;
+    uint64_t wide;
+} result;
+
+uint64_t atomic_mix(uint seed) {
+    atomicExchange(result.middle, seed);
+    memoryBarrierBuffer();
+    uint expected = atomicAdd(result.middle, 0u);
+    uint64_t sum = expected;
+
+    sum += atomicCompSwap(result.middle, expected, seed ^ 0xa5a5a5a5u);
+    memoryBarrierBuffer();
+    sum += atomicAdd(result.middle, 7u);
+
+    uint old8 = atomicXor(result.narrow, seed & 255u) & 255u;
+    uint old16 = (atomicOr(result.narrow, ((seed >> 1) & 65535u) << 16) >> 16);
+
+    uint64_t add64 = (uint64_t(seed) << 32) | seed;
+    uint64_t old64 = atomicAdd(result.wide, add64);
+    sum ^= old64;
+    uint64_t expected64 = old64 + add64;
+    sum += atomicCompSwap(result.wide, expected64, expected64 ^ 0x5a5a5a5a5a5a5a5aUL);
+
+    memoryBarrierBuffer();
+    sum += atomicAdd(result.wide, 0UL);
+    sum ^= atomicExchange(result.wide, uint64_t(seed) * 0x9e3779b97f4a7c15UL);
+    return sum + old8 + old16;
+}
+
+void main() {
+    uint64_t sink = 0;
+    for (uint i = 0; i < 10000; ++i)
+        sink += atomic_mix(i * 3u + 1u);
+    result.words[0] = 0;
+    for (uint i = 0; i < 8; ++i)
+        result.words[1+i] = uint((sink >> (8u * i)) & 255UL);
+}

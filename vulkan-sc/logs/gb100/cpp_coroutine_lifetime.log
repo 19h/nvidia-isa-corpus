@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpajng8t7d/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cpp_coroutine_lifetime.json
+[INFO] Parsing JSON: /tmp/tmpajng8t7d/cpp_coroutine_lifetime.json
+[INFO] Compiling JSON: /tmp/tmpajng8t7d/cpp_coroutine_lifetime.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpajng8t7d/cpp_coroutine_lifetime.spv
+[INFO] Compiled JSON: /tmp/tmpajng8t7d/cpp_coroutine_lifetime.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpajng8t7d/cache.bin

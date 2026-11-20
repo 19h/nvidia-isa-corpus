@@ -1,0 +1,206 @@
+// SPDX-License-Identifier: MIT
+/*
+ * Floating-Point Denormal Rounding Lab
+ *
+ * Exercises tiny finite FP values, scaling back into normal ranges,
+ * cancellation against larger anchors, branch decisions, and integer checksum
+ * quantization. The output is a compact integer checksum instead of relying on
+ * exact decimal formatting of floating-point values.
+ */
+
+
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result {
+    uint words[];
+} output_data;
+
+#define CELLS 18
+#define STEPS 224
+#define D_TINY_COUNT 12
+#define F_TINY_COUNT 10
+
+struct LabCell {
+    precise double sum;
+    precise double residue;
+    precise float drift;
+    uint flags;
+};
+
+const uint64_t tiny_d_bits[D_TINY_COUNT] = uint64_t[D_TINY_COUNT](
+    0x1UL, 0x8000000000000001UL, 0x10UL, 0x8000000000000006UL,
+    0x4000UL, 0x80000000000a0000UL, 0x400000000UL, 0x8000024000000000UL,
+    0x10000000000000UL, 0x8018000000000000UL, 0x34000000000000UL, 0x8051000000000000UL
+);
+
+// Decode the original IEEE-754 encodings before scaling. The products
+// are normal for this workload, even when the encoded input is subnormal.
+precise double scale_tiny_d(int i, int shift) {
+    uint64_t bits = tiny_d_bits[i];
+    int exponent = int((bits >> 52) & 2047UL);
+    uint64_t fraction = bits & 0xfffffffffffffUL;
+    if (exponent == 0) {
+        uint high = uint(fraction >> 32);
+        int leading = high != 0 ? 32 + findMSB(high) : findMSB(uint(fraction));
+        int shift_to_normal = 52 - leading;
+        fraction = (fraction << shift_to_normal) & 0xfffffffffffffUL;
+        exponent = 1 - shift_to_normal;
+    }
+    uint64_t scaled = (bits & 0x8000000000000000UL) | (uint64_t(exponent + shift) << 52) | fraction;
+    return packDouble2x32(uvec2(uint(scaled), uint(scaled >> 32)));
+}
+
+const uint tiny_f_bits[F_TINY_COUNT] = uint[F_TINY_COUNT](
+    0x1u, 0x80000001u, 0x10u, 0x80000030u,
+    0x200u, 0x80002400u, 0x80000u, 0x80300000u,
+    0x800000u, 0x81a00000u
+);
+
+precise float scale_tiny_f(int i, int shift) {
+    uint bits = tiny_f_bits[i];
+    int exponent = int((bits >> 23) & 255u);
+    uint fraction = bits & 0x7fffffu;
+    if (exponent == 0) {
+        int shift_to_normal = 23 - findMSB(fraction);
+        fraction = (fraction << shift_to_normal) & 0x7fffffu;
+        exponent = 1 - shift_to_normal;
+    }
+    return uintBitsToFloat((bits & 0x80000000u) | (uint(exponent + shift) << 23) | fraction);
+}
+
+const int d_scale[8] = int[8](1022, 1018, 1008, 996, 984, 976, 960, 948);
+const int f_scale[8] = int[8](126, 123, 119, 115, 111, 107, 103, 99);
+
+LabCell cells[CELLS];
+
+uint64_t rotl64(uint64_t x, uint n) {
+    n &= 63u;
+    return n == 0u ? x : ((x << n) | (x >> (64u - n)));
+}
+
+uint64_t mix64(uint64_t h, uint64_t v) {
+    h ^= v + 0x9e3779b97f4a7c15UL + (h << 6) + (h >> 2);
+    h ^= h >> 31;
+    h *= 0x7fb5d329728ea185UL;
+    h ^= h >> 27;
+    h *= 0x81dadef4bc2dd44dUL;
+    return h ^ (h >> 33);
+}
+
+precise double fold_unit(double v) {
+    if (v > 2.0LF) {
+        v = 4.0LF - v;
+    } else if (v < -2.0LF) {
+        v = -4.0LF - v;
+    }
+
+    if (v > 2.0LF) {
+        v = 2.0LF;
+    } else if (v < -2.0LF) {
+        v = -2.0LF;
+    }
+
+    return v;
+}
+
+uint quantize_double(double v) {
+    if (v > 8.0LF) {
+        v = 8.0LF;
+    } else if (v < -8.0LF) {
+        v = -8.0LF;
+    }
+
+    int q;
+    if (v >= 0.0LF) {
+        q = int(v * 1048576.0LF + 0.5LF);
+    } else {
+        q = int(v * 1048576.0LF - 0.5LF);
+    }
+    return uint(q);
+}
+
+void init_cells() {
+    for (int i = 0; i < CELLS; i++) {
+        precise double td = scale_tiny_d(i % D_TINY_COUNT, d_scale[i & 7]);
+        precise float tf = scale_tiny_f((i * 3) % F_TINY_COUNT, f_scale[(i + 2) & 7]);
+
+        precise double sum = 0.03125LF * double(i - 9) + td;
+        cells[i].sum = sum;
+        precise double residue = 0.0009765625LF * double((i * 5 + 3) & 15) - td * 0.25LF;
+        cells[i].residue = residue;
+        precise float drift = 0.015625f * float(i - 4) + tf;
+        cells[i].drift = drift;
+        cells[i].flags = uint(i * 17 + 5);
+    }
+}
+
+uint step_cell(inout LabCell cell, int step, int index, inout uint64_t branches) {
+    precise double scaled = scale_tiny_d((step + index * 5) % D_TINY_COUNT, d_scale[(step + index) & 7]);
+    precise double anchor = ((step + index) & 1) != 0 ? 1.0LF : -1.0LF;
+    precise double cancelled = (anchor + scaled) - anchor;
+    precise double recovered = scaled - cancelled;
+    precise double skew = scale_tiny_d((step * 3 + index) % D_TINY_COUNT, d_scale[(step + 3) & 7]);
+
+    if (cancelled == 0.0LF) {
+        branches += 11u;
+        cell.flags ^= 0x00010001u + uint(step);
+    } else if ((cancelled > 0.0LF) == (scaled > 0.0LF)) {
+        branches += 17u;
+        cell.flags += uint(index * 29 + step);
+    } else {
+        branches += 23u;
+        cell.flags = (cell.flags << 3) ^ (cell.flags >> 5) ^ 0xa5a5u;
+    }
+
+    precise float fscaled = scale_tiny_f((step * 7 + index * 2) % F_TINY_COUNT, f_scale[(step + index * 3) & 7]);
+    precise float fanchor = ((step + index) & 2) != 0 ? 0.5f : -0.5f;
+    precise float fcancelled = (fanchor + fscaled) - fanchor;
+
+    precise float next_drift;
+    if (fcancelled == 0.0f) {
+        branches += 3u;
+        next_drift = cell.drift * 0.875f;
+    } else if (fcancelled > 0.0f) {
+        branches += 5u;
+        next_drift = cell.drift * 0.8125f + fcancelled * 48.0f;
+    } else {
+        branches += 7u;
+        next_drift = cell.drift * 0.8125f - fcancelled * 32.0f;
+    }
+
+    cell.drift = next_drift;
+    precise double drift = double(next_drift);
+    precise double next = cell.sum * 0.78125LF + cancelled * 64.0LF - recovered * 0.03125LF;
+    next += skew * 3.0LF + drift * 0.0625LF + cell.residue * 0.125LF;
+
+    precise double residue = cell.residue * -0.625LF + recovered * 512.0LF + double(fcancelled);
+    cell.residue = fold_unit(residue);
+    cell.sum = fold_unit(next);
+
+    precise double probe = cell.sum + cell.residue * 0.5LF + double(int(cell.flags & 255u)) * 0.0001220703125LF;
+    return quantize_double(probe);
+}
+
+void main() {
+    init_cells();
+
+    uint64_t checksum = 0x66705f64656e6f72UL;
+    uint64_t branches = 0;
+
+    for (int step = 0; step < STEPS; step++) {
+        for (int i = 0; i < CELLS; i++) {
+            uint q = step_cell(cells[i], step, i, branches);
+            uint64_t tag = (uint64_t(uint(step)) << 32) ^ uint(i);
+            tag ^= uint64_t(q) ^ (uint64_t(cells[i].flags) << ((i & 1) != 0 ? 17 : 5));
+            checksum = mix64(rotl64(checksum, uint(i + 7)), tag);
+        }
+    }
+
+    uint64_t sink = checksum ^ rotl64(branches, 9);
+    output_data.words[0] = 0;
+    for (uint byte = 0; byte < 8; ++byte) {
+        output_data.words[1 + byte] = uint((sink >> (8u * byte)) & 255UL);
+        output_data.words[17 + byte] = uint((branches >> (8u * byte)) & 255UL);
+    }
+}

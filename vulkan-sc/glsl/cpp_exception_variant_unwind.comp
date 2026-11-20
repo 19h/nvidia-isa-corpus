@@ -1,0 +1,173 @@
+// Tagged outcomes, catch dispatch, and explicit guard cleanup model the
+// variant visitation and unwinding in the C++ workload.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result { uint words[]; } output_data;
+
+const uint ATOM = 0, PAIR = 1, GATE = 2, DETOUR = 3;
+const uint OK = 0, BASE = 1, PHASE = 2, RETRY = 3;
+const uvec4 payloads[8] = uvec4[8](
+    uvec4(ATOM,0x1234,0,0), uvec4(PAIR,0,2,19), uvec4(GATE,1,0x2d,0),
+    uvec4(DETOUR,2,3,0x40), uvec4(PAIR,3,1,71), uvec4(GATE,4,0x55,0),
+    uvec4(DETOUR,5,2,0x33), uvec4(ATOM,0x9e37,0,0)
+);
+struct Outcome { uint kind; uint code; uint64_t value; };
+
+uint64_t trace = 0x6a09e667f3bcc909UL;
+uint live = 0;
+uint64_t values[8];
+
+uint64_t mix64(uint64_t x) {
+    x ^= x >> 33;
+    x *= 0xff51afd7ed558ccdUL;
+    x ^= x >> 33;
+    x *= 0xc4ceb9fe1a85ec53UL;
+    return x ^ (x >> 33);
+}
+
+uint64_t rotl64(uint64_t x, uint n) {
+    n &= 63u;
+    return n == 0 ? x : (x << n) | (x >> (64u-n));
+}
+
+void enter_mark(uint64_t tag) {
+    trace = mix64(trace + tag + uint64_t(++live) * 17UL);
+}
+
+void leave_mark(uint64_t tag, bool unwinding) {
+    trace = mix64((trace ^ tag) + uint64_t(live) * 31UL + (unwinding ? 97UL : 0UL));
+    --live;
+}
+
+uint64_t fault_value(Outcome fault) {
+    switch (fault.kind) {
+        case PHASE: return uint64_t(fault.code)*257UL + fault.value;
+        case RETRY: return fault.value ^ (uint64_t(fault.code)*65537UL);
+        default: return uint64_t(fault.code)*131UL;
+    }
+}
+
+Outcome visit_payload(uint index, uint round, uint64_t seed) {
+    uint64_t tag = 0x10000UL + index*31u + round;
+    enter_mark(tag);
+    uvec4 p = payloads[index];
+    Outcome result = Outcome(OK, 0, 0);
+    switch (p.x) {
+        case ATOM: {
+            uint64_t value = mix64(p.y + seed + round*23u);
+            result = ((value >> (index & 7u)) & 15UL) == 5UL && (round & 1u) != 0u
+                     ? Outcome(PHASE, index+11u, round) : Outcome(OK, 0, value);
+            break;
+        }
+        case PAIR: {
+            uint64_t value = mix64((values[p.y] + p.w) ^ rotl64(values[p.z] + seed, p.y+p.z));
+            result = (round+index+p.w) % 7u == 0 ? Outcome(BASE, p.w+index, 0) : Outcome(OK, 0, value);
+            break;
+        }
+        case GATE: {
+            uint64_t source = values[p.y] ^ seed;
+            result = ((source + p.z + round) & p.z) == 0UL ? Outcome(PHASE, p.z, index+round)
+                     : Outcome(OK, 0, rotl64(mix64(source + trace), p.y+round));
+            break;
+        }
+        default: {
+            uint64_t source = values[p.y];
+            result = ((p.w + round + index) & 3u) == 0
+                     ? Outcome(RETRY, p.w + index, mix64(source + seed))
+                     : Outcome(OK, 0, mix64(source + trace + p.z*149u));
+            break;
+        }
+    }
+    leave_mark(tag, result.kind != OK);
+    return result;
+}
+
+uint64_t recover_payload(Outcome fault, uint index, uint round, uint64_t seed) {
+    uint64_t tag = 0x20000UL + round;
+    enter_mark(tag);
+    uint64_t base = mix64(fault_value(fault) + seed + trace);
+    uvec4 p = payloads[index];
+    uint64_t result = 0;
+    switch (p.x) {
+        case ATOM: result = mix64(base + p.y); break;
+        case PAIR: result = rotl64(base ^ p.w, p.y + p.z + round); break;
+        case GATE: result = mix64(base + p.z + p.y); break;
+        case DETOUR: result = rotl64(base + p.w, p.z + round); break;
+    }
+    leave_mark(tag, false);
+    return result;
+}
+
+Outcome descend(uint depth, uint64_t seed) {
+    uint64_t seeds[6];
+    for (int d = int(depth); d >= 0; --d) {
+        enter_mark(0x30000UL + uint(d));
+        seeds[d] = seed;
+        if (d > 0) seed = mix64(seed + uint(d));
+    }
+    Outcome child = Outcome(PHASE, 0x77u, seeds[0] & 31UL);
+    leave_mark(0x30000UL, true);
+
+    for (uint d = 1; d <= depth; ++d) {
+        if (child.kind == PHASE) {
+            uint64_t tag = 0x40000UL + d;
+            enter_mark(tag);
+            bool rethrow = (d & 1u) != 0;
+            if (!rethrow)
+                child = Outcome(OK, 0, mix64(fault_value(child) + seeds[d] + trace + d));
+            leave_mark(tag, rethrow);
+        } else {
+            child.value = mix64(child.value + seeds[d] + d*101u);
+        }
+        leave_mark(0x30000UL + d, child.kind != OK);
+    }
+    return child;
+}
+
+void main() {
+    for (uint i = 0; i < 8; ++i) values[i] = 0;
+    uint64_t checksum = 0xbb67ae8584caa73bUL;
+    for (uint round = 0; round < 11; ++round) {
+        uint64_t round_tag = 0x50000UL+round;
+        enter_mark(round_tag);
+        for (uint i = 0; i < 8; ++i) {
+            Outcome result = visit_payload(i, round, checksum ^ trace);
+            if (result.kind == OK) {
+                values[i] = result.value;
+            } else if (result.kind == RETRY) {
+                uint64_t tag = 0x60000UL + i;
+                enter_mark(tag);
+                bool rethrow = ((result.code + round) & 1u) == 0;
+                if (!rethrow)
+                    values[i] = recover_payload(result, (i+3u)%8u, round, checksum);
+                leave_mark(tag, rethrow);
+                if (rethrow) {
+                    uint64_t catch_tag = 0x70000UL + i + round*13u;
+                    enter_mark(catch_tag);
+                    values[i] = mix64(fault_value(result) + checksum + values[(i+7u)%8u]);
+                    leave_mark(catch_tag, false);
+                }
+            } else {
+                values[i] = recover_payload(result, i, round, checksum);
+            }
+            checksum = mix64(checksum ^ values[i] ^ trace ^ (i*4099u + round));
+        }
+        Outcome child = descend(3u + round%3u, checksum);
+        if (child.kind == OK) {
+            checksum ^= child.value;
+        } else {
+            uint64_t tag = 0x80000UL + round;
+            enter_mark(tag);
+            checksum = mix64(checksum + fault_value(child) + trace);
+            leave_mark(tag, false);
+        }
+        leave_mark(round_tag, false);
+    }
+    for (uint i = 0; i < 8; ++i)
+        checksum = mix64(checksum + values[i] + trace);
+    uint64_t sink = checksum ^ trace ^ live;
+    output_data.words[0] = uint(live != 0);
+    for (uint i = 0; i < 8; ++i)
+        output_data.words[1+i] = uint((sink >> (8u*i)) & 255UL);
+}

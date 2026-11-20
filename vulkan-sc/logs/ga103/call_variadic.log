@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpbah0aug9/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] call_variadic.json
+[INFO] Parsing JSON: /tmp/tmpbah0aug9/call_variadic.json
+[INFO] Compiling JSON: /tmp/tmpbah0aug9/call_variadic.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpbah0aug9/call_variadic.spv
+[INFO] Compiled JSON: /tmp/tmpbah0aug9/call_variadic.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpbah0aug9/cache.bin

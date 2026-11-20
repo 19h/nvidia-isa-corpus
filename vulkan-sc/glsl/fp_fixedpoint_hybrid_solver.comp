@@ -1,0 +1,247 @@
+// SPDX-License-Identifier: MIT
+/*
+ * Floating-Point Fixed-Point Hybrid Solver
+ *
+ * Runs a small deterministic relaxation solver that mixes Q16.16 fixed-point
+ * integer math with float and double iterative updates. The checksum folds
+ * quantized state so the result line is stable and compact.
+ */
+
+
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result {
+    uint words[];
+} output_data;
+
+#define NODES 20
+#define ITERS 180
+#define Q_SHIFT 16
+#define Q_ONE (1 << Q_SHIFT)
+#define Q_LIMIT (10 << Q_SHIFT)
+
+struct SolverNode {
+    int xq;
+    int yq;
+    int biasq;
+    precise float vf;
+    precise double vd;
+    uint tag;
+};
+
+const int coeff_q[16] = int[16](
+    39322, -14746, 8192, -22938,
+    11469, 32768, -6554, 27853,
+    -9830, 16384, 4915, -19661,
+    24576, -12288, 20480, -4096
+);
+
+const float relax_f[12] = float[12](
+    0.109375f, 0.078125f, 0.140625f, 0.0625f,
+    0.09375f, 0.15625f, 0.046875f, 0.125f,
+    0.0703125f, 0.1171875f, 0.0859375f, 0.1328125f
+);
+
+const double weight_d[14] = double[14](
+    0.3125LF, -0.1875LF, 0.140625LF, -0.09375LF,
+    0.21875LF, 0.0625LF, -0.15625LF, 0.1015625LF,
+    -0.0546875LF, 0.171875LF, -0.125LF, 0.0390625LF,
+    0.265625LF, -0.078125LF
+);
+
+SolverNode nodes[NODES];
+
+uint64_t rotl64(uint64_t x, uint n) {
+    n &= 63u;
+    return n == 0u ? x : ((x << n) | (x >> (64u - n)));
+}
+
+uint64_t mix64(uint64_t h, uint64_t v) {
+    h ^= v + 0x9e3779b97f4a7c15UL + (h << 6) + (h >> 2);
+    h ^= h >> 30;
+    h *= 0xbf58476d1ce4e5b9UL;
+    h ^= h >> 27;
+    h *= 0x94d049bb133111ebUL;
+    return h ^ (h >> 31);
+}
+
+int clamp_q(int64_t v) {
+    if (v > int64_t(Q_LIMIT)) {
+        return Q_LIMIT;
+    }
+    if (v < -int64_t(Q_LIMIT)) {
+        return -Q_LIMIT;
+    }
+    return int(v);
+}
+
+int add_q(int a, int b) {
+    return clamp_q(int64_t(a) + int64_t(b));
+}
+
+int mul_q(int a, int b) {
+    int64_t prod = int64_t(a) * int64_t(b);
+    if (prod >= 0) {
+        prod += 1L << (Q_SHIFT - 1);
+    } else {
+        prod -= 1L << (Q_SHIFT - 1);
+    }
+    return clamp_q(prod / Q_ONE);
+}
+
+double q_to_double(int q) {
+    return double(q) / double(Q_ONE);
+}
+
+int q_from_double(double v) {
+    if (v > 9.75LF) {
+        v = 9.75LF;
+    } else if (v < -9.75LF) {
+        v = -9.75LF;
+    }
+
+    if (v >= 0.0LF) {
+        return int(v * double(Q_ONE) + 0.5LF);
+    }
+    return int(v * double(Q_ONE) - 0.5LF);
+}
+
+float clamp_float(float v) {
+    if (v > 8.0f) {
+        return 8.0f;
+    }
+    if (v < -8.0f) {
+        return -8.0f;
+    }
+    return v;
+}
+
+double clamp_double(double v) {
+    if (v > 8.0LF) {
+        return 8.0LF;
+    }
+    if (v < -8.0LF) {
+        return -8.0LF;
+    }
+    return v;
+}
+
+uint splitmix32(uint x) {
+    x += 0x9e3779b9u;
+    x = (x ^ (x >> 16)) * 0x85ebca6bu;
+    x = (x ^ (x >> 13)) * 0xc2b2ae35u;
+    return x ^ (x >> 16);
+}
+
+uint quantize_double(double v) {
+    if (v > 16.0LF) {
+        v = 16.0LF;
+    } else if (v < -16.0LF) {
+        v = -16.0LF;
+    }
+
+    int q;
+    if (v >= 0.0LF) {
+        q = int(v * 262144.0LF + 0.5LF);
+    } else {
+        q = int(v * 262144.0LF - 0.5LF);
+    }
+    return uint(q);
+}
+
+void init_nodes() {
+    uint seed = 0x6d6f726fu;
+
+    for (int i = 0; i < NODES; i++) {
+        seed = splitmix32(seed + uint(i) * 97u);
+        int sx = int(seed & 0x3ffffu) - 0x20000;
+
+        seed = splitmix32(seed ^ 0xa5a55a5au);
+        int sy = int(seed & 0x3ffffu) - 0x20000;
+
+        seed = splitmix32(seed + 0x13579bdfu);
+        int sb = int(seed & 0x1ffffu) - 0x10000;
+
+        nodes[i].xq = sx;
+        nodes[i].yq = sy;
+        nodes[i].biasq = sb / 3;
+        nodes[i].vf = float(sx - sy) / float(Q_ONE * 4);
+        nodes[i].vd = double(sx + sy + sb) / double(Q_ONE * 5);
+        nodes[i].tag = seed ^ uint(i) * 0x45d9f3bu;
+    }
+}
+
+int signed_magnitude_u(uint x) {
+    uint m = x & 0x7fffu;
+    return (x & 0x8000u) != 0u ? -int(m) : int(m);
+}
+
+uint solve_node(int i, int iter, inout uint64_t branch_score) {
+
+    int ax = coeff_q[(i + iter) & 15];
+    int ay = coeff_q[(i * 3 + iter + 5) & 15];
+    int cross = mul_q(nodes[(i + NODES - 1) % NODES].xq, ay) - mul_q(nodes[(i * 7 + iter + 3) % NODES].yq, ax);
+    int residual_q = add_q(nodes[i].biasq, cross / 2);
+    residual_q = add_q(residual_q, -mul_q(nodes[i].xq, coeff_q[(iter + 9) & 15]) / 3);
+
+    precise double residual_d = q_to_double(residual_q);
+    precise double neighbor_d = q_to_double(nodes[(i + NODES - 1) % NODES].yq - nodes[(i * 7 + iter + 3) % NODES].xq);
+    precise double curve = nodes[i].vd * weight_d[(i + iter) % 14] + double(nodes[i].vf) * 0.375LF;
+    precise double correction = residual_d * weight_d[(iter + 4) % 14] - neighbor_d * 0.0625LF + curve;
+    precise float fcorrection = float(residual_d) * relax_f[(i + iter) % 12] + nodes[i].vf * 0.25f;
+
+    int delta_q = q_from_double(correction * 0.5LF + double(fcorrection) * 0.25LF);
+    int jitter = signed_magnitude_u(nodes[i].tag >> ((iter + i) & 7)) * 2;
+
+    if (residual_q > (Q_ONE / 3)) {
+        branch_score += 19u;
+        delta_q = add_q(delta_q, jitter);
+        nodes[i].tag ^= uint(residual_q) + 0x10001u;
+    } else if (residual_q < -(Q_ONE / 3)) {
+        branch_score += 23u;
+        delta_q = add_q(delta_q, -jitter);
+        nodes[i].tag += uint(-residual_q) ^ 0x9e37u;
+    } else if (correction > double(fcorrection)) {
+        branch_score += 29u;
+        delta_q = add_q(delta_q / 2, coeff_q[(i + 11) & 15] / 8);
+        nodes[i].tag = (nodes[i].tag << 5) ^ (nodes[i].tag >> 3) ^ uint(iter);
+    } else {
+        branch_score += 31u;
+        delta_q = add_q(delta_q / 2, -coeff_q[(i + 2) & 15] / 9);
+        nodes[i].tag = (nodes[i].tag >> 7) ^ (nodes[i].tag << 11) ^ 0x5bd1e995u;
+    }
+
+    nodes[i].xq = add_q(nodes[i].xq, delta_q / 3);
+    nodes[i].yq = add_q(nodes[i].yq, -delta_q / 4 + mul_q(nodes[(i + NODES - 1) % NODES].xq, coeff_q[(iter + i + 6) & 15]) / 8);
+    nodes[i].vf = clamp_float(nodes[i].vf * 0.84375f + fcorrection * 0.5f + float(q_to_double(nodes[i].xq)) * 0.03125f);
+    nodes[i].vd = clamp_double(nodes[i].vd * 0.8125LF + correction * 0.4375LF + q_to_double(nodes[i].yq) * 0.046875LF);
+
+    precise double probe = q_to_double(nodes[i].xq) * 0.75LF + q_to_double(nodes[i].yq) * -0.5LF;
+    probe += double(nodes[i].vf) * 0.25LF + nodes[i].vd * 0.125LF;
+    return quantize_double(probe);
+}
+
+void main() {
+    init_nodes();
+
+    uint64_t checksum = 0x66705f71736f6c76UL;
+    uint64_t branch_score = 0;
+
+    for (int iter = 0; iter < ITERS; iter++) {
+        for (int i = 0; i < NODES; i++) {
+            uint q = solve_node(i, iter, branch_score);
+            uint64_t tag = (uint64_t(uint(iter)) << 32) ^ uint(i);
+            tag ^= uint64_t(q) ^ (uint64_t(nodes[i].tag) << ((i & 3) + 9));
+            tag ^= uint64_t(uint(nodes[i].xq)) << 17;
+            checksum = mix64(rotl64(checksum, uint(i + 11)), tag);
+        }
+    }
+
+    uint64_t sink = checksum ^ rotl64(branch_score, 13);
+    output_data.words[0] = 0;
+    for (uint byte = 0; byte < 8; ++byte) {
+        output_data.words[1 + byte] = uint((sink >> (8u * byte)) & 255UL);
+        output_data.words[17 + byte] = uint((branch_score >> (8u * byte)) & 255UL);
+    }
+}

@@ -1,0 +1,192 @@
+// Cell bytes use the original little-endian layout, including padding.
+// A logical cell index is the GPU representation of a boxed pointer.
+#version 450
+#extension GL_EXT_shader_explicit_arithmetic_types_int64 : require
+layout(local_size_x = 1) in;
+layout(set = 0, binding = 0, std430) writeonly buffer Result { uint words[]; } output_data;
+
+const uint CELL_COUNT = 40;
+const uint BOX_COUNT = 17;
+const uint CELL_SIZE = 56;
+const uint BYTE_OFFSET = 16;
+const uint NEXT_OFFSET = 40;
+const uint TAG_OFFSET = 46;
+const uint LIVE_OFFSET = 47;
+const uint STAMP_OFFSET = 48;
+const uint LOCAL_A = CELL_COUNT;
+const uint LOCAL_B = CELL_COUNT + 1;
+
+uint cells[CELL_COUNT + 2][CELL_SIZE];
+uint visits[CELL_COUNT];
+uvec2 boxes[BOX_COUNT];
+uint scratch[2 * CELL_SIZE + 13];
+
+uint rotl32(uint v, uint n) {
+    n &= 31u;
+    return n == 0 ? v : (v << n) | (v >> (32u - n));
+}
+
+uint64_t rotl64(uint64_t v, uint n) {
+    n &= 63u;
+    return n == 0 ? v : (v << n) | (v >> (64u - n));
+}
+
+uint mix32(uint value) {
+    value ^= value >> 16;
+    value *= 0x7feb352du;
+    value ^= value >> 15;
+    value *= 0x846ca68bu;
+    return value ^ (value >> 16);
+}
+
+uint64_t read_le(uint cell, uint offset, uint size) {
+    uint64_t value = 0;
+    for (uint i = 0; i < size; ++i)
+        value |= uint64_t(cells[cell][offset + i]) << (8u * i);
+    return value;
+}
+
+void write_le(uint cell, uint offset, uint size, uint64_t value) {
+    for (uint i = 0; i < size; ++i)
+        cells[cell][offset + i] = uint((value >> (8u * i)) & 255UL);
+}
+
+uint lane(uint cell, uint index) { return uint(read_le(cell, 4u * index, 4)); }
+uint link(uint cell, uint index) { return uint(read_le(cell, NEXT_OFFSET + 2u * index, 2)); }
+uint64_t stamp(uint cell) { return read_le(cell, STAMP_OFFSET, 8); }
+
+uint64_t checksum_bytes(uint cell, uint64_t seed) {
+    uint64_t value = seed ^ 0x6a09e667f3bcc908UL;
+    for (uint i = 0; i < CELL_SIZE; ++i) {
+        value ^= uint64_t(cells[cell][i]) + (uint64_t(i) << 21);
+        value = rotl64(value, 9) * 0x100000001b3UL;
+        value ^= value >> 27;
+    }
+    return value;
+}
+
+void init_cell(uint cell, uint seed) {
+    for (uint i = 0; i < CELL_SIZE; ++i)
+        cells[cell][i] = 0;
+    for (uint i = 0; i < 4; ++i)
+        write_le(cell, i * 4u, 4, mix32(seed + cell * 97u + i * 0x45d9f3bu));
+    for (uint i = 0; i < 23; ++i) {
+        uint value = mix32(seed ^ (cell * 131u) ^ (i * 23u));
+        cells[cell][BYTE_OFFSET + i] = (value ^ (value >> 11)) & 255u;
+    }
+    for (uint i = 0; i < 3; ++i)
+        write_le(cell, NEXT_OFFSET + 2u * i, 2, (cell * (i + 5u) + seed + i * 7u) % CELL_COUNT);
+    cells[cell][TAG_OFFSET] = (seed + cell) & 3u;
+    cells[cell][LIVE_OFFSET] = uint(cell % 7u != 0u);
+    write_le(cell, STAMP_OFFSET, 8, (uint64_t(lane(cell, 0)) << 32) ^ lane(cell, 3) ^ seed);
+}
+
+uint64_t alias_fold(uint a, uint b, uint step, uint token) {
+    uint64_t acc = (uint64_t(lane(a, 0)) << 19) ^ stamp(b) ^ token;
+    uint l = step & 3u;
+    write_le(a, 4u * l, 4, lane(a, l) + (lane(b, (l + 1u) & 3u) ^ step));
+    uint changed_lane = (l + 2u) & 3u;
+    write_le(b, 4u * changed_lane, 4,
+             lane(b, changed_lane) ^ rotl32(lane(a, l), (step % 17u) + 1u));
+    write_le(a, STAMP_OFFSET, 8, rotl64(stamp(a) + lane(b, l) + step, (step % 29u) + 1u));
+    write_le(b, STAMP_OFFSET, 8, stamp(b) ^ rotl64(stamp(a) ^ token, (step % 23u) + 3u));
+
+    uint tag = cells[a][TAG_OFFSET];
+    if (((token ^ tag ^ step) & 1u) != 0) {
+        uint offset = BYTE_OFFSET + (step * 5u + tag) % 19u;
+        uint value = uint(read_le(a, offset, 4));
+        value ^= rotl32(lane(b, (step + 1u) & 3u) + token, step);
+        write_le(a, offset, 4, value);
+        acc ^= value;
+    } else {
+        uint carry = (step + cells[b][TAG_OFFSET] + token) & 255u;
+        for (uint i = 0; i < 23; ++i) {
+            uint old = cells[b][BYTE_OFFSET + i];
+            cells[b][BYTE_OFFSET + i] = (old + carry + i) & 255u;
+            carry ^= old;
+        }
+        acc += carry;
+    }
+
+    write_le(a, NEXT_OFFSET + 2u * ((step + tag) % 3u), 2,
+             (link(a, step % 3u) + lane(b, 0) + step) % CELL_COUNT);
+    cells[b][LIVE_OFFSET] = (cells[b][LIVE_OFFSET] ^ uint(acc >> 7)) & 1u;
+    return acc ^ checksum_bytes(a, stamp(b) + step);
+}
+
+uint64_t launder_pair(uint box, uint step) {
+    uint first = boxes[box].x;
+    uint second = link(first, (boxes[box].y + step + first) % 3u) % CELL_COUNT;
+    for (uint i = 0; i < CELL_SIZE; ++i) {
+        scratch[3u + i] = cells[first][i];
+        scratch[11u + CELL_SIZE + i] = cells[second][i];
+    }
+
+    for (uint off = 3; off + 4u <= 3u + CELL_SIZE; off += 7) {
+        uint v = 0;
+        for (uint j = 0; j < 4; ++j)
+            v |= scratch[off + j] << (8u * j);
+        v ^= mix32(v + off + step + first);
+        for (uint j = 0; j < 4; ++j)
+            scratch[off + j] = (v >> (8u * j)) & 255u;
+    }
+    for (uint i = 0; i < CELL_SIZE; ++i) {
+        cells[LOCAL_A][i] = scratch[3u + i];
+        cells[LOCAL_B][i] = scratch[11u + CELL_SIZE + i];
+    }
+    cells[LOCAL_A][TAG_OFFSET] &= 3;
+    cells[LOCAL_B][TAG_OFFSET] &= 3;
+    cells[LOCAL_A][LIVE_OFFSET] &= 1;
+    cells[LOCAL_B][LIVE_OFFSET] &= 1;
+
+    bool aliases = ((first ^ second ^ step) & 3u) == 0;
+    uint64_t acc = alias_fold(LOCAL_A, aliases ? LOCAL_A : LOCAL_B, step, aliases ? first : second);
+    cells[first] = cells[LOCAL_A];
+    if (first != second)
+        cells[second] = cells[LOCAL_B];
+    boxes[box] = uvec2((second + uint(acc) + step) % CELL_COUNT, boxes[box].y + step + 13u);
+    return acc ^ (uint64_t(first) << 32) ^ second;
+}
+
+uint64_t walk_lab() {
+    uint64_t result = 0x243f6a8885a308d3UL;
+    for (uint step = 0; step < 240; ++step) {
+        uint box = (step * 9u + uint(result)) % BOX_COUNT;
+        uint cell = boxes[box].x;
+        ++visits[cell];
+        result ^= launder_pair(box, step);
+        result = rotl64(result + visits[cell] + cell, (step % 31u) + 1u);
+
+        if (((uint(result) ^ cell ^ step) & 4u) != 0) {
+            uint idx = (cell + link(cell, (step + cells[cell][TAG_OFFSET]) % 3u)) % CELL_COUNT;
+            boxes[(box + 5u) % BOX_COUNT] = uvec2(idx, uint(result) ^ step);
+        }
+    }
+    return result;
+}
+
+void main() {
+    for (uint i = 0; i < CELL_COUNT; ++i) {
+        visits[i] = 0;
+        init_cell(i, 0x9e3779b9u + i * 0x1020304u);
+    }
+    for (uint i = 0; i < BOX_COUNT; ++i)
+        boxes[i] = uvec2((i * 11u + 3u) % CELL_COUNT, mix32(i + 0x31415926u));
+
+    uint64_t checksum = walk_lab();
+    uint visit_total = 0;
+    uint live_total = 0;
+    for (uint i = 0; i < CELL_COUNT; ++i) {
+        visit_total += visits[i];
+        live_total += cells[i][LIVE_OFFSET];
+        checksum ^= checksum_bytes(i, uint64_t(i) * 0x94d049bb133111ebUL);
+    }
+
+    output_data.words[0] = 0;
+    for (uint i = 0; i < 8; ++i)
+        output_data.words[1 + i] = uint((checksum >> (8u * i)) & 255UL);
+    for (uint i = 0; i < 4; ++i) {
+        output_data.words[17 + i] = (visit_total >> (8u * i)) & 255u;
+        output_data.words[33 + i] = (live_total >> (8u * i)) & 255u;
+    }
+}

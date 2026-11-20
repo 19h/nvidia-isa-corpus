@@ -1,0 +1,18 @@
+
+Starting PCC tool
+----------------------------
+Build information:
+Driver Version  595.99.02
+----------------------------
+[INFO] Reading JSON files from /tmp/tmpym_khi2k/
+[INFO] Enabled device extensions:
+[INFO] Found the following files: 
+[INFO] cpp_virtual.json
+[INFO] Parsing JSON: /tmp/tmpym_khi2k/cpp_virtual.json
+[INFO] Compiling JSON: /tmp/tmpym_khi2k/cpp_virtual.json
+[INFO] Loading shaders: 
+[INFO] /tmp/tmpym_khi2k/cpp_virtual.spv
+[INFO] Compiled JSON: /tmp/tmpym_khi2k/cpp_virtual.json successfully.
+[INFO] 
+[INFO] Nothing to merge.
+[INFO] CacheData written to /tmp/tmpym_khi2k/cache.bin
