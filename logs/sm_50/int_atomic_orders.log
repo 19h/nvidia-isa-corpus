@@ -1,0 +1,8 @@
+ptxas build/nvcc/ptx/compute_50/int_atomic_orders.ptx, line 45; error   : Feature 'scopes on atomic operations' requires .target sm_60 or higher
+ptxas build/nvcc/ptx/compute_50/int_atomic_orders.ptx, line 57; error   : Feature 'scopes on atomic operations' requires .target sm_60 or higher
+ptxas build/nvcc/ptx/compute_50/int_atomic_orders.ptx, line 71; error   : Feature 'scopes on atomic operations' requires .target sm_60 or higher
+ptxas build/nvcc/ptx/compute_50/int_atomic_orders.ptx, line 80; error   : Feature 'scopes on atomic operations' requires .target sm_60 or higher
+ptxas build/nvcc/ptx/compute_50/int_atomic_orders.ptx, line 93; error   : Feature 'scopes on atomic operations' requires .target sm_60 or higher
+ptxas build/nvcc/ptx/compute_50/int_atomic_orders.ptx, line 105; error   : Feature 'scopes on atomic operations' requires .target sm_60 or higher
+ptxas build/nvcc/ptx/compute_50/int_atomic_orders.ptx, line 123; error   : Feature 'scopes on atomic operations' requires .target sm_60 or higher
+ptxas fatal   : Ptx assembly aborted due to errors

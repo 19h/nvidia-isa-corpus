@@ -1,0 +1,37 @@
+build/nvcc/cuda-src/cpp_lambda.cu(196): error: calling a __host__ function("std::function<int (int, int)> ::operator ()(int, int) const") from a __device__ function("apply_operation") is not allowed
+
+build/nvcc/cuda-src/cpp_lambda.cu(196): error: identifier "std::function<int (int, int)> ::operator () const" is undefined in device code
+
+build/nvcc/cuda-src/cpp_lambda.cu(203): error: calling a __host__ function("std::function<int (int, int)> ::function<    ::test_std_function()   ::[lambda(int, int) (instance 1)], void> (T1 &&)") from a __device__ function("test_std_function") is not allowed
+
+build/nvcc/cuda-src/cpp_lambda.cu(203): error: identifier "std::function<int (int, int)> ::function<    ::test_std_function()   ::[lambda(int, int) (instance 1)], void> " is undefined in device code
+
+build/nvcc/cuda-src/cpp_lambda.cu(204): error: calling a __host__ function("std::function<int (int, int)> ::function<    ::test_std_function()   ::[lambda(int, int) (instance 2)], void> (T1 &&)") from a __device__ function("test_std_function") is not allowed
+
+build/nvcc/cuda-src/cpp_lambda.cu(204): error: identifier "std::function<int (int, int)> ::function<    ::test_std_function()   ::[lambda(int, int) (instance 2)], void> " is undefined in device code
+
+build/nvcc/cuda-src/cpp_lambda.cu(205): error: calling a __host__ function("std::function<int (int, int)> ::function<    ::test_std_function()   ::[lambda(int, int) (instance 3)], void> (T1 &&)") from a __device__ function("test_std_function") is not allowed
+
+build/nvcc/cuda-src/cpp_lambda.cu(205): error: identifier "std::function<int (int, int)> ::function<    ::test_std_function()   ::[lambda(int, int) (instance 3)], void> " is undefined in device code
+
+build/nvcc/cuda-src/cpp_lambda.cu(208): error: calling a __host__ function("std::function<int (int, int)> ::function<    ::test_std_function()   ::[lambda(int, int) (instance 4)], void> (T1 &&)") from a __device__ function("test_std_function") is not allowed
+
+build/nvcc/cuda-src/cpp_lambda.cu(208): error: identifier "std::function<int (int, int)> ::function<    ::test_std_function()   ::[lambda(int, int) (instance 4)], void> " is undefined in device code
+
+build/nvcc/cuda-src/cpp_lambda.cu(293): error: calling a __host__ function("std::function<long (int)> ::function<    ::test_recursive_lambda()   ::[lambda(int) (instance 1)], void> (T1 &&)") from a __device__ function("test_recursive_lambda") is not allowed
+
+build/nvcc/cuda-src/cpp_lambda.cu(293): error: identifier "std::function<long (int)> ::function<    ::test_recursive_lambda()   ::[lambda(int) (instance 1)], void> " is undefined in device code
+
+build/nvcc/cuda-src/cpp_lambda.cu(300): error: calling a __host__ function("std::function<long (int)> ::operator ()(int) const") from a __device__ function("test_recursive_lambda") is not allowed
+
+build/nvcc/cuda-src/cpp_lambda.cu(300): error: identifier "std::function<long (int)> ::operator () const" is undefined in device code
+
+build/nvcc/cuda-src/cpp_lambda.cu(295): error: calling a __host__ function("std::function<long (int)> ::operator ()(int) const") from a __device__ function("test_recursive_lambda()::[lambda(int) (instance 1)]::operator () const") is not allowed
+
+build/nvcc/cuda-src/cpp_lambda.cu(295): error: identifier "std::function<long (int)> ::operator () const" is undefined in device code
+
+build/nvcc/cuda-src/cpp_lambda.cu(179): error: calling a __host__ function("std::_Function_base::~_Function_base()") from a __device__ function("std::_Function_base::~_Function_base [subobject]") is not allowed
+
+build/nvcc/cuda-src/cpp_lambda.cu(179): error: identifier "std::_Function_base::~_Function_base" is undefined in device code
+
+18 errors detected in the compilation of "build/nvcc/cuda-src/cpp_lambda.cu".

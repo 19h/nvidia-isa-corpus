@@ -1,0 +1,7 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/02_fibonacci.cu(155): error: identifier "clock64" is undefined
+
+1 error detected in the compilation of "/tmp/tmpxft_0006f5c6_00000000-6_02_fibonacci.cpp1.ii".

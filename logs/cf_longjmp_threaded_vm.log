@@ -1,0 +1,37 @@
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(117): error: calling a __host__ function("longjmp") from a __device__ function("vm_jump") is not allowed
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(117): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(167): error: calling a __host__ function("_setjmp") from a __device__ function("run_threaded_vm") is not allowed
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(167): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(170): error: calling a __host__ function("_setjmp") from a __device__ function("run_threaded_vm") is not allowed
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(170): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(173): error: calling a __host__ function("_setjmp") from a __device__ function("run_threaded_vm") is not allowed
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(173): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(176): error: calling a __host__ function("_setjmp") from a __device__ function("run_threaded_vm") is not allowed
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(176): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(179): error: calling a __host__ function("_setjmp") from a __device__ function("run_threaded_vm") is not allowed
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(179): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(182): error: calling a __host__ function("_setjmp") from a __device__ function("run_threaded_vm") is not allowed
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(182): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(185): error: calling a __host__ function("_setjmp") from a __device__ function("run_threaded_vm") is not allowed
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(185): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(188): error: calling a __host__ function("_setjmp") from a __device__ function("run_threaded_vm") is not allowed
+
+build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu(188): error: identifier "_setjmp" is undefined in device code
+
+18 errors detected in the compilation of "build/nvcc/cuda-src/cf_longjmp_threaded_vm.cu".

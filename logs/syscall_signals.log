@@ -1,0 +1,221 @@
+build/nvcc/cuda-src/syscall_signals.cu(32): warning #3531-D: a volatile operand to an increment expression is deprecated
+      signal_count++;
+      ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/syscall_signals.cu(39): warning #3531-D: a volatile operand to an increment expression is deprecated
+      signal_count++;
+      ^
+
+build/nvcc/cuda-src/syscall_signals.cu(43): warning #3012-D: a volatile destination type for a compound assignment expression is deprecated
+          sink += info->si_signo;
+          ^
+
+build/nvcc/cuda-src/syscall_signals.cu(44): warning #3012-D: a volatile destination type for a compound assignment expression is deprecated
+          sink += info->
+          ^
+
+build/nvcc/cuda-src/syscall_signals.cu(57): error: calling a __host__ function("sigemptyset") from a __device__ function("test_basic_signals") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(57): error: identifier "sigemptyset" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(60): error: calling a __host__ function("sigaction") from a __device__ function("test_basic_signals") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(60): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(68): error: calling a __host__ function("raise") from a __device__ function("test_basic_signals") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(68): error: identifier "raise" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(75): error: calling a __host__ function("sigaction") from a __device__ function("test_basic_signals") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(75): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(88): error: calling a __host__ function("sigemptyset") from a __device__ function("test_siginfo") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(88): error: identifier "sigemptyset" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(91): error: calling a __host__ function("sigaction") from a __device__ function("test_siginfo") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(91): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(98): error: calling a __host__ function("raise") from a __device__ function("test_siginfo") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(98): error: identifier "raise" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(103): error: calling a __host__ function("sigaction") from a __device__ function("test_siginfo") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(103): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(118): error: calling a __host__ function("sigemptyset") from a __device__ function("test_signal_blocking") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(118): error: identifier "sigemptyset" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(119): error: calling a __host__ function("sigaction") from a __device__ function("test_signal_blocking") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(119): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(124): error: calling a __host__ function("sigemptyset") from a __device__ function("test_signal_blocking") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(124): error: identifier "sigemptyset" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(125): error: calling a __host__ function("sigaddset") from a __device__ function("test_signal_blocking") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(125): error: identifier "sigaddset" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(126): error: calling a __host__ function("sigprocmask") from a __device__ function("test_signal_blocking") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(126): error: identifier "sigprocmask" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(130): error: calling a __host__ function("raise") from a __device__ function("test_signal_blocking") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(130): error: identifier "raise" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(137): error: calling a __host__ function("sigpending") from a __device__ function("test_signal_blocking") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(137): error: identifier "sigpending" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(138): error: calling a __host__ function("sigismember") from a __device__ function("test_signal_blocking") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(138): error: identifier "sigismember" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(143): error: calling a __host__ function("sigprocmask") from a __device__ function("test_signal_blocking") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(143): error: identifier "sigprocmask" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(148): error: calling a __host__ function("sigprocmask") from a __device__ function("test_signal_blocking") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(148): error: identifier "sigprocmask" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(149): error: calling a __host__ function("sigaction") from a __device__ function("test_signal_blocking") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(149): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(163): error: calling a __host__ function("sigemptyset") from a __device__ function("test_handler_mask") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(163): error: identifier "sigemptyset" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(164): error: calling a __host__ function("sigaddset") from a __device__ function("test_handler_mask") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(164): error: identifier "sigaddset" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(167): error: calling a __host__ function("sigaction") from a __device__ function("test_handler_mask") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(167): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(170): error: calling a __host__ function("raise") from a __device__ function("test_handler_mask") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(170): error: identifier "raise" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(174): error: calling a __host__ function("sigaction") from a __device__ function("test_handler_mask") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(174): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(185): error: calling a __host__ function("pipe") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(185): error: identifier "pipe" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(189): error: calling a __host__ function("fork") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(189): error: identifier "fork" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(192): error: calling a __host__ function("close") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(192): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(193): error: calling a __host__ function("close") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(193): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(197): error: calling a __host__ function("close") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(197): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(202): error: calling a __host__ function("sigaction") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(202): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(208): error: calling a __host__ function("write") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(208): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(211): error: calling a __host__ function("pause") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(211): error: identifier "pause" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(215): error: calling a __host__ function("write") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(215): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(216): error: calling a __host__ function("close") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(216): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(218): error: calling a __host__ function("_exit") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(218): error: identifier "_exit" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(221): error: calling a __host__ function("close") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(221): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(225): error: calling a __host__ function("read") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(225): error: identifier "read" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(228): error: calling a __host__ function("kill") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(228): error: identifier "kill" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(232): error: calling a __host__ function("read") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(232): error: identifier "read" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(233): error: calling a __host__ function("close") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(233): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(238): error: calling a __host__ function("waitpid") from a __device__ function("test_kill") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(238): error: identifier "waitpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(253): error: calling a __host__ function("sigaction") from a __device__ function("test_alarm") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(253): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(258): error: calling a __host__ function("alarm") from a __device__ function("test_alarm") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(258): error: identifier "alarm" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(261): error: calling a __host__ function("alarm") from a __device__ function("test_alarm") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(261): error: identifier "alarm" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(267): error: calling a __host__ function("sigaction") from a __device__ function("test_alarm") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(267): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(280): error: calling a __host__ function("sigaction") from a __device__ function("test_multiple_handlers") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(280): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(284): error: calling a __host__ function("sigaction") from a __device__ function("test_multiple_handlers") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(284): error: identifier "sigaction" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(289): error: calling a __host__ function("raise") from a __device__ function("test_multiple_handlers") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(289): error: identifier "raise" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(290): error: calling a __host__ function("raise") from a __device__ function("test_multiple_handlers") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(290): error: identifier "raise" is undefined in device code
+
+build/nvcc/cuda-src/syscall_signals.cu(295): error: calling a __host__ function("sigaction") from a __device__ function("test_multiple_handlers") is not allowed
+
+build/nvcc/cuda-src/syscall_signals.cu(295): error: identifier "sigaction" is undefined in device code
+
+Error limit reached.
+100 errors detected in the compilation of "build/nvcc/cuda-src/syscall_signals.cu".
+Compilation terminated.

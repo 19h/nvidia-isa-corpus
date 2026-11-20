@@ -1,0 +1,15 @@
+build/nvcc/cuda-src/cpp_type_erased_callmaze.cu(88): error: memory qualifier on data member is not allowed
+      __attribute__((device)) static constexpr std::size_t StorageSize = 48;
+                     ^
+
+build/nvcc/cuda-src/cpp_type_erased_callmaze.cu(268): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "cpp_type_erased_callmaze " << checksum << '\n';
+           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/cpp_type_erased_callmaze.cu(60): warning #177-D: function "<unnamed>::SmallOp::operator=" was declared but never referenced
+      __attribute__((device)) SmallOp &operator=(const SmallOp &other) {
+                                       ^
+
+1 error detected in the compilation of "build/nvcc/cuda-src/cpp_type_erased_callmaze.cu".

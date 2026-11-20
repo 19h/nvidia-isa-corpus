@@ -1,0 +1,127 @@
+build/nvcc/cuda-src/cf_exception.cu(58): error: device code does not support exception handling
+      try {
+      ^
+
+build/nvcc/cuda-src/cf_exception.cu(60): error: device code does not support exception handling
+              throw BaseException(x);
+              ^
+
+build/nvcc/cuda-src/cf_exception.cu(71): error: device code does not support exception handling
+      try {
+      ^
+
+build/nvcc/cuda-src/cf_exception.cu(72): error: device code does not support exception handling
+          try {
+          ^
+
+build/nvcc/cuda-src/cf_exception.cu(74): error: device code does not support exception handling
+                  throw BaseException(-1);
+                  ^
+
+build/nvcc/cuda-src/cf_exception.cu(77): error: device code does not support exception handling
+                  throw DerivedException(0, 100);
+                  ^
+
+build/nvcc/cuda-src/cf_exception.cu(91): error: device code does not support exception handling
+      try {
+      ^
+
+build/nvcc/cuda-src/cf_exception.cu(92): error: device code does not support exception handling
+          try {
+          ^
+
+build/nvcc/cuda-src/cf_exception.cu(94): error: device code does not support exception handling
+                  throw BaseException(x);
+                  ^
+
+build/nvcc/cuda-src/cf_exception.cu(98): error: device code does not support exception handling
+              throw;
+              ^
+
+build/nvcc/cuda-src/cf_exception.cu(103): warning #940-D: missing return statement at end of non-void function "rethrow_example"
+  }
+  ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/cf_exception.cu(108): error: device code does not support exception handling
+      try {
+      ^
+
+build/nvcc/cuda-src/cf_exception.cu(111): error: device code does not support exception handling
+                  throw BaseException(value);
+                  ^
+
+build/nvcc/cuda-src/cf_exception.cu(113): error: device code does not support exception handling
+                  throw DerivedException(value, 10);
+                  ^
+
+build/nvcc/cuda-src/cf_exception.cu(115): error: device code does not support exception handling
+                  throw AnotherException("error");
+                  ^
+
+build/nvcc/cuda-src/cf_exception.cu(117): error: device code does not support exception handling
+                  throw value;
+                  ^
+
+build/nvcc/cuda-src/cf_exception.cu(139): error: device code does not support exception handling
+          throw BaseException(depth);
+          ^
+
+build/nvcc/cuda-src/cf_exception.cu(148): error: device code does not support exception handling
+      try {
+      ^
+
+build/nvcc/cuda-src/cf_exception.cu(162): error: device code does not support exception handling
+              throw BaseException(v);
+              ^
+
+build/nvcc/cuda-src/cf_exception.cu(170): error: device code does not support exception handling
+      try {
+      ^
+
+build/nvcc/cuda-src/cf_exception.cu(181): error: device code does not support exception handling
+      if (x % 3 == 0) throw BaseException(x);
+                      ^
+
+build/nvcc/cuda-src/cf_exception.cu(182): error: device code does not support exception handling
+      if (x % 3 == 1) throw DerivedException(x, 5);
+                      ^
+
+build/nvcc/cuda-src/cf_exception.cu(183): error: device code does not support exception handling
+      throw x;
+      ^
+
+build/nvcc/cuda-src/cf_exception.cu(195): error: device code does not support exception handling
+      try {
+      ^
+
+build/nvcc/cuda-src/cf_exception.cu(216): error: device code does not support exception handling
+      try {
+      ^
+
+build/nvcc/cuda-src/cf_exception.cu(220): error: device code does not support exception handling
+          throw BaseException(x);
+          ^
+
+build/nvcc/cuda-src/cf_exception.cu(224): warning #940-D: missing return statement at end of non-void function "exception_or_not"
+  }
+  ^
+
+build/nvcc/cuda-src/cf_exception.cu(231): error: device code does not support exception handling
+          try {
+          ^
+
+build/nvcc/cuda-src/cf_exception.cu(233): error: device code does not support exception handling
+                  throw BaseException(i);
+                  ^
+
+build/nvcc/cuda-src/cf_exception.cu(253): error: device code does not support exception handling
+          if (x < 0) throw BaseException(x);
+                     ^
+
+build/nvcc/cuda-src/cf_exception.cu(260): error: device code does not support exception handling
+      try {
+      ^
+
+29 errors detected in the compilation of "build/nvcc/cuda-src/cf_exception.cu".

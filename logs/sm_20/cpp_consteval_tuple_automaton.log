@@ -1,0 +1,10 @@
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+In file included from /usr/include/c++/11/array:35,
+                 from build/nvcc/cuda-src/cpp_consteval_tuple_automaton.cu:5:
+/usr/include/c++/11/bits/c++0x_warning.h:32:2: error: #error This file requires compiler and library support for the ISO C++ 2011 standard. This support must be enabled with the -std=c++11 or -std=gnu++11 compiler options.
+   32 | #error This file requires compiler and library support \
+      |  ^~~~~

@@ -1,0 +1,51 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/int_int128_ops.cu(19): error: "volatile u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(22): error: "u128 (uint64_t, uint64_t)" contains a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(23): error: "u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(23): error: "u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(27): error: "u128 (u128, unsigned int)" contains a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(36): error: "u128 (u128, u128, unsigned int)" contains a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(37): error: "u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(38): error: "u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(39): error: "u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(45): error: "s128 (s128, s128, s128 *)" contains a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(46): error: "s128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(52): error: "uint64_t (u128)" contains a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(62): error: "u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(63): error: "u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(66): error: "u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(68): error: "s128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(69): error: "s128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(69): error: "s128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(69): error: "s128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(71): error: "u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(71): error: "u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(72): error: "u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+build/nvcc/cuda-src/int_int128_ops.cu(72): error: "u128" is a 128-bit integer, which is a GNU extension unsupported in device code
+
+23 errors detected in the compilation of "/tmp/tmpxft_00069469_00000000-6_int_int128_ops.cpp1.ii".

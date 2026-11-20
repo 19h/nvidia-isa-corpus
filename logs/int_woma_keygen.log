@@ -1,0 +1,5 @@
+build/nvcc/cuda-src/int_woma_keygen.cu(146): error: a value of type "void *" cannot be assigned to an entity of type "uint8_t *" (aka "unsigned char *")
+      *out = malloc(len);
+           ^
+
+1 error detected in the compilation of "build/nvcc/cuda-src/int_woma_keygen.cu".

@@ -1,0 +1,7 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/call_abi_stress_matrix.cu(207): error: a "device" function cannot have ellipsis
+
+1 error detected in the compilation of "/tmp/tmpxft_0006a043_00000000-6_call_abi_stress_matrix.cpp1.ii".

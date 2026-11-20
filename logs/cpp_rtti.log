@@ -1,0 +1,113 @@
+build/nvcc/cuda-src/cpp_rtti.cu(119): error: The operator 'dynamic_cast' is not allowed in device code
+      if (DerivedAA* daa = dynamic_cast<DerivedAA*>(ptr)) {
+                           ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(121): error: The operator 'dynamic_cast' is not allowed in device code
+      } else if (DerivedAB* dab = dynamic_cast<DerivedAB*>(ptr)) {
+                                  ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(123): error: The operator 'dynamic_cast' is not allowed in device code
+      } else if (DerivedA* da = dynamic_cast<DerivedA*>(ptr)) {
+                                ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(125): error: The operator 'dynamic_cast' is not allowed in device code
+      } else if (DerivedB* db = dynamic_cast<DerivedB*>(ptr)) {
+                                ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(140): error: The operator 'dynamic_cast' is not allowed in device code
+      if (Interface1* i1 = dynamic_cast<Interface1*>(ptr)) {
+                           ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(143): error: The operator 'dynamic_cast' is not allowed in device code
+      if (Interface2* i2 = dynamic_cast<Interface2*>(ptr)) {
+                           ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(156): error: The operator 'dynamic_cast' is not allowed in device code
+      if (RightDerived* right = dynamic_cast<RightDerived*>(left)) {
+                                ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(161): error: The operator 'dynamic_cast' is not allowed in device code
+      if (DiamondDerived* diamond = dynamic_cast<DiamondDerived*>(left)) {
+                                    ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(174): error: The operator 'typeid' is not allowed in device code
+      if (typeid(*ptr) == typeid(Base)) {
+          ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(174): error: The operator 'typeid' is not allowed in device code
+      if (typeid(*ptr) == typeid(Base)) {
+                          ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(176): error: The operator 'typeid' is not allowed in device code
+      } else if (typeid(*ptr) == typeid(DerivedA)) {
+                 ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(176): error: The operator 'typeid' is not allowed in device code
+      } else if (typeid(*ptr) == typeid(DerivedA)) {
+                                 ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(178): error: The operator 'typeid' is not allowed in device code
+      } else if (typeid(*ptr) == typeid(DerivedB)) {
+                 ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(178): error: The operator 'typeid' is not allowed in device code
+      } else if (typeid(*ptr) == typeid(DerivedB)) {
+                                 ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(180): error: The operator 'typeid' is not allowed in device code
+      } else if (typeid(*ptr) == typeid(DerivedAA)) {
+                 ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(180): error: The operator 'typeid' is not allowed in device code
+      } else if (typeid(*ptr) == typeid(DerivedAA)) {
+                                 ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(182): error: The operator 'typeid' is not allowed in device code
+      } else if (typeid(*ptr) == typeid(DerivedAB)) {
+                 ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(182): error: The operator 'typeid' is not allowed in device code
+      } else if (typeid(*ptr) == typeid(DerivedAB)) {
+                                 ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(184): error: The operator 'typeid' is not allowed in device code
+      } else if (typeid(*ptr) == typeid(MultiDerived)) {
+                 ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(184): error: The operator 'typeid' is not allowed in device code
+      } else if (typeid(*ptr) == typeid(MultiDerived)) {
+                                 ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(189): error: The operator 'typeid' is not allowed in device code
+      result += typeid(*ptr).hash_code() & 0xFF;
+                ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(199): error: device code does not support exception handling
+      try {
+      ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(200): error: The operator 'dynamic_cast' is not allowed in device code
+          DerivedA& da = dynamic_cast<DerivedA&>(ref);
+                         ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(212): error: The operator 'typeid' is not allowed in device code
+      return typeid(*a) == typeid(*b);
+             ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(212): error: The operator 'typeid' is not allowed in device code
+      return typeid(*a) == typeid(*b);
+                           ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(218): error: The operator 'dynamic_cast' is not allowed in device code
+      return dynamic_cast<const DerivedA*>(ptr) != nullptr;
+             ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(265): error: The operator 'dynamic_cast' is not allowed in device code
+          if (DiamondDerived* dd = dynamic_cast<DiamondDerived*>(vb)) {
+                                   ^
+
+build/nvcc/cuda-src/cpp_rtti.cu(271): error: The operator 'dynamic_cast' is not allowed in device code
+          DerivedA* null_result = dynamic_cast<DerivedA*>(null_ptr);
+                                  ^
+
+28 errors detected in the compilation of "build/nvcc/cuda-src/cpp_rtti.cu".

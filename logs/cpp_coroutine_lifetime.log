@@ -1,0 +1,63 @@
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(139): error: device code does not support coroutines
+              co_yield ForkEvent{mix64(value + 11ULL), mix64(value + 29ULL)};
+              ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(141): error: device code does not support coroutines
+              co_yield ValueEvent{live + step, value};
+              ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(146): error: device code does not support coroutines
+              co_yield MarkerEvent{live, trace & 0xffffULL};
+              ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(149): warning #940-D: missing return statement at end of non-void function "<unnamed>::make_events"
+  }
+  ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(217): error: device code does not support coroutines
+          std::uint64_t awaited = co_await StepAwaiter{input, &trace};
+                                  ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(221): error: device code does not support coroutines
+      co_return total ^ trace;
+      ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(210): error: device code does not support coroutines
+  Task fold_with_awaits(const std::array<int, 8> seeds, std::uint64_t &trace, int &live) {
+       ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(272): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "cpp_coroutine_lifetime " << checksum << ' ' << live << '\n';
+           ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(155): warning #177-D: function "<unnamed>::StepAwaiter::await_ready" was declared but never referenced
+      __attribute__((device)) bool await_ready() const noexcept {
+                                   ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(159): warning #177-D: function "<unnamed>::StepAwaiter::await_suspend" was declared but never referenced
+      __attribute__((device)) bool await_suspend(std::coroutine_handle<>) const noexcept {
+                                   ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(164): warning #177-D: function "<unnamed>::StepAwaiter::await_resume" was declared but never referenced
+      __attribute__((device)) std::uint64_t await_resume() const noexcept {
+                                            ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(188): warning #177-D: function "<unnamed>::Task::Task(<unnamed>::Task &&) noexcept" was declared but never referenced
+      __attribute__((device)) Task(Task &&other) noexcept : handle_(other.handle_) {
+                              ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(174): warning #177-D: function "<unnamed>::Task::promise_type::get_return_object" was declared but never referenced
+          __attribute__((device)) Task get_return_object() {
+                                       ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(179): warning #177-D: function "<unnamed>::Task::promise_type::final_suspend" was declared but never referenced
+          __attribute__((device)) std::suspend_always final_suspend() noexcept { return {}; }
+                                                      ^
+
+build/nvcc/cuda-src/cpp_coroutine_lifetime.cu(181): warning #177-D: function "<unnamed>::Task::promise_type::unhandled_exception" was declared but never referenced
+          __attribute__((device)) void unhandled_exception() { std::terminate(); }
+                                       ^
+
+6 errors detected in the compilation of "build/nvcc/cuda-src/cpp_coroutine_lifetime.cu".

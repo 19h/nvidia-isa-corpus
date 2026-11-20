@@ -1,0 +1,203 @@
+build/nvcc/cuda-src/syscall_file_ops.cu(43): error: calling a __host__ function("strcpy") from a __device__ function("test_basic_file_ops") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(43): error: identifier "strcpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(44): error: calling a __host__ function("mkstemp") from a __device__ function("test_basic_file_ops") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(44): error: identifier "mkstemp" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(54): error: calling a __host__ function("write") from a __device__ function("test_basic_file_ops") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(54): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(58): error: calling a __host__ function("lseek") from a __device__ function("test_basic_file_ops") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(58): error: identifier "lseek" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(62): error: calling a __host__ function("read") from a __device__ function("test_basic_file_ops") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(62): error: identifier "read" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(73): error: calling a __host__ function("close") from a __device__ function("test_basic_file_ops") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(73): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(74): error: calling a __host__ function("unlink") from a __device__ function("test_basic_file_ops") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(74): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(85): error: calling a __host__ function("strcpy") from a __device__ function("test_partial_io") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(85): error: identifier "strcpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(86): error: calling a __host__ function("mkstemp") from a __device__ function("test_partial_io") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(86): error: identifier "mkstemp" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(92): error: calling a __host__ function("write") from a __device__ function("test_partial_io") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(92): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(97): error: calling a __host__ function("lseek") from a __device__ function("test_partial_io") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(97): error: identifier "lseek" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(104): error: calling a __host__ function("read") from a __device__ function("test_partial_io") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(104): error: identifier "read" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(111): error: calling a __host__ function("close") from a __device__ function("test_partial_io") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(111): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(112): error: calling a __host__ function("unlink") from a __device__ function("test_partial_io") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(112): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(123): error: calling a __host__ function("strcpy") from a __device__ function("test_seek_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(123): error: identifier "strcpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(124): error: calling a __host__ function("mkstemp") from a __device__ function("test_seek_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(124): error: identifier "mkstemp" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(131): error: calling a __host__ function("write") from a __device__ function("test_seek_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(131): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(136): error: calling a __host__ function("lseek") from a __device__ function("test_seek_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(136): error: identifier "lseek" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(140): error: calling a __host__ function("read") from a __device__ function("test_seek_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(140): error: identifier "read" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(145): error: calling a __host__ function("lseek") from a __device__ function("test_seek_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(145): error: identifier "lseek" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(147): error: calling a __host__ function("lseek") from a __device__ function("test_seek_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(147): error: identifier "lseek" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(152): error: calling a __host__ function("lseek") from a __device__ function("test_seek_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(152): error: identifier "lseek" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(155): error: calling a __host__ function("lseek") from a __device__ function("test_seek_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(155): error: identifier "lseek" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(158): error: calling a __host__ function("close") from a __device__ function("test_seek_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(158): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(159): error: calling a __host__ function("unlink") from a __device__ function("test_seek_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(159): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(170): error: calling a __host__ function("strcpy") from a __device__ function("test_stat_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(170): error: identifier "strcpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(171): error: calling a __host__ function("mkstemp") from a __device__ function("test_stat_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(171): error: identifier "mkstemp" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(175): error: calling a __host__ function("write") from a __device__ function("test_stat_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(175): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(179): error: calling a __host__ function("fstat") from a __device__ function("test_stat_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(179): error: identifier "fstat" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(185): error: calling a __host__ function("close") from a __device__ function("test_stat_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(185): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(188): error: calling a __host__ function("stat") from a __device__ function("test_stat_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(188): error: identifier "stat" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(194): error: calling a __host__ function("lstat") from a __device__ function("test_stat_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(194): error: identifier "lstat" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(198): error: calling a __host__ function("unlink") from a __device__ function("test_stat_operations") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(198): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(212): error: calling a __host__ function("strcpy") from a __device__ function("test_multiple_fds") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(212): error: identifier "strcpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(213): error: calling a __host__ function("mkstemp") from a __device__ function("test_multiple_fds") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(213): error: identifier "mkstemp" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(217): error: calling a __host__ function("close") from a __device__ function("test_multiple_fds") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(217): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(218): error: calling a __host__ function("unlink") from a __device__ function("test_multiple_fds") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(218): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(229): error: calling a __host__ function("write") from a __device__ function("test_multiple_fds") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(229): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(235): error: calling a __host__ function("lseek") from a __device__ function("test_multiple_fds") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(235): error: identifier "lseek" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(236): error: calling a __host__ function("read") from a __device__ function("test_multiple_fds") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(236): error: identifier "read" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(242): error: calling a __host__ function("close") from a __device__ function("test_multiple_fds") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(242): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(243): error: calling a __host__ function("unlink") from a __device__ function("test_multiple_fds") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(243): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(255): error: calling a __host__ function("strcpy") from a __device__ function("test_truncate") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(255): error: identifier "strcpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(256): error: calling a __host__ function("mkstemp") from a __device__ function("test_truncate") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(256): error: identifier "mkstemp" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(261): error: calling a __host__ function("write") from a __device__ function("test_truncate") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(261): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(264): error: calling a __host__ function("ftruncate") from a __device__ function("test_truncate") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(264): error: identifier "ftruncate" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(267): error: calling a __host__ function("fstat") from a __device__ function("test_truncate") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(267): error: identifier "fstat" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(271): error: calling a __host__ function("ftruncate") from a __device__ function("test_truncate") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(271): error: identifier "ftruncate" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(272): error: calling a __host__ function("fstat") from a __device__ function("test_truncate") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(272): error: identifier "fstat" is undefined in device code
+
+build/nvcc/cuda-src/syscall_file_ops.cu(275): error: calling a __host__ function("close") from a __device__ function("test_truncate") is not allowed
+
+build/nvcc/cuda-src/syscall_file_ops.cu(275): error: identifier "close" is undefined in device code
+
+Error limit reached.
+100 errors detected in the compilation of "build/nvcc/cuda-src/syscall_file_ops.cu".
+Compilation terminated.

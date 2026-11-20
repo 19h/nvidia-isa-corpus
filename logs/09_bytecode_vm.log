@@ -1,0 +1,152 @@
+build/nvcc/cuda-src/09_bytecode_vm.cu(478): warning #546-D: transfer of control bypasses initialization of:
+            variable "frame" (declared at line 716)
+          switch (opcode) {
+          ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(805): error: calling a __host__ function("putchar") from a __device__ function("vm_run") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(805): error: identifier "putchar" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(812): error: calling a __host__ function("putchar") from a __device__ function("vm_run") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(812): error: identifier "putchar" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(819): error: calling a __host__ function("scanf") from a __device__ function("vm_run") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(819): error: identifier "scanf" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(890): error: calling a __host__ function("putchar") from a __device__ function("disassemble") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(890): error: identifier "putchar" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(934): error: calling a __host__ function("strcasecmp") from a __device__ function("find_opcode") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(934): error: identifier "strcasecmp" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(944): error: calling a __host__ function("strcmp") from a __device__ function("find_label") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(944): error: identifier "strcmp" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(959): error: calling a __host__ function("strncpy") from a __device__ function("add_label") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(959): error: identifier "strncpy" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(999): error: calling a __host__ function("isspace") from a __device__ function("parse_operand") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(999): error: identifier "isspace" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1003): error: calling a __host__ function("strtol") from a __device__ function("parse_operand") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1003): error: identifier "strtol" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1005): error: calling a __host__ function("isspace") from a __device__ function("parse_operand") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1005): error: identifier "isspace" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1049): error: calling a __host__ function("isspace") from a __device__ function("trim_line") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1049): error: identifier "isspace" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1052): error: calling a __host__ function("strlen") from a __device__ function("trim_line") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1052): error: identifier "strlen" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1053): error: calling a __host__ function("isspace") from a __device__ function("trim_line") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1053): error: identifier "isspace" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1068): error: calling a __host__ function("strchr(char *, int)") from a __device__ function("assemble_line") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1068): error: identifier "strchr" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1069): error: calling a __host__ function("strchr(char *, int)") from a __device__ function("assemble_line") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1069): error: identifier "strchr" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1076): error: calling a __host__ function("isalnum") from a __device__ function("assemble_line") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1076): error: identifier "isalnum" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1089): error: calling a __host__ function("strncpy") from a __device__ function("assemble_line") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1089): error: identifier "strncpy" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1105): error: calling a __host__ function("isspace") from a __device__ function("assemble_line") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1105): error: identifier "isspace" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1115): error: calling a __host__ function("sscanf") from a __device__ function("assemble_line") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1115): error: identifier "sscanf" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1157): error: calling a __host__ function("strchr(char *, int)") from a __device__ function("assemble_line") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1157): error: identifier "strchr" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1158): error: calling a __host__ function("strrchr(char *, int)") from a __device__ function("assemble_line") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1158): error: identifier "strrchr" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1195): error: calling a __host__ function("strdup") from a __device__ function("assemble") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1195): error: identifier "strdup" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1203): error: calling a __host__ function("strtok") from a __device__ function("assemble") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1203): error: identifier "strtok" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1211): error: calling a __host__ function("strtok") from a __device__ function("assemble") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1211): error: identifier "strtok" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1216): error: calling a __host__ function("strdup") from a __device__ function("assemble") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1216): error: identifier "strdup" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1224): error: calling a __host__ function("strtok") from a __device__ function("assemble") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1224): error: identifier "strtok" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1232): error: calling a __host__ function("strtok") from a __device__ function("assemble") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1232): error: identifier "strtok" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1529): error: calling a __host__ function("strcmp") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1529): error: identifier "strcmp" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1529): error: calling a __host__ function("strcmp") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1529): error: identifier "strcmp" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1531): error: calling a __host__ function("strcmp") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1531): error: identifier "strcmp" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1531): error: calling a __host__ function("strcmp") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1531): error: identifier "strcmp" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1550): error: calling a __host__ function("strcmp") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1550): error: identifier "strcmp" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1552): error: calling a __host__ function("strcmp") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1552): error: identifier "strcmp" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1554): error: calling a __host__ function("strcmp") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1554): error: identifier "strcmp" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1556): error: calling a __host__ function("strcmp") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1556): error: identifier "strcmp" is undefined in device code
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1558): error: calling a __host__ function("strcmp") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/09_bytecode_vm.cu(1558): error: identifier "strcmp" is undefined in device code
+
+72 errors detected in the compilation of "build/nvcc/cuda-src/09_bytecode_vm.cu".

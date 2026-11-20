@@ -1,0 +1,23 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+cc1: warning: command-line option ‘-std=c++98’ is valid for C++/ObjC++ but not for C
+cc1: warning: command-line option ‘-std=c++98’ is valid for C++/ObjC++ but not for C
+build/nvcc/cuda-src/cf_indirect_call.cu(85): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z10impl_a_getPv'
+build/nvcc/cuda-src/cf_indirect_call.cu(91): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z10impl_a_setPvi'
+build/nvcc/cuda-src/cf_indirect_call.cu(97): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z14impl_a_processPvi'
+build/nvcc/cuda-src/cf_indirect_call.cu(106): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z10impl_b_getPv'
+build/nvcc/cuda-src/cf_indirect_call.cu(112): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z10impl_b_setPvi'
+build/nvcc/cuda-src/cf_indirect_call.cu(118): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z14impl_b_processPvi'
+build/nvcc/cuda-src/cf_indirect_call.cu(129): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z19callback_accumulateiPv'
+build/nvcc/cuda-src/cf_indirect_call.cu(135): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z17callback_multiplyiPv'
+build/nvcc/cuda-src/cf_indirect_call.cu(141): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z21iterate_with_callbackPKiiPFviPvES1_'
+build/nvcc/cuda-src/cf_indirect_call.cu(149): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z11apply_twicePFiiEi'
+build/nvcc/cuda-src/cf_indirect_call.cu(154): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z7composePFiiES0_i'
+build/nvcc/cuda-src/cf_indirect_call.cu(159): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z9fold_leftPFiiiEPKiii'
+build/nvcc/cuda-src/cf_indirect_call.cu(181): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z10state_idleP12StateMachinei'
+build/nvcc/cuda-src/cf_indirect_call.cu(189): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z13state_runningP12StateMachinei'
+build/nvcc/cuda-src/cf_indirect_call.cu(199): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z12state_pausedP12StateMachinei'
+build/nvcc/cuda-src/cf_indirect_call.cu(209): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z12step_machineP12StateMachinei'
+build/nvcc/cuda-src/cf_indirect_call.cu(58): Error: Function pointers and function template parameters are not supported in sm_1x.

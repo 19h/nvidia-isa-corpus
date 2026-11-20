@@ -1,0 +1,98 @@
+program	successful_targets	diagnostic
+programs/01_hello_world.c	43	
+programs/02_fibonacci.c	43	
+programs/03_linked_list.c	43	
+programs/04_bst.cpp	0	logs/04_bst.log
+programs/05_thread_pool.cpp	0	logs/05_thread_pool.log
+programs/06_allocator.c	43	
+programs/07_regex.c	0	logs/07_regex.log
+programs/08_json_parser.cpp	0	logs/08_json_parser.log
+programs/09_bytecode_vm.c	0	logs/09_bytecode_vm.log
+programs/10_template_madness.cpp	0	logs/10_template_madness.log
+programs/asm_arch_detect.c	0	logs/asm_arch_detect.log
+programs/asm_atomic_ops.c	0	logs/asm_atomic_ops.log
+programs/asm_barriers.c	0	logs/asm_barriers.log
+programs/asm_context_switch.c	0	logs/asm_context_switch.log
+programs/asm_syscall_raw.c	0	logs/asm_syscall_raw.log
+programs/call_abi_stress_matrix.c	41	
+programs/call_many_float_args.c	43	
+programs/call_many_int_args.c	43	
+programs/call_mixed_aggregates.c	47	
+programs/call_mixed_args.c	47	
+programs/call_nested.c	43	
+programs/call_struct_byval.cpp	43	
+programs/call_struct_return.c	47	
+programs/call_tail_recursive.c	43	
+programs/call_variadic.c	41	
+programs/cf_computed_goto.c	0	logs/cf_computed_goto.log
+programs/cf_duff_device_parser.c	43	
+programs/cf_exception.cpp	0	logs/cf_exception.log
+programs/cf_indirect_call.c	43	
+programs/cf_irreducible_state_maze.c	43	
+programs/cf_license_crackme.c	0	logs/cf_license_crackme.log
+programs/cf_longjmp_threaded_vm.c	0	logs/cf_longjmp_threaded_vm.log
+programs/cf_musttail.cpp	43	
+programs/cf_rorog.c	0	logs/cf_rorog.log
+programs/cf_setjmp.c	0	logs/cf_setjmp.log
+programs/cf_switch_dense.c	47	
+programs/cf_switch_sparse.c	47	
+programs/cpp_allocator_polymorph_zoo.cpp	0	logs/cpp_allocator_polymorph_zoo.log
+programs/cpp_consteval_tuple_automaton.cpp	37	
+programs/cpp_constexpr_variant_graph.cpp	0	logs/cpp_constexpr_variant_graph.log
+programs/cpp_coroutine_lifetime.cpp	0	logs/cpp_coroutine_lifetime.log
+programs/cpp_exception_variant_unwind.cpp	0	logs/cpp_exception_variant_unwind.log
+programs/cpp_lambda.cpp	0	logs/cpp_lambda.log
+programs/cpp_rtti.cpp	0	logs/cpp_rtti.log
+programs/cpp_type_erased_callmaze.cpp	0	logs/cpp_type_erased_callmaze.log
+programs/cpp_virtual.cpp	43	
+programs/fp_denormal_rounding_lab.c	43	
+programs/fp_dsp_filter.c	47	
+programs/fp_fft.c	47	
+programs/fp_fixedpoint_hybrid_solver.c	43	
+programs/fp_mandelbrot.c	47	
+programs/fp_neural_layer.c	47	
+programs/fp_physics_sim.c	47	
+programs/fp_piecewise_chaos.c	43	
+programs/int_atomic_orders.c	34	
+programs/int_bigint.c	47	
+programs/int_bitfields.c	39	
+programs/int_carryless_crc_mesh.c	43	
+programs/int_crc32.c	47	
+programs/int_crypto_mix_network.c	43	
+programs/int_divrem_wide_lattice.c	43	
+programs/int_galois.c	47	
+programs/int_int128_ops.c	39	
+programs/int_popcount.c	47	
+programs/int_sha256.c	47	
+programs/int_woma_keygen.c	0	logs/int_woma_keygen.log
+programs/mem_alias_lifetime_graph.c	43	
+programs/mem_flexible_arena_rewriter.c	41	
+programs/mem_provenance_launder_lab.c	43	
+programs/mem_random.c	43	
+programs/mem_sequential.c	47	
+programs/mem_stack_realign.c	36	
+programs/mem_strided.c	43	
+programs/mem_tls.c	0	logs/mem_tls.log
+programs/mem_unaligned_packed.c	43	
+programs/min_add_chain.c	47	
+programs/min_bitwise.c	47	
+programs/min_branch_chain.c	47	
+programs/min_div_chain.c	47	
+programs/min_float_add.c	47	
+programs/min_float_mul.c	47	
+programs/min_load_chain.c	47	
+programs/min_mul_chain.c	47	
+programs/min_nop_sled.c	0	logs/min_nop_sled.log
+programs/min_shift_chain.c	47	
+programs/min_store_chain.c	47	
+programs/simd_aes.c	47	
+programs/simd_dot_product.c	47	
+programs/simd_image_filter.c	47	
+programs/simd_matrix_mul.c	47	
+programs/simd_portable_bitplane.c	43	
+programs/simd_string_search.c	47	
+programs/syscall_file_ops.c	0	logs/syscall_file_ops.log
+programs/syscall_fork_exec.c	0	logs/syscall_fork_exec.log
+programs/syscall_mmap.c	0	logs/syscall_mmap.log
+programs/syscall_signals.c	0	logs/syscall_signals.log
+programs/syscall_socket.c	0	logs/syscall_socket.log

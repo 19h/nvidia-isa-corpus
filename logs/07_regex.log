@@ -1,0 +1,69 @@
+build/nvcc/cuda-src/07_regex.cu(269): error: calling a __host__ function("snprintf") from a __device__ function("parse_char_class") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(269): error: identifier "snprintf" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(284): error: calling a __host__ function("snprintf") from a __device__ function("parse_char_class") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(284): error: identifier "snprintf" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(293): error: calling a __host__ function("snprintf") from a __device__ function("parse_char_class") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(293): error: identifier "snprintf" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(317): error: calling a __host__ function("snprintf") from a __device__ function("parse_char_class") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(317): error: identifier "snprintf" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(350): error: calling a __host__ function("snprintf") from a __device__ function("regex_compile") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(350): error: identifier "snprintf" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(354): error: calling a __host__ function("strlen") from a __device__ function("regex_compile") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(354): error: identifier "strlen" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(355): error: calling a __host__ function("snprintf") from a __device__ function("regex_compile") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(355): error: identifier "snprintf" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(364): error: calling a __host__ function("snprintf") from a __device__ function("regex_compile") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(364): error: identifier "snprintf" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(407): error: calling a __host__ function("snprintf") from a __device__ function("regex_compile") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(407): error: identifier "snprintf" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(412): error: calling a __host__ function("snprintf") from a __device__ function("regex_compile") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(412): error: identifier "snprintf" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(418): error: calling a __host__ function("snprintf") from a __device__ function("regex_compile") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(418): error: identifier "snprintf" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(432): error: calling a __host__ function("snprintf") from a __device__ function("regex_compile") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(432): error: identifier "snprintf" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(657): error: calling a __host__ function("strlen") from a __device__ function("regex_match") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(657): error: identifier "strlen" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(680): error: calling a __host__ function("strlen") from a __device__ function("regex_search") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(680): error: identifier "strlen" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(713): error: calling a __host__ function("strlen") from a __device__ function("regex_full_match") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(713): error: identifier "strlen" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(745): error: calling a __host__ function("isprint") from a __device__ function("regex_print") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(745): error: identifier "isprint" is undefined in device code
+
+build/nvcc/cuda-src/07_regex.cu(758): error: calling a __host__ function("isprint") from a __device__ function("regex_print") is not allowed
+
+build/nvcc/cuda-src/07_regex.cu(758): error: identifier "isprint" is undefined in device code
+
+34 errors detected in the compilation of "build/nvcc/cuda-src/07_regex.cu".

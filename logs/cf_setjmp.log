@@ -1,0 +1,179 @@
+build/nvcc/cuda-src/cf_setjmp.cu(143): warning #3012-D: a volatile destination type for a compound assignment expression is deprecated
+          sum += jumped;
+          ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/cf_setjmp.cu(148): warning #3531-D: a volatile operand to an increment expression is deprecated
+          i++;
+          ^
+
+build/nvcc/cuda-src/cf_setjmp.cu(152): warning #3012-D: a volatile destination type for a compound assignment expression is deprecated
+          sum += val;
+          ^
+
+build/nvcc/cuda-src/cf_setjmp.cu(177): warning #3531-D: a volatile operand to an increment expression is deprecated
+      for (i = 0; i < switches; i++) {
+                                ^
+
+build/nvcc/cuda-src/cf_setjmp.cu(186): warning #3012-D: a volatile destination type for a compound assignment expression is deprecated
+              local += shared_value;
+              ^
+
+build/nvcc/cuda-src/cf_setjmp.cu(275): warning #3012-D: a volatile destination type for a compound assignment expression is deprecated
+      result += 1;
+      ^
+
+build/nvcc/cuda-src/cf_setjmp.cu(281): warning #3012-D: a volatile destination type for a compound assignment expression is deprecated
+      result += 10;
+      ^
+
+build/nvcc/cuda-src/cf_setjmp.cu(282): warning #3532-D: a volatile operand to a decrement expression is deprecated
+      state_input--;
+      ^
+
+build/nvcc/cuda-src/cf_setjmp.cu(289): warning #3012-D: a volatile destination type for a compound assignment expression is deprecated
+      result += 100;
+      ^
+
+build/nvcc/cuda-src/cf_setjmp.cu(290): warning #3012-D: a volatile destination type for a compound assignment expression is deprecated
+      state_input -= 2;
+      ^
+
+build/nvcc/cuda-src/cf_setjmp.cu(296): warning #3012-D: a volatile destination type for a compound assignment expression is deprecated
+      result += 1000;
+      ^
+
+build/nvcc/cuda-src/cf_setjmp.cu(23): error: calling a __host__ function("_setjmp") from a __device__ function("basic_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(23): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(32): error: calling a __host__ function("longjmp") from a __device__ function("basic_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(32): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(44): error: calling a __host__ function("longjmp") from a __device__ function("deep_function") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(44): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(51): error: calling a __host__ function("_setjmp") from a __device__ function("nested_longjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(51): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(74): error: calling a __host__ function("longjmp") from a __device__ function("raise_error") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(74): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(93): error: calling a __host__ function("_setjmp") from a __device__ function("try_process") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(93): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(109): error: calling a __host__ function("_setjmp") from a __device__ function("multi_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(109): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(114): error: calling a __host__ function("_setjmp") from a __device__ function("multi_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(114): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(119): error: calling a __host__ function("_setjmp") from a __device__ function("multi_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(119): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(126): error: calling a __host__ function("longjmp") from a __device__ function("multi_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(126): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(127): error: calling a __host__ function("longjmp") from a __device__ function("multi_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(127): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(128): error: calling a __host__ function("longjmp") from a __device__ function("multi_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(128): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(141): error: calling a __host__ function("_setjmp") from a __device__ function("setjmp_loop") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(141): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(150): error: calling a __host__ function("longjmp") from a __device__ function("setjmp_loop") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(150): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(154): error: calling a __host__ function("longjmp") from a __device__ function("setjmp_loop") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(154): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(178): error: calling a __host__ function("_setjmp") from a __device__ function("coroutine_test") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(178): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(180): error: calling a __host__ function("_setjmp") from a __device__ function("coroutine_test") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(180): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(183): error: calling a __host__ function("longjmp") from a __device__ function("coroutine_test") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(183): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(189): error: calling a __host__ function("longjmp") from a __device__ function("coroutine_test") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(189): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(219): error: calling a __host__ function("longjmp") from a __device__ function("acquire_resource") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(219): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(231): error: calling a __host__ function("_setjmp") from a __device__ function("use_resources") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(231): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(241): error: calling a __host__ function("longjmp") from a __device__ function("use_resources") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(241): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(265): error: calling a __host__ function("_setjmp") from a __device__ function("state_machine_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(265): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(266): error: calling a __host__ function("_setjmp") from a __device__ function("state_machine_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(266): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(267): error: calling a __host__ function("_setjmp") from a __device__ function("state_machine_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(267): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(268): error: calling a __host__ function("_setjmp") from a __device__ function("state_machine_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(268): error: identifier "_setjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(271): error: calling a __host__ function("longjmp") from a __device__ function("state_machine_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(271): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(276): error: calling a __host__ function("longjmp") from a __device__ function("state_machine_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(276): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(283): error: calling a __host__ function("longjmp") from a __device__ function("state_machine_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(283): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(284): error: calling a __host__ function("longjmp") from a __device__ function("state_machine_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(284): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(285): error: calling a __host__ function("longjmp") from a __device__ function("state_machine_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(285): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(291): error: calling a __host__ function("longjmp") from a __device__ function("state_machine_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(291): error: identifier "longjmp" is undefined in device code
+
+build/nvcc/cuda-src/cf_setjmp.cu(292): error: calling a __host__ function("longjmp") from a __device__ function("state_machine_setjmp") is not allowed
+
+build/nvcc/cuda-src/cf_setjmp.cu(292): error: identifier "longjmp" is undefined in device code
+
+66 errors detected in the compilation of "build/nvcc/cuda-src/cf_setjmp.cu".

@@ -1,0 +1,1 @@
+ptxas error   : Entry function 'program_entry' uses too much local data (0x4ec0 bytes, 0x4000 max)

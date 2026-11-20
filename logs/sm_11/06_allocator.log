@@ -1,0 +1,207 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/06_allocator.cu(237): error: calling a __host__ function("printf") from a __device__ function("heap_init") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(531): error: calling a __host__ function("printf") from a __device__ function("my_malloc") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(589): error: calling a __host__ function("printf") from a __device__ function("my_free") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(603): error: calling a __host__ function("printf") from a __device__ function("my_free") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(653): error: calling a __host__ function("printf") from a __device__ function("my_calloc") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(833): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(834): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(835): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(839): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(840): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(841): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(842): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(843): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(846): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(848): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(849): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(850): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(861): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(862): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(863): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(864): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(870): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(894): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(895): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(898): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(899): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(900): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(903): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(906): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(907): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(908): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(909): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(910): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(912): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(915): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(916): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(917): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(918): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(919): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(920): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(921): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(922): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(925): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(926): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(939): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(947): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(951): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(952): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(953): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(954): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(955): error: calling a __host__ function("printf") from a __device__ function("my_heap_dump") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(973): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(974): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(975): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(976): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(977): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(982): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(984): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(989): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(990): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(991): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1003): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1005): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1009): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1013): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1020): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1022): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1026): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1031): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1033): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1040): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1042): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1044): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1052): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1054): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1060): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1062): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1066): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1074): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1081): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1083): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1087): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1090): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1093): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1095): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1098): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1102): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1110): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1112): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1114): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1116): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1118): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1120): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1122): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1125): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1127): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1129): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1134): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1139): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+build/nvcc/cuda-src/06_allocator.cu(1145): error: calling a __host__ function("printf") from a __device__ function("stress_test") is not allowed
+
+Error limit reached.
+100 errors detected in the compilation of "/tmp/tmpxft_0006d9e8_00000000-6_06_allocator.cpp1.ii".
+Compilation terminated.

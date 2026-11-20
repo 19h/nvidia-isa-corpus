@@ -1,0 +1,46 @@
+build/nvcc/cuda-src/cpp_allocator_polymorph_zoo.cu(102): warning #20012-D: __device__ annotation is ignored on a non-virtual function("ZooAllocator") that is explicitly defaulted on its first declaration
+      __attribute__((device)) ZooAllocator() noexcept = default;
+                     ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/cpp_allocator_polymorph_zoo.cu(156): warning #20012-D: __device__ annotation is ignored on a non-virtual function("~Actor") that is explicitly defaulted on its first declaration
+      __attribute__((device)) ~Actor() = default;
+                     ^
+
+build/nvcc/cuda-src/cpp_allocator_polymorph_zoo.cu(110): error: device code does not support exception handling
+              throw std::bad_array_new_length();
+              ^
+
+build/nvcc/cuda-src/cpp_allocator_polymorph_zoo.cu(174): error: device code does not support exception handling
+      try {
+      ^
+          detected during instantiation of "void <unnamed>::append_actor(Vector &, <unnamed>::ZooResource &, int) [with Vector=std::vector<<unnamed>::OwnedActor, <unnamed>::ZooAllocator<<unnamed>::OwnedActor>>]" at line 347
+
+build/nvcc/cuda-src/cpp_allocator_polymorph_zoo.cu(178): error: device code does not support exception handling
+          throw;
+          ^
+          detected during instantiation of "void <unnamed>::append_actor(Vector &, <unnamed>::ZooResource &, int) [with Vector=std::vector<<unnamed>::OwnedActor, <unnamed>::ZooAllocator<<unnamed>::OwnedActor>>]" at line 347
+
+build/nvcc/cuda-src/cpp_allocator_polymorph_zoo.cu(180): warning #940-D: missing return statement at end of non-void function "<unnamed>::make_actor<T,Args...>(<unnamed>::ZooResource &, Args &&...) [with T=<unnamed>::CounterActor, Args=<int &>]"
+  }
+  ^
+          detected during:
+            instantiation of "<unnamed>::OwnedActor <unnamed>::make_actor<T,Args...>(<unnamed>::ZooResource &, Args &&...) [with T=<unnamed>::CounterActor, Args=<int &>]" at line 318
+            instantiation of "void <unnamed>::append_actor(Vector &, <unnamed>::ZooResource &, int) [with Vector=std::vector<<unnamed>::OwnedActor, <unnamed>::ZooAllocator<<unnamed>::OwnedActor>>]" at line 347
+
+build/nvcc/cuda-src/cpp_allocator_polymorph_zoo.cu(180): warning #940-D: missing return statement at end of non-void function "<unnamed>::make_actor<T,Args...>(<unnamed>::ZooResource &, Args &&...) [with T=<unnamed>::BufferActor, Args=<int &>]"
+  }
+  ^
+          detected during:
+            instantiation of "<unnamed>::OwnedActor <unnamed>::make_actor<T,Args...>(<unnamed>::ZooResource &, Args &&...) [with T=<unnamed>::BufferActor, Args=<int &>]" at line 321
+            instantiation of "void <unnamed>::append_actor(Vector &, <unnamed>::ZooResource &, int) [with Vector=std::vector<<unnamed>::OwnedActor, <unnamed>::ZooAllocator<<unnamed>::OwnedActor>>]" at line 347
+
+build/nvcc/cuda-src/cpp_allocator_polymorph_zoo.cu(180): warning #940-D: missing return statement at end of non-void function "<unnamed>::make_actor<T,Args...>(<unnamed>::ZooResource &, Args &&...) [with T=<unnamed>::BranchActor, Args=<int &>]"
+  }
+  ^
+          detected during:
+            instantiation of "<unnamed>::OwnedActor <unnamed>::make_actor<T,Args...>(<unnamed>::ZooResource &, Args &&...) [with T=<unnamed>::BranchActor, Args=<int &>]" at line 324
+            instantiation of "void <unnamed>::append_actor(Vector &, <unnamed>::ZooResource &, int) [with Vector=std::vector<<unnamed>::OwnedActor, <unnamed>::ZooAllocator<<unnamed>::OwnedActor>>]" at line 347
+
+3 errors detected in the compilation of "build/nvcc/cuda-src/cpp_allocator_polymorph_zoo.cu".

@@ -1,0 +1,13 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/mem_stack_realign.cu(20): error: identifier "alignas" is undefined
+
+build/nvcc/cuda-src/mem_stack_realign.cu(20): error: expected a ";"
+
+build/nvcc/cuda-src/mem_stack_realign.cu(22): error: identifier "fixed" is undefined
+
+build/nvcc/cuda-src/mem_stack_realign.cu(37): error: identifier "fixed" is undefined
+
+4 errors detected in the compilation of "/tmp/tmpxft_0006da23_00000000-6_mem_stack_realign.cpp1.ii".

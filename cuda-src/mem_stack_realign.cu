@@ -1,0 +1,66 @@
+/*
+ * mem_stack_realign.c
+ *
+ * Stack alignment and dynamic allocation patterns.
+ * Stresses VLAs, alloca, and over-aligned locals.
+ *
+ * Features exercised:
+ *   - Variable-length arrays
+ *   - __builtin_alloca with manual alignment
+ *   - Over-aligned local buffers
+ *   - Mixed stack frame sizes
+ */
+
+#include <stdint.h>
+
+__device__ volatile uint64_t sink;
+
+__device__ __attribute__((noinline))
+uint64_t stack_mix(uint32_t seed, uint32_t n) {
+    alignas(32) uint8_t fixed[64];
+    for (uint32_t i = 0; i < 64; i++) {
+        fixed[i] = (uint8_t)(seed + i * 3u);
+    }
+
+    uint32_t len = (n & 0x3fu) + 1u;
+    uint32_t *vla = (uint32_t *)alloca(len * sizeof(uint32_t));
+    for (uint32_t i = 0; i < len; i++) {
+        vla[i] = seed ^ (uint32_t)(i * 0x9e37u);
+    }
+
+    uint32_t dyn_size = len * 3u + 17u;
+    uint8_t *raw = (uint8_t *)alloca(dyn_size + 31u);
+    uintptr_t aligned_addr = ((uintptr_t)raw + 31u) & ~(uintptr_t)31u;
+    uint8_t *aligned = (uint8_t *)aligned_addr;
+
+    for (uint32_t i = 0; i < dyn_size; i++) {
+        aligned[i] = (uint8_t)(fixed[i & 63u] ^ (uint8_t)vla[i % len]);
+    }
+
+    uint64_t sum = 0;
+    for (uint32_t i = 0; i < len; i++) {
+        sum += vla[i];
+    }
+    for (uint32_t i = 0; i < dyn_size; i += 5u) {
+        sum += aligned[i];
+    }
+    sum ^= (uint64_t)aligned[0] << 56;
+
+    return sum;
+}
+
+__device__ int program_main(void) {
+    uint64_t result = 0;
+
+    for (uint32_t i = 1; i < 2000; i++) {
+        result += stack_mix(i * 7u + 3u, i);
+    }
+
+    sink = result;
+    return 0;
+}
+
+extern "C" __global__ void program_entry(int *status) {
+    if (blockIdx.x == 0 && threadIdx.x == 0)
+        *status = program_main();
+}

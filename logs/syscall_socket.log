@@ -1,0 +1,203 @@
+build/nvcc/cuda-src/syscall_socket.cu(48): error: calling a __host__ function("strcpy") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(48): error: identifier "strcpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(49): error: calling a __host__ function("mktemp") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(49): error: identifier "mktemp" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(52): error: calling a __host__ function("socket") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(52): error: identifier "socket" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(59): error: calling a __host__ function("strncpy") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(59): error: identifier "strncpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(61): error: calling a __host__ function("bind") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(61): error: identifier "bind" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(62): error: calling a __host__ function("close") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(62): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(67): error: calling a __host__ function("listen") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(67): error: identifier "listen" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(68): error: calling a __host__ function("close") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(68): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(69): error: calling a __host__ function("unlink") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(69): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(73): error: calling a __host__ function("fork") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(73): error: identifier "fork" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(76): error: calling a __host__ function("close") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(76): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(77): error: calling a __host__ function("unlink") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(77): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(81): error: calling a __host__ function("close") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(81): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(83): error: calling a __host__ function("socket") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(83): error: identifier "socket" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(84): error: calling a __host__ function("_exit") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(84): error: identifier "_exit" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(87): error: calling a __host__ function("connect") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(87): error: identifier "connect" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(88): error: calling a __host__ function("close") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(88): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(89): error: calling a __host__ function("_exit") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(89): error: identifier "_exit" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(94): error: calling a __host__ function("strlen") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(94): error: identifier "strlen" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(94): error: calling a __host__ function("send") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(94): error: identifier "send" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(97): error: calling a __host__ function("recv") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(97): error: identifier "recv" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(99): error: calling a __host__ function("close") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(99): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(100): error: calling a __host__ function("_exit") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(100): error: identifier "_exit" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(104): error: calling a __host__ function("accept") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(104): error: identifier "accept" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(108): error: calling a __host__ function("recv") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(108): error: identifier "recv" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(113): error: calling a __host__ function("strlen") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(113): error: identifier "strlen" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(113): error: calling a __host__ function("send") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(113): error: identifier "send" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(115): error: calling a __host__ function("close") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(115): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(118): error: calling a __host__ function("close") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(118): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(119): error: calling a __host__ function("unlink") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(119): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(122): error: calling a __host__ function("waitpid") from a __device__ function("test_unix_stream") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(122): error: identifier "waitpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(139): error: calling a __host__ function("strcpy") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(139): error: identifier "strcpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(140): error: calling a __host__ function("mktemp") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(140): error: identifier "mktemp" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(141): error: calling a __host__ function("strcpy") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(141): error: identifier "strcpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(142): error: calling a __host__ function("mktemp") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(142): error: identifier "mktemp" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(145): error: calling a __host__ function("socket") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(145): error: identifier "socket" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(150): error: calling a __host__ function("strncpy") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(150): error: identifier "strncpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(152): error: calling a __host__ function("bind") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(152): error: identifier "bind" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(153): error: calling a __host__ function("close") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(153): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(158): error: calling a __host__ function("socket") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(158): error: identifier "socket" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(160): error: calling a __host__ function("close") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(160): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(161): error: calling a __host__ function("unlink") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(161): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(167): error: calling a __host__ function("strncpy") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(167): error: identifier "strncpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(169): error: calling a __host__ function("bind") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(169): error: identifier "bind" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(170): error: calling a __host__ function("close") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(170): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(171): error: calling a __host__ function("close") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(171): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(172): error: calling a __host__ function("unlink") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(172): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(178): error: calling a __host__ function("strlen") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(178): error: identifier "strlen" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(178): error: calling a __host__ function("sendto") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(178): error: identifier "sendto" is undefined in device code
+
+build/nvcc/cuda-src/syscall_socket.cu(184): error: calling a __host__ function("recvfrom") from a __device__ function("test_unix_dgram") is not allowed
+
+build/nvcc/cuda-src/syscall_socket.cu(184): error: identifier "recvfrom" is undefined in device code
+
+Error limit reached.
+100 errors detected in the compilation of "build/nvcc/cuda-src/syscall_socket.cu".
+Compilation terminated.

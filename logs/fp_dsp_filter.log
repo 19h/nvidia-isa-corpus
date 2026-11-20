@@ -1,0 +1,6 @@
+build/nvcc/cuda-src/fp_dsp_filter.cu(161): warning #177-D: variable "t" was declared but never referenced
+          float t = (float)i / 4096;
+                ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+

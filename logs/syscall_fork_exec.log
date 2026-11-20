@@ -1,0 +1,209 @@
+build/nvcc/cuda-src/syscall_fork_exec.cu(176): warning #2464-D: conversion from a string literal to "char *" is deprecated
+          char *argv[] = {"true", 
+                          ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(33): error: calling a __host__ function("fork") from a __device__ function("test_simple_fork") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(33): error: identifier "fork" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(39): error: calling a __host__ function("_exit") from a __device__ function("test_simple_fork") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(39): error: identifier "_exit" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(45): error: calling a __host__ function("waitpid") from a __device__ function("test_simple_fork") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(45): error: identifier "waitpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(62): error: calling a __host__ function("pipe") from a __device__ function("test_fork_compute") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(62): error: identifier "pipe" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(66): error: calling a __host__ function("fork") from a __device__ function("test_fork_compute") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(66): error: identifier "fork" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(69): error: calling a __host__ function("close") from a __device__ function("test_fork_compute") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(69): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(70): error: calling a __host__ function("close") from a __device__ function("test_fork_compute") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(70): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(74): error: calling a __host__ function("close") from a __device__ function("test_fork_compute") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(74): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(81): error: calling a __host__ function("write") from a __device__ function("test_fork_compute") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(81): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(82): error: calling a __host__ function("close") from a __device__ function("test_fork_compute") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(82): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(83): error: calling a __host__ function("_exit") from a __device__ function("test_fork_compute") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(83): error: identifier "_exit" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(86): error: calling a __host__ function("close") from a __device__ function("test_fork_compute") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(86): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(89): error: calling a __host__ function("read") from a __device__ function("test_fork_compute") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(89): error: identifier "read" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(90): error: calling a __host__ function("close") from a __device__ function("test_fork_compute") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(90): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(95): error: calling a __host__ function("waitpid") from a __device__ function("test_fork_compute") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(95): error: identifier "waitpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(109): error: calling a __host__ function("fork") from a __device__ function("test_multiple_forks") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(109): error: identifier "fork" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(116): error: calling a __host__ function("_exit") from a __device__ function("test_multiple_forks") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(116): error: identifier "_exit" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(127): error: calling a __host__ function("waitpid") from a __device__ function("test_multiple_forks") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(127): error: identifier "waitpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(142): error: calling a __host__ function("fork") from a __device__ function("test_fork_exit_paths") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(142): error: identifier "fork" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(148): error: calling a __host__ function("getpid") from a __device__ function("test_fork_exit_paths") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(148): error: identifier "getpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(149): error: calling a __host__ function("_exit") from a __device__ function("test_fork_exit_paths") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(149): error: identifier "_exit" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(153): error: calling a __host__ function("waitpid") from a __device__ function("test_fork_exit_paths") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(153): error: identifier "waitpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(170): error: calling a __host__ function("fork") from a __device__ function("test_fork_exec") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(170): error: identifier "fork" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(180): error: calling a __host__ function("execve") from a __device__ function("test_fork_exec") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(180): error: identifier "execve" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(181): error: calling a __host__ function("execve") from a __device__ function("test_fork_exec") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(181): error: identifier "execve" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(184): error: calling a __host__ function("_exit") from a __device__ function("test_fork_exec") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(184): error: identifier "_exit" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(188): error: calling a __host__ function("waitpid") from a __device__ function("test_fork_exec") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(188): error: identifier "waitpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(203): error: calling a __host__ function("getpid") from a __device__ function("test_fork_tree") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(203): error: identifier "getpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(207): error: calling a __host__ function("fork") from a __device__ function("test_fork_tree") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(207): error: identifier "fork" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(210): error: calling a __host__ function("getpid") from a __device__ function("test_fork_tree") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(210): error: identifier "getpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(214): error: calling a __host__ function("_exit") from a __device__ function("test_fork_tree") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(214): error: identifier "_exit" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(219): error: calling a __host__ function("waitpid") from a __device__ function("test_fork_tree") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(219): error: identifier "waitpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(233): error: calling a __host__ function("fork") from a __device__ function("test_wait_options") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(233): error: identifier "fork" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(239): error: calling a __host__ function("usleep") from a __device__ function("test_wait_options") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(239): error: identifier "usleep" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(240): error: calling a __host__ function("_exit") from a __device__ function("test_wait_options") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(240): error: identifier "_exit" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(247): error: calling a __host__ function("waitpid") from a __device__ function("test_wait_options") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(247): error: identifier "waitpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(253): error: calling a __host__ function("waitpid") from a __device__ function("test_wait_options") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(253): error: identifier "waitpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(270): error: calling a __host__ function("getpid") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(270): error: identifier "getpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(273): error: calling a __host__ function("pipe") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(273): error: identifier "pipe" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(277): error: calling a __host__ function("fork") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(277): error: identifier "fork" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(280): error: calling a __host__ function("close") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(280): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(281): error: calling a __host__ function("close") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(281): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(285): error: calling a __host__ function("close") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(285): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(287): error: calling a __host__ function("getpid") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(287): error: identifier "getpid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(288): error: calling a __host__ function("getppid") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(288): error: identifier "getppid" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(291): error: calling a __host__ function("write") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(291): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(292): error: calling a __host__ function("write") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(292): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(293): error: calling a __host__ function("close") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(293): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(295): error: calling a __host__ function("_exit") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(295): error: identifier "_exit" is undefined in device code
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(298): error: calling a __host__ function("close") from a __device__ function("test_pid_functions") is not allowed
+
+build/nvcc/cuda-src/syscall_fork_exec.cu(298): error: identifier "close" is undefined in device code
+
+Error limit reached.
+100 errors detected in the compilation of "build/nvcc/cuda-src/syscall_fork_exec.cu".
+Compilation terminated.

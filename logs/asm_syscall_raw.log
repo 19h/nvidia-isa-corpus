@@ -1,0 +1,57 @@
+build/nvcc/cuda-src/asm_syscall_raw.cu(35): error: asm operand type size(8) does not match type/size implied by constraint 'a'
+          : "=a"(ret)
+            ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(36): error: asm operand type size(8) does not match type/size implied by constraint 'a'
+          : "a"(num)
+            ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(47): error: asm operand type size(8) does not match type/size implied by constraint 'a'
+          : "=a"(ret)
+            ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(48): error: asm operand type size(8) does not match type/size implied by constraint 'a'
+          : "a"(num), "D"(arg1)
+            ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(48): error: asm operand type size(8) does not match type/size implied by constraint 'D'
+          : "a"(num), "D"(arg1)
+                      ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(59): error: asm operand type size(8) does not match type/size implied by constraint 'a'
+          : "=a"(ret)
+            ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(60): error: asm operand type size(8) does not match type/size implied by constraint 'a'
+          : "a"(num), "D"(arg1), "S"(arg2)
+            ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(60): error: asm operand type size(8) does not match type/size implied by constraint 'D'
+          : "a"(num), "D"(arg1), "S"(arg2)
+                      ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(60): error: asm operand type size(8) does not match type/size implied by constraint 'S'
+          : "a"(num), "D"(arg1), "S"(arg2)
+                                 ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(71): error: asm operand type size(8) does not match type/size implied by constraint 'a'
+          : "=a"(ret)
+            ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(72): error: asm operand type size(8) does not match type/size implied by constraint 'a'
+          : "a"(num), "D"(arg1), "S"(arg2), "d"(arg3)
+            ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(72): error: asm operand type size(8) does not match type/size implied by constraint 'D'
+          : "a"(num), "D"(arg1), "S"(arg2), "d"(arg3)
+                      ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(72): error: asm operand type size(8) does not match type/size implied by constraint 'S'
+          : "a"(num), "D"(arg1), "S"(arg2), "d"(arg3)
+                                 ^
+
+build/nvcc/cuda-src/asm_syscall_raw.cu(72): error: asm operand type size(8) does not match type/size implied by constraint 'd'
+          : "a"(num), "D"(arg1), "S"(arg2), "d"(arg3)
+                                            ^
+
+14 errors detected in the compilation of "build/nvcc/cuda-src/asm_syscall_raw.cu".

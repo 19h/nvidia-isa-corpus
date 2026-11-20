@@ -1,0 +1,18 @@
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/call_variadic.cu(18): error: a __device__ or __host__ __device__ function cannot have ellipsis
+
+build/nvcc/cuda-src/call_variadic.cu(32): error: a __device__ or __host__ __device__ function cannot have ellipsis
+
+build/nvcc/cuda-src/call_variadic.cu(46): error: a __device__ or __host__ __device__ function cannot have ellipsis
+
+build/nvcc/cuda-src/call_variadic.cu(84): error: a __device__ or __host__ __device__ function cannot have ellipsis
+
+build/nvcc/cuda-src/call_variadic.cu(94): error: a __device__ or __host__ __device__ function cannot have ellipsis
+
+build/nvcc/cuda-src/call_variadic.cu(116): error: a __device__ or __host__ __device__ function cannot have ellipsis
+
+6 errors detected in the compilation of "/tmp/tmpxft_0006f6fd_00000000-7_call_variadic.cpp1.ii".

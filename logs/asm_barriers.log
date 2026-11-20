@@ -1,0 +1,5 @@
+build/nvcc/cuda-src/asm_barriers.cu(45): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+      __asm__ volatile("lock; addl $0, %0" : "+m"(dummy) :: "memory");
+                                             ^
+
+1 error detected in the compilation of "build/nvcc/cuda-src/asm_barriers.cu".

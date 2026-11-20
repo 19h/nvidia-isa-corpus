@@ -1,0 +1,6 @@
+build/nvcc/cuda-src/cpp_consteval_tuple_automaton.cu(99): warning #177-D: variable "<unnamed>::Input" was declared but never referenced
+  constexpr auto Input = build_input(std::make_index_sequence<InputCount>{});
+                 ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+

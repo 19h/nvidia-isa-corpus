@@ -1,0 +1,127 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/03_linked_list.cu(98) (col. 11): error: calling a __host__ function("malloc") from a __device__ function("create_node") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(102): error: calling a __host__ function("printf") from a __device__ function("create_node") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(292): error: calling a __host__ function("printf") from a __device__ function("delete_node") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(299): error: calling a __host__ function("free") from a __device__ function("delete_node") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(311): error: calling a __host__ function("printf") from a __device__ function("delete_node") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(318): error: calling a __host__ function("free") from a __device__ function("delete_node") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(344): error: calling a __host__ function("printf") from a __device__ function("delete_at_position") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(349): error: calling a __host__ function("printf") from a __device__ function("delete_at_position") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(356): error: calling a __host__ function("free") from a __device__ function("delete_at_position") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(371): error: calling a __host__ function("printf") from a __device__ function("delete_at_position") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(378): error: calling a __host__ function("free") from a __device__ function("delete_at_position") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(554): error: calling a __host__ function("printf") from a __device__ function("print_list") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(559): error: calling a __host__ function("printf") from a __device__ function("print_list") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(562): error: calling a __host__ function("printf") from a __device__ function("print_list") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(564): error: calling a __host__ function("printf") from a __device__ function("print_list") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(569): error: calling a __host__ function("printf") from a __device__ function("print_list") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(584): error: calling a __host__ function("printf") from a __device__ function("print_list_detailed") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(588): error: calling a __host__ function("printf") from a __device__ function("print_list_detailed") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(589): error: calling a __host__ function("printf") from a __device__ function("print_list_detailed") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(590): error: calling a __host__ function("printf") from a __device__ function("print_list_detailed") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(596): error: calling a __host__ function("printf") from a __device__ function("print_list_detailed") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(605): error: calling a __host__ function("printf") from a __device__ function("print_list_detailed") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(606): error: calling a __host__ function("printf") from a __device__ function("print_list_detailed") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(632): error: calling a __host__ function("free") from a __device__ function("free_list") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(637): error: calling a __host__ function("printf") from a __device__ function("free_list") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(647): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(648): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(649): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(655): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(658): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(665): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(671): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(675): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(686): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(688): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(695): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(698): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(706): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(708): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(712): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(717): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(722): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(727): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(732): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(740): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(746): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(753): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(758): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(766): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(772): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(774): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(777): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(781): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(786): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(790): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(794): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(802): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(804): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(819): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(823): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/03_linked_list.cu(824): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+61 errors detected in the compilation of "/tmp/tmpxft_0006a7eb_00000000-6_03_linked_list.cpp1.ii".

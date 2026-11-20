@@ -1,0 +1,11 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/cf_duff_device_parser.cu(416): error: Within a __device__/__global__ function, only __shared__ variables may be marked "static"
+
+build/nvcc/cuda-src/cf_duff_device_parser.cu(418): error: Within a __device__/__global__ function, only __shared__ variables may be marked "static"
+
+build/nvcc/cuda-src/cf_duff_device_parser.cu(420): error: Within a __device__/__global__ function, only __shared__ variables may be marked "static"
+
+3 errors detected in the compilation of "/tmp/tmpxft_00068b50_00000000-6_cf_duff_device_parser.cpp1.ii".

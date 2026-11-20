@@ -1,0 +1,7 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/fp_denormal_rounding_lab.cu(200): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+1 error detected in the compilation of "/tmp/tmpxft_0006a18c_00000000-6_fp_denormal_rounding_lab.cpp1.ii".

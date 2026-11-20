@@ -1,0 +1,189 @@
+build/nvcc/cuda-src/syscall_mmap.cu(37): error: calling a __host__ function("mmap") from a __device__ function("test_anonymous_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(37): error: identifier "mmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(61): error: calling a __host__ function("munmap") from a __device__ function("test_anonymous_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(61): error: identifier "munmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(73): error: calling a __host__ function("strcpy") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(73): error: identifier "strcpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(74): error: calling a __host__ function("mkstemp") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(74): error: identifier "mkstemp" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(78): error: calling a __host__ function("ftruncate") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(78): error: identifier "ftruncate" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(85): error: calling a __host__ function("write") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(85): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(88): error: calling a __host__ function("mmap") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(88): error: identifier "mmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(93): error: calling a __host__ function("close") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(93): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(94): error: calling a __host__ function("unlink") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(94): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(110): error: calling a __host__ function("msync") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(110): error: identifier "msync" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(113): error: calling a __host__ function("munmap") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(113): error: identifier "munmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(115): error: calling a __host__ function("lseek") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(115): error: identifier "lseek" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(116): error: calling a __host__ function("read") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(116): error: identifier "read" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(121): error: calling a __host__ function("close") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(121): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(122): error: calling a __host__ function("unlink") from a __device__ function("test_file_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(122): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(133): error: calling a __host__ function("strcpy") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(133): error: identifier "strcpy" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(134): error: calling a __host__ function("mkstemp") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(134): error: identifier "mkstemp" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(140): error: calling a __host__ function("ftruncate") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(140): error: identifier "ftruncate" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(141): error: calling a __host__ function("write") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(141): error: identifier "write" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(142): error: calling a __host__ function("lseek") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(142): error: identifier "lseek" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(145): error: calling a __host__ function("mmap") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(145): error: identifier "mmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(150): error: calling a __host__ function("close") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(150): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(151): error: calling a __host__ function("unlink") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(151): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(168): error: calling a __host__ function("lseek") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(168): error: identifier "lseek" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(169): error: calling a __host__ function("read") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(169): error: identifier "read" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(174): error: calling a __host__ function("munmap") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(174): error: identifier "munmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(175): error: calling a __host__ function("close") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(175): error: identifier "close" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(176): error: calling a __host__ function("unlink") from a __device__ function("test_private_mmap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(176): error: identifier "unlink" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(187): error: calling a __host__ function("mmap") from a __device__ function("test_mprotect") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(187): error: identifier "mmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(203): error: calling a __host__ function("mprotect") from a __device__ function("test_mprotect") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(203): error: identifier "mprotect" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(212): error: calling a __host__ function("mprotect") from a __device__ function("test_mprotect") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(212): error: identifier "mprotect" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(224): error: calling a __host__ function("munmap") from a __device__ function("test_mprotect") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(224): error: identifier "munmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(237): error: calling a __host__ function("mmap") from a __device__ function("test_multiple_mappings") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(237): error: identifier "mmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(244): error: calling a __host__ function("munmap") from a __device__ function("test_multiple_mappings") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(244): error: identifier "munmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(268): error: calling a __host__ function("munmap") from a __device__ function("test_multiple_mappings") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(268): error: identifier "munmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(280): error: calling a __host__ function("mmap") from a __device__ function("test_large_mapping") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(280): error: identifier "mmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(301): error: calling a __host__ function("munmap") from a __device__ function("test_large_mapping") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(301): error: identifier "munmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(308): error: calling a __host__ function("munmap") from a __device__ function("test_large_mapping") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(308): error: identifier "munmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(320): error: calling a __host__ function("mmap") from a __device__ function("test_mremap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(320): error: identifier "mmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(336): error: calling a __host__ function("mremap") from a __device__ function("test_mremap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(336): error: identifier "mremap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(338): error: calling a __host__ function("munmap") from a __device__ function("test_mremap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(338): error: identifier "munmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(357): error: calling a __host__ function("munmap") from a __device__ function("test_mremap") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(357): error: identifier "munmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(374): error: calling a __host__ function("mmap") from a __device__ function("test_madvise") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(374): error: identifier "mmap" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(384): error: calling a __host__ function("madvise") from a __device__ function("test_madvise") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(384): error: identifier "madvise" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(394): error: calling a __host__ function("madvise") from a __device__ function("test_madvise") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(394): error: identifier "madvise" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(405): error: calling a __host__ function("madvise") from a __device__ function("test_madvise") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(405): error: identifier "madvise" is undefined in device code
+
+build/nvcc/cuda-src/syscall_mmap.cu(407): error: calling a __host__ function("munmap") from a __device__ function("test_madvise") is not allowed
+
+build/nvcc/cuda-src/syscall_mmap.cu(407): error: identifier "munmap" is undefined in device code
+
+94 errors detected in the compilation of "build/nvcc/cuda-src/syscall_mmap.cu".

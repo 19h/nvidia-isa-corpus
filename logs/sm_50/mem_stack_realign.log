@@ -1,0 +1,10 @@
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+build/nvcc/cuda-src/mem_stack_realign.cu(26): error: alloca() is not supported for architectures lower than compute_52
+                                 __builtin_alloca (
+                                 ^
+
+build/nvcc/cuda-src/mem_stack_realign.cu(32): error: alloca() is not supported for architectures lower than compute_52
+                               __builtin_alloca (
+                               ^
+
+2 errors detected in the compilation of "build/nvcc/cuda-src/mem_stack_realign.cu".

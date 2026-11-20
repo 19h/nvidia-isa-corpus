@@ -1,0 +1,91 @@
+build/nvcc/cuda-src/asm_context_switch.cu(61): error: asm operand type size(8) does not match type/size implied by constraint 'r'
+          : "r"(from), "r"(to),
+            ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(61): error: asm operand type size(8) does not match type/size implied by constraint 'r'
+          : "r"(from), "r"(to),
+                       ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(62): error: asm constraint letter 'i' is not allowed inside a __device__/__global__ function
+            [rsp] "i"(
+            ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(63): error: asm constraint letter 'i' is not allowed inside a __device__/__global__ function
+            [rbp] "i"(
+            ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(64): error: asm constraint letter 'i' is not allowed inside a __device__/__global__ function
+            [rbx] "i"(
+            ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(65): error: asm constraint letter 'i' is not allowed inside a __device__/__global__ function
+            [r12] "i"(
+            ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(66): error: asm constraint letter 'i' is not allowed inside a __device__/__global__ function
+            [r13] "i"(
+            ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(67): error: asm constraint letter 'i' is not allowed inside a __device__/__global__ function
+            [r14] "i"(
+            ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(68): error: asm constraint letter 'i' is not allowed inside a __device__/__global__ function
+            [r15] "i"(
+            ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(69): error: asm constraint letter 'i' is not allowed inside a __device__/__global__ function
+            [rip] "i"(
+            ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(71): error: The cc clobber constraint is not supported in device code
+            "memory", "cc"
+                      ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(374): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+          : "=m"(saved_rbx), "=m"(saved_r12), "=m"(saved_r13),
+            ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(374): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+          : "=m"(saved_rbx), "=m"(saved_r12), "=m"(saved_r13),
+                             ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(374): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+          : "=m"(saved_rbx), "=m"(saved_r12), "=m"(saved_r13),
+                                              ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(375): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+            "=m"(saved_r14), "=m"(saved_r15), "+r"(result)
+            ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(375): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+            "=m"(saved_r14), "=m"(saved_r15), "+r"(result)
+                             ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(375): error: asm operand type size(8) does not match type/size implied by constraint 'r'
+            "=m"(saved_r14), "=m"(saved_r15), "+r"(result)
+                                              ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(345): warning #550-D: variable "saved_rbx" was set but never used
+      int64_t saved_rbx, saved_r12, saved_r13, saved_r14, saved_r15;
+              ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/asm_context_switch.cu(345): warning #550-D: variable "saved_r12" was set but never used
+      int64_t saved_rbx, saved_r12, saved_r13, saved_r14, saved_r15;
+                         ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(345): warning #550-D: variable "saved_r13" was set but never used
+      int64_t saved_rbx, saved_r12, saved_r13, saved_r14, saved_r15;
+                                    ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(345): warning #550-D: variable "saved_r14" was set but never used
+      int64_t saved_rbx, saved_r12, saved_r13, saved_r14, saved_r15;
+                                               ^
+
+build/nvcc/cuda-src/asm_context_switch.cu(345): warning #550-D: variable "saved_r15" was set but never used
+      int64_t saved_rbx, saved_r12, saved_r13, saved_r14, saved_r15;
+                                                          ^
+
+17 errors detected in the compilation of "build/nvcc/cuda-src/asm_context_switch.cu".

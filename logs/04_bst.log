@@ -1,0 +1,605 @@
+build/nvcc/cuda-src/04_bst.cu(429): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n" << std::string(60, '=') << "\n";
+           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/04_bst.cu(430): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "  " << title << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(431): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << std::string(60, '=') << "\n\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(438): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "--- Test 1: Basic insertion and traversals ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(442): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Inserted: 50, 30, 70, 20, 40, 60, 80\n\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(443): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Tree structure:\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(445): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(453): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 2: Tree properties ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(454): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Size: " << tree.size() << " (expected: 7)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(455): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Height: " << tree.height() << " (expected: 2)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(456): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Is balanced: " << (tree.isBalanced() ? "yes" : "no") << " (expected: yes)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(457): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Is empty: " << (tree.empty() ? "yes" : "no") << " (expected: no)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(460): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 3: Find operations ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(463): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Min value: " << (minVal ? std::to_string(*minVal) : "null") << " (expected: 20)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(464): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Max value: " << (maxVal ? std::to_string(*maxVal) : "null") << " (expected: 80)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(466): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Contains 40: " << (tree.contains(40) ? "yes" : "no") << " (expected: yes)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(467): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Contains 45: " << (tree.contains(45) ? "yes" : "no") << " (expected: no)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(470): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Find 60: " << (found ? std::to_string(*found) : "not found") << " (expected: 60)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(473): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 4: Removal operations ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(476): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Removing 20 (leaf): " << (tree.remove(20) ? "success" : "failed") << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(477): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Tree after removing 20:\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(483): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\nAfter inserting 25:\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(486): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Removing 30 (one child): " << (tree.remove(30) ? "success" : "failed") << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(487): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Tree after removing 30:\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(492): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\nRemoving 50 (root, two children): " << (tree.remove(50) ? "success" : "failed") << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(493): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Tree after removing 50 (root):\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(498): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\nRemoving 999 (non-existent): " << (tree.remove(999) ? "success" : "failed") << " (expected: failed)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(500): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\nFinal size: " << tree.size() << " (expected: 5)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(503): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 5: Copy constructor ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(505): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Original tree:\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(507): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Copied tree:\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(512): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\nAfter inserting 100 into original:\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(513): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Original: ";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(515): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Copy (should be unchanged): ";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(519): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 6: Move semantics ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(522): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Tree to move: ";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(524): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Size before move: " << treeToMove.size() << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(527): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Moved tree: ";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(529): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Original after move (should be empty): size = " << treeToMove.size() << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(532): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 7: Assignment operators ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(535): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "After copy assignment: ";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(540): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "After move assignment: ";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(544): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 8: Edge cases ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(546): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Empty tree - size: " << emptyTree.size() << ", height: " << emptyTree.height() << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(547): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Empty tree - isBalanced: " << (emptyTree.isBalanced() ? "yes" : "no") << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(548): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Empty tree - findMin: " << (emptyTree.findMin() ? "found" : "null") << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(552): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Single node - size: " << singleNode.size() << ", height: " << singleNode.height() << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(553): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Single node - isBalanced: " << (singleNode.isBalanced() ? "yes" : "no") << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(556): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 9: Unbalanced tree detection ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(559): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Right-skewed tree (1,2,3,4,5):\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(561): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Height: " << unbalanced.height() << " (expected: 4)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(562): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Is balanced: " << (unbalanced.isBalanced() ? "yes" : "no") << " (expected: no)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(565): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 10: Duplicate handling ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(568): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Inserted: 5, 3, 7, 3, 5, 7 (duplicates should be ignored)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(569): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Size: " << dupTree.size() << " (expected: 3)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(577): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "--- Test 1: Basic string insertion ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(587): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Inserted: mango, apple, zebra, banana, orange, kiwi, grape\n\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(588): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Tree structure:\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(590): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(596): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 2: String find operations ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(599): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Min: " << (minStr ? *minStr : "null") << " (expected: apple)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(600): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Max: " << (maxStr ? *maxStr : "null") << " (expected: zebra)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(602): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Contains 'banana': " << (tree.contains("banana") ? "yes" : "no") << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(603): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Contains 'cherry': " << (tree.contains("cherry") ? "yes" : "no") << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(606): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 3: Move semantics with strings ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(608): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Inserting via move: '" << moveMe << "'\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(610): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "After move, original string: '" << moveMe << "' (may be empty or unchanged)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(614): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 4: String removal ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(616): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "After removing 'mango':\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(621): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 5: Collect to vector ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(623): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Sorted vector: ";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(625): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << s << " ";
+               ^
+
+build/nvcc/cuda-src/04_bst.cu(627): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(630): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Test 6: Deep copy verification ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(635): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Original (added pineapple): ";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(637): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Copy (added strawberry): ";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(647): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Tree structure:\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(649): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(652): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "--- Sum using inorder callback ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(657): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Sum of all elements: " << sum << " (expected: 28)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(660): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Filter even numbers using preorder ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(667): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Even numbers (preorder): ";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(669): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << n << " ";
+               ^
+
+build/nvcc/cuda-src/04_bst.cu(671): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(674): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n--- Transform using level-order ---\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(679): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Transformed (level-order): ";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(681): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << s << " ";
+               ^
+
+build/nvcc/cuda-src/04_bst.cu(683): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(698): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Basic property assertions: PASSED\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(708): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Find operation assertions: PASSED\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(713): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Sorted order assertion: PASSED\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(720): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Remove operation assertions: PASSED\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(727): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Copy independence assertion: PASSED\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(734): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Move semantics assertion: PASSED\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(741): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Clear operation assertion: PASSED\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(750): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Empty tree assertions: PASSED\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(752): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\nAll assertions PASSED!\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(756): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Binary Search Tree Implementation Test Suite\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(757): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "============================================\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(758): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Using C++17 with smart pointers (unique_ptr)\n";
+           ^
+
+build/nvcc/cuda-src/04_bst.cu(429): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("printSeparator") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(429): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(429): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("printSeparator") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(429): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(429): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(429): error: calling a __host__ function("std::basic_ostream<T1, T2>  &  ::std::operator <<<char,     ::std::char_traits<char> , ::std::allocator<char> > (    ::std::basic_ostream<T1, T2>  &, const    ::std::__cxx11::basic_string<T1, T2, T3>  &)") from a __device__ function("printSeparator") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(429): error: identifier "std::operator <<<char,     ::std::char_traits<char> , ::std::allocator<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(430): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("printSeparator") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(430): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(430): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("printSeparator") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(430): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(430): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(430): error: calling a __host__ function("std::basic_ostream<T1, T2>  &  ::std::operator <<<char,     ::std::char_traits<char> , ::std::allocator<char> > (    ::std::basic_ostream<T1, T2>  &, const    ::std::__cxx11::basic_string<T1, T2, T3>  &)") from a __device__ function("printSeparator") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(430): error: identifier "std::operator <<<char,     ::std::char_traits<char> , ::std::allocator<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(431): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("printSeparator") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(431): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(431): error: calling a __host__ function("std::basic_ostream<T1, T2>  &  ::std::operator <<<char,     ::std::char_traits<char> , ::std::allocator<char> > (    ::std::basic_ostream<T1, T2>  &, const    ::std::__cxx11::basic_string<T1, T2, T3>  &)") from a __device__ function("printSeparator") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(431): error: identifier "std::operator <<<char,     ::std::char_traits<char> , ::std::allocator<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(431): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(438): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(438): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(438): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(442): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(442): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(442): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(443): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(443): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(443): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(444): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(445): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(445): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(445): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(447): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(448): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(449): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(450): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(453): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(453): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(453): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(454): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(454): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(454): error: calling a __host__ function("std::basic_ostream<char, std::char_traits<char> >::operator <<(unsigned long)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(454): error: identifier "std::basic_ostream<char, std::char_traits<char> >::operator <<" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(454): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(454): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(454): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(455): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(455): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(455): error: calling a __host__ function("std::basic_ostream<char, std::char_traits<char> >::operator <<(int)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(455): error: identifier "std::basic_ostream<char, std::char_traits<char> >::operator <<" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(455): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(455): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(455): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(456): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(456): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(456): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(456): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(456): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(456): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(456): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(457): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(457): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(457): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(457): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(457): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(457): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(457): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(460): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(460): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(460): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(463): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(463): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(463): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(463): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(463): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(463): error: calling a __host__ function("std::__cxx11::to_string(int)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(463): error: identifier "std::__cxx11::to_string" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(463): error: calling a __host__ function("std::basic_ostream<T1, T2>  &  ::std::operator <<<char,     ::std::char_traits<char> , ::std::allocator<char> > (    ::std::basic_ostream<T1, T2>  &, const    ::std::__cxx11::basic_string<T1, T2, T3>  &)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(463): error: identifier "std::operator <<<char,     ::std::char_traits<char> , ::std::allocator<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(464): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(464): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(464): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(464): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(464): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(464): error: calling a __host__ function("std::__cxx11::to_string(int)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(464): error: identifier "std::__cxx11::to_string" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(464): error: calling a __host__ function("std::basic_ostream<T1, T2>  &  ::std::operator <<<char,     ::std::char_traits<char> , ::std::allocator<char> > (    ::std::basic_ostream<T1, T2>  &, const    ::std::__cxx11::basic_string<T1, T2, T3>  &)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(464): error: identifier "std::operator <<<char,     ::std::char_traits<char> , ::std::allocator<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(466): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(466): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(466): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(466): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(466): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(466): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(466): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(467): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(467): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(467): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("testIntBST") is not allowed
+
+build/nvcc/cuda-src/04_bst.cu(467): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/04_bst.cu(467): error: identifier "std::cout" is undefined in device code
+
+Error limit reached.
+100 errors detected in the compilation of "build/nvcc/cuda-src/04_bst.cu".
+Compilation terminated.

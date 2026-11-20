@@ -1,0 +1,39 @@
+build/nvcc/cuda-src/asm_arch_detect.cu(29): error: asm operand type size(4) does not match type/size implied by constraint 'a'
+          : "=a"(result->eax), "=b"(result->ebx), "=c"(result->ecx), "=d"(result->edx)
+            ^
+
+build/nvcc/cuda-src/asm_arch_detect.cu(29): error: asm operand type size(4) does not match type/size implied by constraint 'b'
+          : "=a"(result->eax), "=b"(result->ebx), "=c"(result->ecx), "=d"(result->edx)
+                               ^
+
+build/nvcc/cuda-src/asm_arch_detect.cu(29): error: asm operand type size(4) does not match type/size implied by constraint 'c'
+          : "=a"(result->eax), "=b"(result->ebx), "=c"(result->ecx), "=d"(result->edx)
+                                                  ^
+
+build/nvcc/cuda-src/asm_arch_detect.cu(29): error: asm operand type size(4) does not match type/size implied by constraint 'd'
+          : "=a"(result->eax), "=b"(result->ebx), "=c"(result->ecx), "=d"(result->edx)
+                                                                     ^
+
+build/nvcc/cuda-src/asm_arch_detect.cu(30): error: asm operand type size(4) does not match type/size implied by constraint 'a'
+          : "a"(leaf), "c"(subleaf)
+            ^
+
+build/nvcc/cuda-src/asm_arch_detect.cu(30): error: asm operand type size(4) does not match type/size implied by constraint 'c'
+          : "a"(leaf), "c"(subleaf)
+                       ^
+
+build/nvcc/cuda-src/asm_arch_detect.cu(89): error: asm operand type size(4) does not match type/size implied by constraint 'a'
+      __asm__ volatile("rdtsc" : "=a"(lo), "=d"(hi));
+                                 ^
+
+build/nvcc/cuda-src/asm_arch_detect.cu(89): error: asm operand type size(4) does not match type/size implied by constraint 'd'
+      __asm__ volatile("rdtsc" : "=a"(lo), "=d"(hi));
+                                           ^
+
+build/nvcc/cuda-src/asm_arch_detect.cu(111): warning #3531-D: a volatile operand to an increment expression is deprecated
+      for (volatile int i = 0; i < 1000; i++) {}
+                                         ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+8 errors detected in the compilation of "build/nvcc/cuda-src/asm_arch_detect.cu".

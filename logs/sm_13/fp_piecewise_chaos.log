@@ -1,0 +1,7 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/fp_piecewise_chaos.cu(172): error: calling a __host__ function("printf") from a __device__ function("program_main") is not allowed
+
+1 error detected in the compilation of "/tmp/tmpxft_0006a2d0_00000000-6_fp_piecewise_chaos.cpp1.ii".

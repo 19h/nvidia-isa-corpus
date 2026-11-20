@@ -1,0 +1,10 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+cc1: warning: command-line option ‘-std=c++98’ is valid for C++/ObjC++ but not for C
+cc1: warning: command-line option ‘-std=c++98’ is valid for C++/ObjC++ but not for C
+build/nvcc/cuda-src/mem_unaligned_packed.cu(38): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z10init_blockPV11PackedBlockj'
+build/nvcc/cuda-src/mem_unaligned_packed.cu(52): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z10sum_packedPVK11PackedBlock'
+build/nvcc/cuda-src/mem_unaligned_packed.cu(70): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z8mix_tailPV10PackedTailj'
+build/nvcc/cuda-src/mem_unaligned_packed.cu(40): Error: Unaligned memory accesses not supported

@@ -1,0 +1,2 @@
+ptxas /tmp/tmpxft_000672f3_00000000-6_min_nop_sled.ptx, line 43; fatal   : Parsing error near 'nop': syntax error
+ptxas fatal   : Ptx assembly aborted due to errors

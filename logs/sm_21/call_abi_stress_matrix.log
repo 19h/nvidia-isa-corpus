@@ -1,0 +1,8 @@
+nvcc warning : The 'compute_20', 'sm_20', and 'sm_21' architectures are deprecated, and may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/call_abi_stress_matrix.cu(207): error: a __device__ or __host__ __device__ function cannot have ellipsis
+
+1 error detected in the compilation of "/tmp/tmpxft_0006a996_00000000-7_call_abi_stress_matrix.cpp1.ii".

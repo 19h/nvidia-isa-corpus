@@ -1,0 +1,215 @@
+build/nvcc/cuda-src/05_thread_pool.cu(83): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "[ThreadPool] Initialized with " << num_threads << " worker threads\n";
+               ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/05_thread_pool.cu(186): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+                  std::cout << "[ThreadPool] Immediate shutdown requested\n";
+                       ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(188): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+                  std::cout << "[ThreadPool] Graceful shutdown requested ("
+                       ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(203): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "[ThreadPool] Shutdown complete. Tasks completed: "
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(270): error: device code does not support exception handling
+              try {
+              ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(275): warning #20096-D: address of a host variable "std::cerr" cannot be directly taken in a __device__/__global__ function
+                  std::cerr << "[ThreadPool] Worker " << thread_id
+                       ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(348): error: device code does not support exception handling
+          throw std::invalid_argument("Negative value not allowed: " + std::to_string(x));
+          ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(355): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "=== Thread Pool Demonstration ===\n\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(359): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "Hardware concurrency: " << num_threads << " threads\n\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(364): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "--- Test 1: Parallel Sum of Squares ---\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(401): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "Sum of squares [0, " << N << "):\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(402): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Parallel result:   " << parallel_result << " (" << parallel_duration << " ms)\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(403): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Sequential result: " << sequential_result << " (" << sequential_duration << " ms)\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(404): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Results match: " << (parallel_result == sequential_result ? "YES" : "NO") << "\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(406): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << "  Speedup: " << std::fixed << std::setprecision(2)
+                   ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(410): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(415): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "--- Test 2: Various Callable Types ---\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(442): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Lambda (10 + 20): " << lambda_future.get() << "\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(443): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Function pointer (100 + 200): " << func_ptr_future.get() << "\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(444): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Functor (7 * 5): " << functor_future.get() << "\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(445): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  std::function (8^2): " << std_func_future.get() << "\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(446): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Capturing lambda (42 * 2): " << capture_future.get() << "\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(448): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(453): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "--- Test 3: Exception Handling ---\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(464): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Successful task (10 * 2): " << success_future.get() << "\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(467): error: device code does not support exception handling
+          try {
+          ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(469): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << "  ERROR: Exception was not thrown!\n";
+                   ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(471): error: calling a __host__ function("what") from a __device__ function("program_main") is not allowed
+              std::cout << "  Exception caught as expected: " << e.what() << "\n";
+                                                                   ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(471): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << "  Exception caught as expected: " << e.what() << "\n";
+                   ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(474): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(479): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "--- Test 4: High Task Volume ---\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(511): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Submitted " << num_tasks << " tasks\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(512): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Total result: " << total << "\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(513): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Time: " << duration << " ms\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(514): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Throughput: " << std::fixed << std::setprecision(0)
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(518): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Stats: " << completed << "/" << queued << " tasks completed\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(520): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(525): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "--- Test 5: Void Return Type Tasks ---\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(543): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Counter after 10 increments (0+1+2+...+9): " << counter.load() << "\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(544): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Expected: 45\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(546): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(551): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "--- Test 6: Graceful Shutdown ---\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(566): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Submitted 20 tasks (each takes 20ms)\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(567): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Pool will shutdown gracefully (wait for all tasks)...\n";
+               ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(571): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "  Graceful shutdown test completed\n\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(576): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "--- Test 7: Submit After Shutdown ---\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(581): error: device code does not support exception handling
+          try {
+          ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(583): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << "  ERROR: Should have thrown exception!\n";
+                   ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(585): error: calling a __host__ function("what") from a __device__ function("program_main") is not allowed
+              std::cout << "  Exception caught as expected: " << e.what() << "\n";
+                                                                   ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(585): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << "  Exception caught as expected: " << e.what() << "\n";
+                   ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(588): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(590): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "=== All Tests Completed ===\n";
+           ^
+
+build/nvcc/cuda-src/05_thread_pool.cu(144): error: device code does not support exception handling
+                  throw std::runtime_error("Cannot submit task to stopped ThreadPool");
+                  ^
+
+7 errors detected in the compilation of "build/nvcc/cuda-src/05_thread_pool.cu".

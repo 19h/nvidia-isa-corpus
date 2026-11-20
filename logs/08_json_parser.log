@@ -1,0 +1,407 @@
+build/nvcc/cuda-src/08_json_parser.cu(197): error: device code does not support exception handling
+              throw std::runtime_error("JSON value is not an array (is " + type_name() + ")");
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(201): error: device code does not support exception handling
+              throw std::out_of_range("Array index " + std::to_string(index) +
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(209): error: device code does not support exception handling
+              throw std::runtime_error("JSON value is not an array (is " + type_name() + ")");
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(213): error: device code does not support exception handling
+              throw std::out_of_range("Array index " + std::to_string(index) +
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(222): error: device code does not support exception handling
+              throw std::runtime_error("JSON value is not an object (is " + type_name() + ")");
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(229): error: device code does not support exception handling
+              throw std::runtime_error("JSON value is not an object (is " + type_name() + ")");
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(234): error: device code does not support exception handling
+              throw std::out_of_range("Key not found: " + key);
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(269): error: device code does not support exception handling
+          throw std::runtime_error("size() called on non-container JSON value");
+          ^
+
+build/nvcc/cuda-src/08_json_parser.cu(270): warning #940-D: missing return statement at end of non-void function "JsonValue::size"
+      }
+      ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/08_json_parser.cu(282): error: device code does not support exception handling
+              throw std::runtime_error("push_back() called on non-array JSON value");
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(289): error: device code does not support exception handling
+              throw std::runtime_error("push_back() called on non-array JSON value");
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(600): error: device code does not support exception handling
+              throw JsonParseError("Unexpected content after JSON value",
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(616): error: device code does not support exception handling
+          try {
+          ^
+
+build/nvcc/cuda-src/08_json_parser.cu(619): error: calling a __host__ function("what") from a __device__ function("try_parse") is not allowed
+              if (error_out) *error_out = e.what();
+                                            ^
+
+build/nvcc/cuda-src/08_json_parser.cu(627): error: device code does not support exception handling
+              throw std::runtime_error("Failed to open file: " + filename);
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(637): error: device code does not support exception handling
+          try {
+          ^
+
+build/nvcc/cuda-src/08_json_parser.cu(640): error: calling a __host__ function("what") from a __device__ function("try_parse_file") is not allowed
+              if (error_out) *error_out = e.what();
+                                            ^
+
+build/nvcc/cuda-src/08_json_parser.cu(650): error: device code does not support exception handling
+              throw JsonParseError(m_current_token.value,
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(658): error: device code does not support exception handling
+              throw JsonParseError("Expected " + expected + ", got '" +
+              ^
+
+build/nvcc/cuda-src/08_json_parser.cu(691): error: device code does not support exception handling
+                  throw JsonParseError("Unexpected end of input",
+                  ^
+
+build/nvcc/cuda-src/08_json_parser.cu(694): error: device code does not support exception handling
+                  throw JsonParseError("Unexpected token: " + m_current_token.value,
+                  ^
+
+build/nvcc/cuda-src/08_json_parser.cu(698): warning #940-D: missing return statement at end of non-void function "JsonParser::parse_value"
+      }
+      ^
+
+build/nvcc/cuda-src/08_json_parser.cu(731): error: device code does not support exception handling
+                  throw JsonParseError("Trailing comma not allowed in JSON",
+                  ^
+
+build/nvcc/cuda-src/08_json_parser.cu(764): error: device code does not support exception handling
+                  throw JsonParseError("Trailing comma not allowed in JSON",
+                  ^
+
+build/nvcc/cuda-src/08_json_parser.cu(998): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "=== JSON Parser and Serializer Demo ===\n\n";
+           ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1003): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "1. Parsing complex nested JSON:\n";
+           ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1004): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << std::string(50, '-') << '\n';
+           ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1038): error: device code does not support exception handling
+      try {
+      ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1040): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "Successfully parsed JSON!\n\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1045): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "2. Accessing values:\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1046): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << std::string(50, '-') << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1048): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  name: " << doc["name"].get_string() << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1049): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  version: " << doc["version"].get_number() << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1050): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  enabled: " << (doc["enabled"].get_bool() ? "true" : "false") << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1054): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << "  numbers.integer: " << *val << '\n';
+                   ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1057): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << "  numbers.scientific: " << std::scientific << *val << std::fixed << '\n';
+                   ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1061): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  features.unicode: " << doc["features"]["unicode"].get_string() << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1062): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  features.nested.level1.level2.level3[2]: "
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1066): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  arrays.strings[1]: " << doc["arrays"]["strings"][1].get_string() << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1067): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  arrays.mixed size: " << doc["arrays"]["mixed"].size() << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1069): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1074): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "3. Modifying the document:\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1075): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << std::string(50, '-') << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1103): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Added fields: newField, timestamp, numbers.added, newArray, newObject\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1104): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Modified: version (now " << doc["version"].as_number().value() << ")\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1105): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Modified: enabled (now " << (doc["enabled"].get_bool() ? "true" : "false") << ")\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1106): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Deleted: metadata\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1107): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  arrays.strings now has " << doc["arrays"]["strings"].size() << " elements\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1108): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1113): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "4. Pretty-printed output (first 60 lines):\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1114): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << std::string(50, '-') << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1123): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << line << '\n';
+                   ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1127): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << "  ... (truncated)\n";
+                   ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1129): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1134): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "5. Compact serialization (first 200 chars):\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1135): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << std::string(50, '-') << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1139): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << compact.substr(0, 200) << "...\n";
+                   ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1141): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << compact << '\n';
+                   ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1143): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Total length: " << compact.length() << " characters\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1144): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Pretty length: " << pretty.length() << " characters\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1145): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1150): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "6. Building JSON programmatically:\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1151): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << std::string(50, '-') << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1170): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << json::stringify(config) << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1171): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1176): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "7. Error handling demonstrations:\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1177): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << std::string(50, '-') << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1198): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+                  std::cout << "  " << desc << ":\n    " << error << "\n\n";
+                       ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1205): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "8. Type checking and safe access:\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1206): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << std::string(50, '-') << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1212): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << "  [" << i << "]: type=" << val.type_name();
+                   ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1215): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+                  std::cout << ", value=" << *n;
+                       ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1217): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+                  std::cout << ", value=\"" << *s << "\"";
+                       ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1219): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+                  std::cout << ", value=" << (*b ? "true" : "false");
+                       ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1221): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+                  std::cout << ", value=null";
+                       ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1223): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+                  std::cout << ", keys=" << val.size();
+                       ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1225): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              std::cout << '\n';
+                   ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1227): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1232): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "9. Safe defaults with value_or():\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1233): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << std::string(50, '-') << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1240): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  timeout: " << settings.value_or("timeout", 60) << " (exists)\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1241): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  retries: " << settings.value_or("retries", 3) << " (default)\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1242): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  verbose: " << (settings.value_or("verbose", false) ? "true" : "false") << " (exists)\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1243): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  debug: " << (settings.value_or("debug", false) ? "true" : "false") << " (default)\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1244): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1249): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "10. Unicode and escape sequences:\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1250): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << std::string(50, '-') << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1260): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Chinese: " << unicode_test["chinese"].get_string() << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1261): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Japanese: " << unicode_test["japanese"].get_string() << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1262): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Emoji: " << unicode_test["emoji"].get_string() << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1263): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "  Escapes (raw): ";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1265): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              if (c == '\t') std::cout << "[TAB]";
+                                  ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1266): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              else if (c == '\n') std::cout << "[NL]";
+                                       ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1267): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+              else std::cout << c;
+                        ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1269): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1270): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1272): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+          std::cout << "=== All tests completed successfully! ===\n";
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1275): error: calling a __host__ function("what") from a __device__ function("program_main") is not allowed
+          std::cerr << "Parse error: " << e.what() << '\n';
+                                            ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1275): warning #20096-D: address of a host variable "std::cerr" cannot be directly taken in a __device__/__global__ function
+          std::cerr << "Parse error: " << e.what() << '\n';
+               ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1278): error: calling a __host__ function("what") from a __device__ function("program_main") is not allowed
+          std::cerr << "Error: " << e.what() << '\n';
+                                      ^
+
+build/nvcc/cuda-src/08_json_parser.cu(1278): warning #20096-D: address of a host variable "std::cerr" cannot be directly taken in a __device__/__global__ function
+          std::cerr << "Error: " << e.what() << '\n';
+               ^
+
+25 errors detected in the compilation of "build/nvcc/cuda-src/08_json_parser.cu".

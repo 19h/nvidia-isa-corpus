@@ -1,0 +1,9 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+cc1: warning: command-line option ‘-std=c++98’ is valid for C++/ObjC++ but not for C
+cc1: warning: command-line option ‘-std=c++98’ is valid for C++/ObjC++ but not for C
+build/nvcc/cuda-src/int_bitfields.cu(40): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z11pack_fieldsPV9BitFieldAj'
+build/nvcc/cuda-src/int_bitfields.cu(57): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z11sign_fieldsPV9BitFieldBi'
+build/nvcc/cuda-src/int_bitfields.cu(89): Error: Unaligned memory accesses not supported

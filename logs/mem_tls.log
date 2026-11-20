@@ -1,0 +1,91 @@
+build/nvcc/cuda-src/mem_tls.cu(17): error: identifier "_Thread_local" is undefined
+  __attribute__((device)) _Thread_local uint32_t tls_counter;
+                          ^
+
+build/nvcc/cuda-src/mem_tls.cu(17): error: "uint32_t" has already been declared in the current scope
+  __attribute__((device)) _Thread_local uint32_t tls_counter;
+                                        ^
+
+build/nvcc/cuda-src/mem_tls.cu(17): error: expected a ";"
+  __attribute__((device)) _Thread_local uint32_t tls_counter;
+                                                 ^
+
+build/nvcc/cuda-src/mem_tls.cu(18): error: identifier "_Thread_local" is undefined
+  __attribute__((device)) _Thread_local uint64_t tls_accum;
+                          ^
+
+build/nvcc/cuda-src/mem_tls.cu(18): error: "uint64_t" has already been declared in the current scope
+  __attribute__((device)) _Thread_local uint64_t tls_accum;
+                                        ^
+
+build/nvcc/cuda-src/mem_tls.cu(18): error: expected a ";"
+  __attribute__((device)) _Thread_local uint64_t tls_accum;
+                                                 ^
+
+build/nvcc/cuda-src/mem_tls.cu(19): error: identifier "_Thread_local" is undefined
+  __attribute__((device)) _Thread_local uint8_t tls_bytes[13];
+                          ^
+
+build/nvcc/cuda-src/mem_tls.cu(19): error: "uint8_t" has already been declared in the current scope
+  __attribute__((device)) _Thread_local uint8_t tls_bytes[13];
+                                        ^
+
+build/nvcc/cuda-src/mem_tls.cu(19): error: expected a ";"
+  __attribute__((device)) _Thread_local uint8_t tls_bytes[13];
+                                                ^
+
+build/nvcc/cuda-src/mem_tls.cu(22): error: variable "uint32_t" is not a type name
+      uint32_t a;
+      ^
+
+build/nvcc/cuda-src/mem_tls.cu(24): error: variable "uint8_t" is not a type name
+      uint8_t c;
+      ^
+
+build/nvcc/cuda-src/mem_tls.cu(25): error: variable "uint8_t" is not a type name
+      uint8_t d;
+      ^
+
+build/nvcc/cuda-src/mem_tls.cu(28): error: identifier "_Thread_local" is undefined
+  __attribute__((device)) _Thread_local TlsBlock tls_block;
+                          ^
+
+build/nvcc/cuda-src/mem_tls.cu(28): error: "TlsBlock" has already been declared in the current scope
+  __attribute__((device)) _Thread_local TlsBlock tls_block;
+                                        ^
+
+build/nvcc/cuda-src/mem_tls.cu(28): error: expected a ";"
+  __attribute__((device)) _Thread_local TlsBlock tls_block;
+                                                 ^
+
+build/nvcc/cuda-src/mem_tls.cu(29): error: identifier "_Thread_local" is undefined
+  __attribute__((device)) _Thread_local uint64_t tls_array[4];
+                          ^
+
+build/nvcc/cuda-src/mem_tls.cu(29): error: variable "uint64_t" has already been defined (previous definition at line 18)
+  __attribute__((device)) _Thread_local uint64_t tls_array[4];
+                                        ^
+
+build/nvcc/cuda-src/mem_tls.cu(29): error: expected a ";"
+  __attribute__((device)) _Thread_local uint64_t tls_array[4];
+                                                 ^
+
+build/nvcc/cuda-src/mem_tls.cu(32): error: variable "uint64_t" is not a type name
+  uint64_t tls_update(uint32_t seed) {
+  ^
+
+build/nvcc/cuda-src/mem_tls.cu(31): warning #1835-D: attribute "noinline" does not apply here
+  __attribute__((device)) __attribute__((noinline))
+                                         ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/mem_tls.cu(32): error: expected a ")"
+  uint64_t tls_update(uint32_t seed) {
+                               ^
+
+build/nvcc/cuda-src/mem_tls.cu(32): error: expected a ";"
+  uint64_t tls_update(uint32_t seed) {
+                                     ^
+
+21 errors detected in the compilation of "build/nvcc/cuda-src/mem_tls.cu".

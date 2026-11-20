@@ -1,0 +1,57 @@
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(263): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "cpp_constexpr_variant_graph " << checksum << '\n';
+           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(263): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, char)") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(263): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(263): error: calling a __host__ function("std::basic_ostream<char, std::char_traits<char> >::operator <<(unsigned long)") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(263): error: identifier "std::basic_ostream<char, std::char_traits<char> >::operator <<" is undefined in device code
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(263): error: calling a __host__ function("std::basic_ostream<char, T1>  &  ::std::operator <<<    ::std::char_traits<char> > (    ::std::basic_ostream<char, T1>  &, const char *)") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(263): error: identifier "std::operator <<<    ::std::char_traits<char> > " is undefined in device code
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(263): error: identifier "std::cout" is undefined in device code
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(162): error: calling a __host__ function("std::unique_ptr< ::_NV_ANON_NAMESPACE::Rule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::Rule> > ::unique_ptr< ::_NV_ANON_NAMESPACE::AffineRule,  ::std::default_delete< ::_NV_ANON_NAMESPACE::AffineRule> , void> (::std::unique_ptr<T1, T2> &&)") from a __device__ function("_NV_ANON_NAMESPACE::RuleSet::RuleSet") is not allowed
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(162): error: identifier "std::unique_ptr< ::_NV_ANON_NAMESPACE::Rule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::Rule> > ::unique_ptr< ::_NV_ANON_NAMESPACE::AffineRule,  ::std::default_delete< ::_NV_ANON_NAMESPACE::AffineRule> , void> " is undefined in device code
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(162): error: calling a __host__ function("std::__detail::_MakeUniq<T1> ::__single_object   ::std::make_unique< ::_NV_ANON_NAMESPACE::AffineRule  > (T2 &&...)") from a __device__ function("_NV_ANON_NAMESPACE::RuleSet::RuleSet") is not allowed
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(162): error: identifier "std::make_unique< ::_NV_ANON_NAMESPACE::AffineRule  > " is undefined in device code
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(162): error: calling a __host__ function("std::unique_ptr< ::_NV_ANON_NAMESPACE::Rule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::Rule> > ::~unique_ptr()") from a __device__ function("_NV_ANON_NAMESPACE::RuleSet::RuleSet") is not allowed
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(162): error: identifier "std::unique_ptr< ::_NV_ANON_NAMESPACE::Rule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::Rule> > ::~unique_ptr" is undefined in device code
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(162): error: calling a __host__ function("std::unique_ptr< ::_NV_ANON_NAMESPACE::AffineRule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::AffineRule> > ::~unique_ptr()") from a __device__ function("_NV_ANON_NAMESPACE::RuleSet::RuleSet") is not allowed
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(162): error: identifier "std::unique_ptr< ::_NV_ANON_NAMESPACE::AffineRule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::AffineRule> > ::~unique_ptr" is undefined in device code
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(163): error: calling a __host__ function("std::unique_ptr< ::_NV_ANON_NAMESPACE::Rule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::Rule> > ::unique_ptr< ::_NV_ANON_NAMESPACE::GateRule,  ::std::default_delete< ::_NV_ANON_NAMESPACE::GateRule> , void> (::std::unique_ptr<T1, T2> &&)") from a __device__ function("_NV_ANON_NAMESPACE::RuleSet::RuleSet") is not allowed
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(163): error: identifier "std::unique_ptr< ::_NV_ANON_NAMESPACE::Rule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::Rule> > ::unique_ptr< ::_NV_ANON_NAMESPACE::GateRule,  ::std::default_delete< ::_NV_ANON_NAMESPACE::GateRule> , void> " is undefined in device code
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(163): error: calling a __host__ function("std::__detail::_MakeUniq<T1> ::__single_object   ::std::make_unique< ::_NV_ANON_NAMESPACE::GateRule  > (T2 &&...)") from a __device__ function("_NV_ANON_NAMESPACE::RuleSet::RuleSet") is not allowed
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(163): error: identifier "std::make_unique< ::_NV_ANON_NAMESPACE::GateRule  > " is undefined in device code
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(163): error: calling a __host__ function("std::unique_ptr< ::_NV_ANON_NAMESPACE::Rule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::Rule> > ::~unique_ptr()") from a __device__ function("_NV_ANON_NAMESPACE::RuleSet::RuleSet") is not allowed
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(163): error: identifier "std::unique_ptr< ::_NV_ANON_NAMESPACE::Rule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::Rule> > ::~unique_ptr" is undefined in device code
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(163): error: calling a __host__ function("std::unique_ptr< ::_NV_ANON_NAMESPACE::GateRule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::GateRule> > ::~unique_ptr()") from a __device__ function("_NV_ANON_NAMESPACE::RuleSet::RuleSet") is not allowed
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(163): error: identifier "std::unique_ptr< ::_NV_ANON_NAMESPACE::GateRule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::GateRule> > ::~unique_ptr" is undefined in device code
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(169): error: calling a __host__ function("std::unique_ptr< ::_NV_ANON_NAMESPACE::Rule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::Rule> > ::operator ->() const") from a __device__ function("_NV_ANON_NAMESPACE::RuleSet::apply const") is not allowed
+
+build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu(169): error: identifier "std::unique_ptr< ::_NV_ANON_NAMESPACE::Rule,     ::std::default_delete< ::_NV_ANON_NAMESPACE::Rule> > ::operator -> const" is undefined in device code
+
+25 errors detected in the compilation of "build/nvcc/cuda-src/cpp_constexpr_variant_graph.cu".

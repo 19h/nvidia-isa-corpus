@@ -1,0 +1,20 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+cc1: warning: command-line option ‘-std=c++98’ is valid for C++/ObjC++ but not for C
+cc1: warning: command-line option ‘-std=c++98’ is valid for C++/ObjC++ but not for C
+build/nvcc/cuda-src/mem_random.cu(69): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z18pointer_chase_listP4Nodei'
+build/nvcc/cuda-src/mem_random.cu(81): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z15indirect_accessPKiPKmm'
+build/nvcc/cuda-src/mem_random.cu(91): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z15double_indirectPKiPKmS2_m'
+build/nvcc/cuda-src/mem_random.cu(101): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z11index_chasePKiPKmmi'
+build/nvcc/cuda-src/mem_random.cu(114): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z15permuted_accessPKiPKmm'
+build/nvcc/cuda-src/mem_random.cu(124): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z14permuted_writePiPKmPKim'
+build/nvcc/cuda-src/mem_random.cu(159): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z13tree_preorderP8TreeNode'
+build/nvcc/cuda-src/mem_random.cu(166): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z14tree_iterativeP8TreeNode'
+build/nvcc/cuda-src/mem_random.cu(185): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z10bst_lookupP8TreeNodei'
+build/nvcc/cuda-src/mem_random.cu(200): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z13random_accessPKimi'
+build/nvcc/cuda-src/mem_random.cu(211): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z16dependent_randomPKimi'
+build/nvcc/cuda-src/mem_random.cu(223): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z14strided_randomPKimmi'
+build/nvcc/cuda-src/mem_random.cu(161): Error: Recursive function call is not supported yet: tree_preorder(TreeNode*)
+build/nvcc/cuda-src/mem_random.cu(161): Error: Recursive function call is not supported yet: tree_preorder(TreeNode*)

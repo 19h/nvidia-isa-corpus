@@ -1,0 +1,9 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+cc1: warning: command-line option ‘-std=c++98’ is valid for C++/ObjC++ but not for C
+cc1: warning: command-line option ‘-std=c++98’ is valid for C++/ObjC++ but not for C
+build/nvcc/cuda-src/call_nested.cu(106): Error: Recursive function call is not supported yet: mutual_a(int, int)
+build/nvcc/cuda-src/call_nested.cu(90): Error: Recursive function call is not supported yet: deep_with_locals(int, int)
+build/nvcc/cuda-src/call_nested.cu(89): Error: Recursive function call is not supported yet: deep_with_locals(int, int)

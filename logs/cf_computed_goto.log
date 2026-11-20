@@ -1,0 +1,117 @@
+build/nvcc/cuda-src/cf_computed_goto.cu(44): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_nop,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(45): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_push,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(46): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_pop,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(47): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_add,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(48): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_sub,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(49): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_mul,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(50): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_div,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(51): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_dup,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(52): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_swap,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(53): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_load,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(54): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_store,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(55): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_jmp,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(56): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_jz,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(57): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_jnz,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(58): error: address of label extension is not supported in __device__/__global__ functions
+          &&do_halt
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(193): error: address of label extension is not supported in __device__/__global__ functions
+          &&state_init,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(194): error: address of label extension is not supported in __device__/__global__ functions
+          &&state_running,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(195): error: address of label extension is not supported in __device__/__global__ functions
+          &&state_waiting,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(196): error: address of label extension is not supported in __device__/__global__ functions
+          &&state_done
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(236): error: address of label extension is not supported in __device__/__global__ functions
+          &&handle_alpha,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(237): error: address of label extension is not supported in __device__/__global__ functions
+          &&handle_digit,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(238): error: address of label extension is not supported in __device__/__global__ functions
+          &&handle_space,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(239): error: address of label extension is not supported in __device__/__global__ functions
+          &&handle_other
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(293): error: address of label extension is not supported in __device__/__global__ functions
+          &&t_lit, (void*)10,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(294): error: address of label extension is not supported in __device__/__global__ functions
+          &&t_lit, (void*)20,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(295): error: address of label extension is not supported in __device__/__global__ functions
+          &&t_add,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(296): error: address of label extension is not supported in __device__/__global__ functions
+          &&t_dup,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(297): error: address of label extension is not supported in __device__/__global__ functions
+          &&t_mul,
+          ^
+
+build/nvcc/cuda-src/cf_computed_goto.cu(298): error: address of label extension is not supported in __device__/__global__ functions
+          &&t_exit
+          ^
+
+29 errors detected in the compilation of "build/nvcc/cuda-src/cf_computed_goto.cu".

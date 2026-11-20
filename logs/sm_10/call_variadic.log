@@ -1,0 +1,17 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/call_variadic.cu(18): error: a "device" function cannot have ellipsis
+
+build/nvcc/cuda-src/call_variadic.cu(32): error: a "device" function cannot have ellipsis
+
+build/nvcc/cuda-src/call_variadic.cu(46): error: a "device" function cannot have ellipsis
+
+build/nvcc/cuda-src/call_variadic.cu(84): error: a "device" function cannot have ellipsis
+
+build/nvcc/cuda-src/call_variadic.cu(94): error: a "device" function cannot have ellipsis
+
+build/nvcc/cuda-src/call_variadic.cu(116): error: a "device" function cannot have ellipsis
+
+6 errors detected in the compilation of "/tmp/tmpxft_0006f5cb_00000000-6_call_variadic.cpp1.ii".

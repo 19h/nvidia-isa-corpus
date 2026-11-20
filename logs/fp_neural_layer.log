@@ -1,0 +1,6 @@
+build/nvcc/cuda-src/fp_neural_layer.cu(43): warning #177-D: function "approx_sigmoid" was declared but never referenced
+  __attribute__((device)) static inline float approx_sigmoid(float x) {
+                                              ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+

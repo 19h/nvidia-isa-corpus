@@ -1,0 +1,6 @@
+build/nvcc/cuda-src/int_popcount.cu(104): warning #177-D: function "ffs_soft" was declared but never referenced
+  __attribute__((device)) static inline int ffs_soft(uint32_t x) {
+                                            ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+

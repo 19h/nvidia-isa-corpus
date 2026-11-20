@@ -1,0 +1,5 @@
+program	sm	status	device_sink	host_sink
+min_add_chain	sm_89	pass	-318996684	-318996684
+int_sha256	sm_89	pass	40763203	40763203
+cf_switch_dense	sm_89	pass	88875818582	88875818582
+fp_fft	sm_89	pass	344194117.2522953	344194117.2522953

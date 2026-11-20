@@ -1,0 +1,53 @@
+build/nvcc/cuda-src/02_fibonacci.cu(62): error: identifier "stderr" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(62): error: calling a __host__ function("fprintf") from a __device__ function("fib_naive") is not allowed
+
+build/nvcc/cuda-src/02_fibonacci.cu(62): error: identifier "fprintf" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(92): error: identifier "stderr" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(92): error: calling a __host__ function("fprintf") from a __device__ function("fib_memo") is not allowed
+
+build/nvcc/cuda-src/02_fibonacci.cu(92): error: identifier "fprintf" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(98): error: identifier "stderr" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(98): error: calling a __host__ function("fprintf") from a __device__ function("fib_memo") is not allowed
+
+build/nvcc/cuda-src/02_fibonacci.cu(98): error: identifier "fprintf" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(135): error: calling a __host__ function("clock_gettime") from a __device__ function("get_time_seconds") is not allowed
+
+build/nvcc/cuda-src/02_fibonacci.cu(135): error: identifier "clock_gettime" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(148): error: calling a __host__ function("__errno_location") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/02_fibonacci.cu(148): error: identifier "__errno_location" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(149): error: calling a __host__ function("strtol") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/02_fibonacci.cu(149): error: identifier "strtol" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(151): error: calling a __host__ function("__errno_location") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/02_fibonacci.cu(151): error: identifier "__errno_location" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(152): error: identifier "stderr" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(152): error: calling a __host__ function("fprintf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/02_fibonacci.cu(152): error: identifier "fprintf" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(153): error: calling a __host__ function("fprintf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/02_fibonacci.cu(153): error: identifier "fprintf" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(153): error: identifier "stderr" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(225): error: identifier "stderr" is undefined in device code
+
+build/nvcc/cuda-src/02_fibonacci.cu(225): error: calling a __host__ function("fprintf") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/02_fibonacci.cu(225): error: identifier "fprintf" is undefined in device code
+
+26 errors detected in the compilation of "build/nvcc/cuda-src/02_fibonacci.cu".

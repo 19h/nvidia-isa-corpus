@@ -1,0 +1,65 @@
+build/nvcc/cuda-src/asm_atomic_ops.cu(25): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+      __asm__ volatile("movl %1, %0" : "=r"(val) : "m"(*ptr) : "memory");
+                                                   ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(31): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+      __asm__ volatile("movl %1, %0" : "=m"(*ptr) : "r"(val) : "memory");
+                                       ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(39): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+          : "=r"(result), "+m"(*ptr)
+                          ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(40): error: asm operand type size(4) does not match type/size implied by constraint '0'
+          : "0"(val)
+            ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(51): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+          : "=r"(result), "+m"(*ptr)
+                          ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(52): error: asm operand type size(4) does not match type/size implied by constraint '0'
+          : "0"(val)
+            ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(63): error: asm operand type size(4) does not match type/size implied by constraint 'a'
+          : "=a"(prev), "+m"(*ptr)
+            ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(63): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+          : "=a"(prev), "+m"(*ptr)
+                        ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(64): error: asm operand type size(4) does not match type/size implied by constraint '0'
+          : "r"(desired), "0"(expected)
+                          ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(76): error: asm operand type size(8) does not match type/size implied by constraint 'r'
+          : "=r"(result), "+m"(*ptr)
+            ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(76): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+          : "=r"(result), "+m"(*ptr)
+                          ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(77): error: asm operand type size(8) does not match type/size implied by constraint '0'
+          : "0"(val)
+            ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(88): error: asm operand type size(8) does not match type/size implied by constraint 'a'
+          : "=a"(prev), "+m"(*ptr)
+            ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(88): error: asm constraint letter 'm' is not allowed inside a __device__/__global__ function
+          : "=a"(prev), "+m"(*ptr)
+                        ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(89): error: asm operand type size(8) does not match type/size implied by constraint 'r'
+          : "r"(desired), "0"(expected)
+            ^
+
+build/nvcc/cuda-src/asm_atomic_ops.cu(89): error: asm operand type size(8) does not match type/size implied by constraint '0'
+          : "r"(desired), "0"(expected)
+                          ^
+
+16 errors detected in the compilation of "build/nvcc/cuda-src/asm_atomic_ops.cu".

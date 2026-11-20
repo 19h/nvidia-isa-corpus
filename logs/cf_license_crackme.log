@@ -1,0 +1,85 @@
+build/nvcc/cuda-src/cf_license_crackme.cu(102): error: calling a __host__ function("fwrite") from a __device__ function("e0") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(102): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(103): error: calling a __host__ function("fwrite") from a __device__ function("e1") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(103): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(104): error: calling a __host__ function("fwrite") from a __device__ function("e2") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(104): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(105): error: calling a __host__ function("fwrite") from a __device__ function("e3") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(105): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(106): error: calling a __host__ function("fwrite") from a __device__ function("e4") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(106): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(107): error: calling a __host__ function("fwrite") from a __device__ function("e5") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(107): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(108): error: calling a __host__ function("fwrite") from a __device__ function("e6") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(108): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(109): error: calling a __host__ function("fwrite") from a __device__ function("e7") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(109): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(110): error: calling a __host__ function("fwrite") from a __device__ function("e8") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(110): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(111): error: calling a __host__ function("fwrite") from a __device__ function("e9") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(111): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(112): error: calling a __host__ function("fwrite") from a __device__ function("e10") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(112): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(113): error: calling a __host__ function("fwrite") from a __device__ function("e11") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(113): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(114): error: calling a __host__ function("fwrite") from a __device__ function("e12") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(114): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(115): error: calling a __host__ function("fwrite") from a __device__ function("e13") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(115): error: identifier "fwrite" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(501): error: calling a __host__ function("fflush") from a __device__ function("k3") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(501): error: identifier "fflush" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(543): error: identifier "stdout" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(544): error: calling a __host__ function("fgets") from a __device__ function("program_main") is not allowed
+
+build/nvcc/cuda-src/cf_license_crackme.cu(544): error: identifier "fgets" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(544): error: identifier "stdin" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(545): error: identifier "stdout" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(550): error: identifier "stdout" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(551): error: identifier "stdout" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(552): error: identifier "stdout" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(553): error: identifier "stdout" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(557): error: identifier "stdout" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(558): error: identifier "stdout" is undefined in device code
+
+build/nvcc/cuda-src/cf_license_crackme.cu(560): error: identifier "stdout" is undefined in device code
+
+42 errors detected in the compilation of "build/nvcc/cuda-src/cf_license_crackme.cu".

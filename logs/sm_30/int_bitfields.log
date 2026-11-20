@@ -1,0 +1,6 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+build/nvcc/cuda-src/int_bitfields.cu(18): error: "Bitfields and field types containing bitfields are not supported in packed structures and unions for device compilation!"
+

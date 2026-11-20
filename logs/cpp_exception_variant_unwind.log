@@ -1,0 +1,51 @@
+build/nvcc/cuda-src/cpp_exception_variant_unwind.cu(140): error: device code does not support exception handling
+                  throw PhaseFault(static_cast<std::uint32_t>(index + 11U), static_cast<std::uint32_t>(round));
+                  ^
+
+build/nvcc/cuda-src/cpp_exception_variant_unwind.cu(149): error: device code does not support exception handling
+                  throw Fault(static_cast<std::uint32_t>(pair.salt + index));
+                  ^
+
+build/nvcc/cuda-src/cpp_exception_variant_unwind.cu(156): error: device code does not support exception handling
+                  throw PhaseFault(static_cast<std::uint32_t>(gate.mask), static_cast<std::uint32_t>(index + round));
+                  ^
+
+build/nvcc/cuda-src/cpp_exception_variant_unwind.cu(163): error: device code does not support exception handling
+                  throw RetryFault(detour.trip + static_cast<std::uint32_t>(index), mix64(source + seed));
+                  ^
+
+build/nvcc/cuda-src/cpp_exception_variant_unwind.cu(201): error: device code does not support exception handling
+          throw PhaseFault(0x77U, static_cast<std::uint32_t>(seed & 31ULL));
+          ^
+
+build/nvcc/cuda-src/cpp_exception_variant_unwind.cu(204): error: device code does not support exception handling
+      try {
+      ^
+
+build/nvcc/cuda-src/cpp_exception_variant_unwind.cu(210): error: device code does not support exception handling
+              throw;
+              ^
+
+build/nvcc/cuda-src/cpp_exception_variant_unwind.cu(228): error: device code does not support exception handling
+              try {
+              ^
+
+build/nvcc/cuda-src/cpp_exception_variant_unwind.cu(229): error: device code does not support exception handling
+                  try {
+                  ^
+
+build/nvcc/cuda-src/cpp_exception_variant_unwind.cu(234): error: device code does not support exception handling
+                          throw;
+                          ^
+
+build/nvcc/cuda-src/cpp_exception_variant_unwind.cu(248): error: device code does not support exception handling
+          try {
+          ^
+
+build/nvcc/cuda-src/cpp_exception_variant_unwind.cu(267): warning #20096-D: address of a host variable "std::cout" cannot be directly taken in a __device__/__global__ function
+      std::cout << "cpp_exception_variant_unwind " << checksum << '\n';
+           ^
+
+Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+
+11 errors detected in the compilation of "build/nvcc/cuda-src/cpp_exception_variant_unwind.cu".

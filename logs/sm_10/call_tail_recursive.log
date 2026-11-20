@@ -1,0 +1,19 @@
+<command-line>: warning: "__GNUC__" redefined
+<built-in>: note: this is the location of the previous definition
+<command-line>: warning: "__GNUC_MINOR__" redefined
+<built-in>: note: this is the location of the previous definition
+cc1: warning: command-line option ‘-std=c++98’ is valid for C++/ObjC++ but not for C
+cc1: warning: command-line option ‘-std=c++98’ is valid for C++/ObjC++ but not for C
+build/nvcc/cuda-src/call_tail_recursive.cu(58): Warning: Pointer parameters must be inlined, so overriding noinline attribute on '_Z12iterate_tailPKiil'
+build/nvcc/cuda-src/call_tail_recursive.cu(99): Error: Recursive function call is not supported yet: state_machine(State, int, long)
+build/nvcc/cuda-src/call_tail_recursive.cu(97): Error: Recursive function call is not supported yet: state_machine(State, int, long)
+build/nvcc/cuda-src/call_tail_recursive.cu(95): Error: Recursive function call is not supported yet: state_machine(State, int, long)
+build/nvcc/cuda-src/call_tail_recursive.cu(94): Error: Recursive function call is not supported yet: state_machine(State, int, long)
+build/nvcc/cuda-src/call_tail_recursive.cu(79): Error: Recursive function call is not supported yet: is_odd_tail(int)
+build/nvcc/cuda-src/call_tail_recursive.cu(70): Error: Recursive function call is not supported yet: power_tail(long, int, long)
+build/nvcc/cuda-src/call_tail_recursive.cu(68): Error: Recursive function call is not supported yet: power_tail(long, int, long)
+build/nvcc/cuda-src/call_tail_recursive.cu(60): Error: Recursive function call is not supported yet: iterate_tail(int const*, int, long)
+build/nvcc/cuda-src/call_tail_recursive.cu(53): Error: Recursive function call is not supported yet: gcd(long, long)
+build/nvcc/cuda-src/call_tail_recursive.cu(46): Error: Recursive function call is not supported yet: sum_tail(int, long)
+build/nvcc/cuda-src/call_tail_recursive.cu(34): Error: Recursive function call is not supported yet: fib_tail(int, long, long)
+build/nvcc/cuda-src/call_tail_recursive.cu(21): Error: Recursive function call is not supported yet: factorial_tail(int, long)
